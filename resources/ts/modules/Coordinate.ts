@@ -93,7 +93,7 @@ export function drawSquare(map, item, size) {
         pivotLon + (column + 1) * (size / (111000 * Math.cos(deg2rad(pivotLat))))
     )
     
-    const rect = L.rectangle([boxTL, boxBR], { color: 'red', weight: 1, opacity: 1, fillOpacity: 1 }).addTo(map)
+    const rect = L.rectangle([boxTL, boxBR], { color: 'red', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(map)
 
     rect.on('click', function (event) {
         console.log(item, event)
