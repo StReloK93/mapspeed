@@ -20,8 +20,9 @@ async function initMap(data) {
 
 onMounted(async () => {
     const { data } = await axios.get("/api/tracks")
-    const token = "f5289e1f1e82404625a8e440cc9cc362BA59F356797C7A58C077963A55E2E0259F6B271F"
-    wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz");
+    const token = "f5289e1f1e82404625a8e440cc9cc3621F472A0DC36C2424065053EC12EDF8D26B1F91BD"
+    wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz")
+
     wialon.core.Session.getInstance().loginToken(token, "", (code) => {
         if (code) return
         eid.value = wialon.core.Session.getInstance().getId()

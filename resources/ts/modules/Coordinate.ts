@@ -8,12 +8,11 @@ export function createMap(sid) {
     });
 
     const map = L.map('map').setView([42.2628699, 63.891215], 12);
-    // const map = L.map('map').setView([42.32, 63.82], 10);
     var sess = wialon.core.Session.getInstance()
     L.tileLayer.webGis = function (url, options) {
         return new L.TileLayer.WebGis(url, options);
     };
-
+    
     L.tileLayer.webGis(sess.getBaseGisUrl('render'), {
         attribution: 'Gurtam Maps',
         minZoom: 1,
@@ -32,9 +31,8 @@ export function createMap(sid) {
         { type: "type", data: "avl_unit_group", flags: flags, mode: 0 }
 
     ], (code) => {
-        sess
         var units = sess.getItems("avl_unit_group")
-        // executeReport()
+        executeReport()
         units[14].getUnits().forEach((item) => {
             show_track(item, map)
         })
@@ -75,6 +73,9 @@ export function getTile(tilePoint) {
     return tileUrl
 }
 
+
+
+
 export function drawSquare(map, item, size) {
     const row = +item.ZonaY
     const column = +item.ZonaX
@@ -93,7 +94,7 @@ export function drawSquare(map, item, size) {
         pivotLon + (column + 1) * (size / (111000 * Math.cos(deg2rad(pivotLat))))
     )
     
-    const rect = L.rectangle([boxTL, boxBR], { color: 'red', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(map)
+    const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(map)
 
     rect.on('click', function (event) {
         console.log(item, event)
@@ -170,10 +171,32 @@ export function executeReport() { // execute selected report
     var id_unit = 7381
     var sess = wialon.core.Session.getInstance(); // get instance of current Session
     var res = sess.getItem(id_res); // get resource by id
-    var from = toUnixTime(2023, 12, 27, '00', '00', 0)
-    var to = toUnixTime(2023, 12, 27, '09', '00', 0)
+    var from = toUnixTime(2024, 1, 3, '00', '00', 0)
+    var to = toUnixTime(2024, 1, 3, '09', '00', 0)
 
     var interval = { "from": from, "to": to, "flags": wialon.item.MReport.intervalFlag.absolute };
     var template = res.getReport(id_templ); // get report template by id
     res.execReport(template, id_unit, 0, interval, (code, data) => console.log(code, data))
 }
+
+
+// function delete_track (evt) {
+// 	const unit_id = evt
+// 	const sess = wialon.core.Session.getInstance()
+// 	const renderer = sess.getRenderer()
+// 	if (layers && layers[unit_id])
+// 	{
+// 		// delete layer from renderer
+// 		renderer.removeLayer(layers[unit_id], function(code) { 
+// 			if (code) 
+// 				msg(wialon.core.Errors.getErrorText(code)); // exit if error code
+// 			else 
+// 				msg("Track removed."); // else send message, then ok
+// 		});
+// 		delete layers[unit_id]; // delete layer from container
+// 	}
+// 	// move marker behind bounds
+// 	if (map)
+// 		map.removeLayer(markers[unit_id]);
+// 	delete markers[unit_id];
+// }
