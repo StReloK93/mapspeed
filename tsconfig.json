@@ -9,7 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/*": [ // / to begin with.
-        "./resources/js/*"
+        "./resources/ts/*"
       ]
     },
   }

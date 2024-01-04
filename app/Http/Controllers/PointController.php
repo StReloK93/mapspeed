@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Facades\MyHttpFacade as Gurtam;
 use App\Models\Point;
@@ -48,6 +49,26 @@ class PointController extends Controller
 
     }
 
+    public function createToken(){
+        // f5289e1f1e82404625a8e440cc9cc3620EA1CA83C8F02E03B3EEF3F51ABC2D16E7FCC250
+        // 94e3f3e1ac97def632645f3655f7c9320F482674258FFE1B89D5296855D502E753290349
+        $group = Http::get("http://wl.ngmk.uz/wialon/ajax.html", [
+            'svc' => 'token/update',
+            'params' => json_encode([
+                "callMode" => 'create',
+                "userId" => "7547",
+                "h" => "",
+                "app" => 'mapSpeed',
+                "at" => 0,
+                "dur" => 0,
+                "fl" => -1,
+                "p" => [],
+                "items" => "",
+            ]),
+        ]);
+        
+        dd(json_decode($group, true));
+    }
 
     public function getTiles(){
         return Gurtam::getTiles();
