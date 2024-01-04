@@ -1,30 +1,42 @@
 import Leaflet from "./Leaflet"
 
 export default class {
-    Tlayer; map; to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
+    Tlayer
+    map
+    leafMap
+    drawSquare
+    to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
     session = wialon.core.Session.getInstance()
-    
+
     constructor(sid, UIData) {
         this.initWialon(sid, UIData)
     }
 
     async initWialon(sid, UIData) {
-        const { map } = new Leaflet(sid)
-        this.map = map
-    
-        const groups:any = await this.initReports()
-        groups.forEach((group, index) => {
-            
-            
-            const onlyNumber = group.getName().replace(/\D/g, "")
-            const name = onlyNumber == "" ? "Barchasi" : onlyNumber + ' Tonnali'
-            
-            UIData.groups.push({ id: group.getId(), name: name })
-            if (index == 0) this.executeReport(group.getId(), UIData)
-        })
+        this.leafMap = new Leaflet(sid)
+        this.map = this.leafMap.map
 
+        const groups: any = await this.initReports()
+        groups.forEach((group) => {
+            const onlyNumber = group.getName().replace(/\D/g, "")
+            const name = onlyNumber == "" ? "Barchasi" : onlyNumber + ' Tonna'
+
+            UIData.groups.push({ id: group.getId(), name: name })
+        })
+        this.selectUnit(groups[0].getId(), UIData)
     }
 
+    async selectUnit(unitId, UIData) {
+        UIData.loading = true
+        await this.executeReport(unitId, UIData)
+        UIData.loading = false
+        const { data } = await axios.get('/api/tracks')
+        data.forEach((point) => {
+            
+            this.leafMap.drawSquare(point, 50)
+
+        })
+    }
 
     async initReports() {
         const session = this.session
@@ -32,9 +44,9 @@ export default class {
             var renderer = session.getRenderer()
             if (this.Tlayer && this.Tlayer.setUrl) this.Tlayer.setUrl(this.getTiles(renderer))
         }
-    
+
         return await new Promise(function (resolve, reject) {
-            
+
             var renderer = session.getRenderer()
             session.loadLibrary("resourceReports")
             renderer.addListener("changeVersion", update_renderer);
@@ -42,7 +54,7 @@ export default class {
                 { type: "type", data: "avl_resource", flags: wialon.item.Item.dataFlag.base | wialon.item.Resource.dataFlag.reports, mode: 0 },
                 { type: "type", data: "avl_unit", flags: wialon.item.Item.dataFlag.base | wialon.item.Unit.dataFlag.lastMessage, mode: 0 },
                 { type: "type", data: "avl_unit_group", flags: wialon.item.Item.dataFlag.base | wialon.item.Unit.dataFlag.lastMessage, mode: 0 }
-        
+
             ], (code) => {
                 var units = session.getItems("avl_unit_group")
                 resolve(units)
@@ -50,21 +62,28 @@ export default class {
         })
     }
 
-    public executeReport(group_id, UIData) { // execute selected report
-        if(UIData.active == group_id) return
-        
+    public async executeReport(group_id, UIData) { // execute selected report
+        if (UIData.active == group_id) return
+
         UIData.active = group_id
         var renderer = this.session.getRenderer()
         var report = this.session.getItems("avl_resource")[0]
         var template = report.getReports()
-    
-        report.execReport(template[1], group_id, 0, { "from": this.from, "to": this.to, "flags": wialon.item.MReport.intervalFlag.absolute },
-            (code, layer) => {
-                if (!layer) return
-                if (!this.Tlayer) this.Tlayer = L.tileLayer(this.getTiles(renderer), { zoomReverse: true, zoomOffset: -1 }).addTo(this.map)
-                else this.Tlayer.setUrl(this.getTiles(renderer))
-            }
-        )
+
+
+        return await new Promise(function (resolve, reject) {
+
+            report.execReport(template[1], group_id, 0, { "from": this.from, "to": this.to, "flags": wialon.item.MReport.intervalFlag.absolute },
+                (code, layer) => {
+                    if (!layer) return
+                    if (!this.Tlayer) this.Tlayer = L.tileLayer(this.getTiles(renderer), { zoomReverse: true, zoomOffset: -1 }).addTo(this.map)
+                    else this.Tlayer.setUrl(this.getTiles(renderer))
+                    resolve('magic')
+                }
+            )
+
+        }.bind(this))
+
     }
 
 
@@ -72,7 +91,7 @@ export default class {
         return this.session.getBaseUrl() + "/adfurl" + renderer.getVersion() + "/avl_render/{x}_{y}_{z}/" + this.session.getId() + ".png"
     }
 
-    
+
 
 }
 

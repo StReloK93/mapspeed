@@ -33,7 +33,9 @@ export default class {
         return map
     }
 
-    drawSquare(map, item, size) {
+    drawSquare(item, size) {
+        console.log(this)
+        
         const row = +item.ZonaY
         const column = +item.ZonaX
     
@@ -50,7 +52,7 @@ export default class {
             pivotLon + (column + 1) * (size / (111000 * Math.cos(this.deg2rad(pivotLat))))
         )
     
-        const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(map)
+        const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
     
         rect.on('click', function (event) {
             console.log(item, event)
