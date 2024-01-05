@@ -4,7 +4,10 @@
         <PreLoader :loading="UIData.loading" />
         <SpeedColors />
         <main class="h-full overflow-y-auto p-2 absolute top-0 right-0 z-30">
-            <button v-for="point in appStore.points" class="btn-line !border bg-white !px-1 mb-1 block w-52" @click="customWialon.leafMap.fixedToPoint(point.center)" >
+            <button
+                v-for="point in appStore.points"
+                :class="{ '!bg-gray-700 !text-white': point.active }"
+                class="btn-line !border bg-white !px-1 mb-1 block w-52" @click="customWialon.leafMap.fixedToPoint(point.center, point.image)" >
                <!-- <span class="inline-flex w-6 h-6 rounded-full items-center justify-center bg-gray-400 text-white">{{ point.item.QT }}</span>  -->
                Tezlik
                {{ point.item.SpeedAvg }} dan
@@ -21,7 +24,6 @@ import PreLoader from './PreLoader.vue'
 import HeaderButton from './HeaderButton.vue'
 import SpeedColors from './SpeedColors.vue'
 import Wialon from '@/modules/Wialon'
-// import { initWialon } from '@/modules/Coordinate'
 import { onMounted, reactive, ref } from 'vue'
 
 const appStore = useAppStore()

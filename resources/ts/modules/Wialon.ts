@@ -29,7 +29,7 @@ export default class {
     async selectUnit(unitId, UIData) {
         UIData.loading = true
         this.leafMap.removeCubics()
-
+        this.map.setView([42.2628699, 63.891215], 13);
         const select = UIData.groups.find((group) => group.id == unitId)
         await this.executeReport(unitId, UIData)
         await axios.get(`/api/tracks/${select.number}`).then(({ data: points }) => {

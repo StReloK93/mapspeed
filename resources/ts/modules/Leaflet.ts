@@ -57,10 +57,10 @@ export default class {
         const center = this.getCenterCubic(boxTL, boxBR)
         const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
         const marker = L.marker(center).addTo(this.map)
-        marker._icon.classList.add('animate-marker')
+        // marker._icon.classList.add('animate-marker')
 
         this.points.push({ rect, marker })
-        this.store.points.push({ center, item })
+        this.store.points.push({ center, item, image: marker._icon, active: false })
         
         this.store.points = this.store.points.sort((d1, d2) => (
             +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
@@ -95,7 +95,17 @@ export default class {
         return degrees * (Math.PI / 180);
     }
 
-    fixedToPoint(point) {
+    fixedToPoint(point, image) {
+        this.store.points.forEach((point) => {
+            if (point.image == image) {
+                point.active = true
+                point.image.classList.add('animate-marker')
+            }
+            else {
+                point.active = false
+                point.image.classList.remove('animate-marker')
+            }
+        })
         this.map.setView(point, 15);
     }
 
