@@ -56,3 +56,20 @@
 .v-leave-to {
     opacity: 0;
 }
+
+.animate-marker {
+    position: relative;
+    animation: bounce 1s infinite; /* Пример анимации: bounce - это название анимации */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        top: 0;
+    }
+    40% {
+        top: -7px;
+    }
+    60% {
+        top: -3px;
+    }
+}
