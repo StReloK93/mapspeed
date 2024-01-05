@@ -61,6 +61,10 @@ export default class {
 
         this.points.push({ rect, marker })
         this.store.points.push({ center, item })
+        
+        this.store.points = this.store.points.sort((d1, d2) => (
+            +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
+        ) ? -1 : 1)
         rect.on('click', function (event) { })
     }
 

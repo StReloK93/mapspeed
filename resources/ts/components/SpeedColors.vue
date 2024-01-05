@@ -1,6 +1,6 @@
 <template>
-    <div class="absolute top-10 left-1 w-14 text-center z-30">
-        <main v-for="color in colors" :class="color.color" class="text-sm text-white rounded-sm shadow-sm mb-1">
+    <div class="absolute bottom-1 left-1  text-center z-30 flex">
+        <main v-for="color in colors" :class="color.color" class="w-14 text-sm text-white rounded-sm shadow-sm mr-1">
             {{color.speed}}
         </main>
     </div>

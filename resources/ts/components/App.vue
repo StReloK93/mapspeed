@@ -3,14 +3,15 @@
         <HeaderButton :custom-wialon="customWialon" :UIData="UIData" />
         <PreLoader :loading="UIData.loading" />
         <SpeedColors />
-        <main class="flex h-screen">
-            <div id="map" class="h-full flex-grow"></div>
-            <main class="w-64 h-full overflow-y-auto p-2">
-                <section class="bg-gray-100 text-gray-700 mb-2 px-3 py-1" @click="customWialon.leafMap.fixedToPoint(point.center)" v-for="point in appStore.points">
-                   <span>{{ point.item.QT }} tonna </span> {{ point.item.SpeedAvg }} -  {{ point.item.SpeedAvgL }}
-                </section>
-            </main>
+        <main class="h-full overflow-y-auto p-2 absolute top-0 right-0 z-30">
+            <button v-for="point in appStore.points" class="btn-line !border bg-white !px-1 mb-1 block w-52" @click="customWialon.leafMap.fixedToPoint(point.center)" >
+               <!-- <span class="inline-flex w-6 h-6 rounded-full items-center justify-center bg-gray-400 text-white">{{ point.item.QT }}</span>  -->
+               Tezlik
+               {{ point.item.SpeedAvg }} dan
+               {{ point.item.SpeedAvgL }} Km/s tushgan
+            </button>
         </main>
+        <div id="map" class="h-screen"></div>
     </section>
 </template>
 
