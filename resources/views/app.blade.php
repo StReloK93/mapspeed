@@ -7,7 +7,7 @@
     <script src="http://wl.ngmk.uz/wsdk/script/wialon.js"></script>
     <script src="/leaflet.js"></script>
     <link rel="stylesheet" href="/leaflet.css" />
-    <title>Document</title>
+    <title>Карта Скоростных дорог</title>
 </head>
 <body>
     <section id="app"></section>
