@@ -1,5 +1,6 @@
 export default class {
     map
+    rectangles = []
     constructor(sid) {
         this.map = this.createMap(sid)
     }
@@ -34,10 +35,8 @@ export default class {
     }
 
     drawSquare(item, size) {
-        console.log(this)
-        
-        const row = +item.ZonaY
-        const column = +item.ZonaX
+        const row = +item.ZonaX
+        const column = +item.ZonaY
     
         const pivotLat = 42.32;
         const pivotLon = 63.82;
@@ -53,9 +52,21 @@ export default class {
         )
     
         const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
-    
+        this.rectangles.push(rect)
         rect.on('click', function (event) {
             console.log(item, event)
+        })
+    }
+
+    drawCubics(points) {
+        points.forEach((point) => {
+            this.drawSquare(point, 50)
+        })
+    }
+
+    removeCubics() {
+        this.rectangles.forEach(rect => {
+            this.map.removeLayer(rect)
         })
     }
 

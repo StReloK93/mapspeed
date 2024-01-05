@@ -21,21 +21,24 @@ export default class {
             const onlyNumber = group.getName().replace(/\D/g, "")
             const name = onlyNumber == "" ? "Barchasi" : onlyNumber + ' Tonna'
 
-            UIData.groups.push({ id: group.getId(), name: name })
+            UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
         })
         this.selectUnit(groups[0].getId(), UIData)
     }
 
     async selectUnit(unitId, UIData) {
         UIData.loading = true
-        await this.executeReport(unitId, UIData)
-        UIData.loading = false
-        const { data } = await axios.get('/api/tracks')
-        data.forEach((point) => {
-            
-            this.leafMap.drawSquare(point, 50)
+        this.leafMap.removeCubics()
 
+        const select = UIData.groups.find((group) => group.id == unitId)
+        await this.executeReport(unitId, UIData)
+        await axios.get(`/api/tracks/${select.number}`).then(({ data: points }) => {
+            this.leafMap.drawCubics(points)
         })
+
+        UIData.loading = false
+
+
     }
 
     async initReports() {

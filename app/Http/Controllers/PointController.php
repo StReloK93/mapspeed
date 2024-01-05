@@ -7,24 +7,24 @@ use Illuminate\Http\Request;
 use App\Facades\MyHttpFacade as Gurtam;
 use App\Models\Point;
 use DB;
+
 class PointController extends Controller
 {
 
-    public function index()
+    public function show($index)
     {
-        // return Point::whereBetween('time', ['2023-12-18 09:00:00', '2023-12-18 11:59:59'])
-        // ->where('column',65)
-        // ->get();
-
-        // return Point::select('zonax as column', 'zonay as row','id', 'y', 'x')->whereBetween('t', ['2023-12-18 09:00:00', '2023-12-18 11:59:59'])->where([
-        //     ['zonax', 76],
-        //     ['zonay', 72],
-        // ])->get();
-
-        return DB::select('select * from dbo.ProblemZonesAll()');
+        if($index == 0){
+            return DB::select('select * from dbo.ProblemZonesAll()');
+        }
+        else{
+            return DB::select('select * from  dbo.ProblemZonesAll() WHERE qt = '.$index.'');
+        }
     }
 
-    public function getReport(){
+
+
+    public function getReport()
+    {
         return Gurtam::getWialonReportImages('2023-12-17 21:00:00', '2023-12-18 08:59:59');
     }
     public function generate($id)
@@ -49,9 +49,9 @@ class PointController extends Controller
 
     }
 
-    public function createToken(){
-        // f5289e1f1e82404625a8e440cc9cc3620EA1CA83C8F02E03B3EEF3F51ABC2D16E7FCC250
-        // 94e3f3e1ac97def632645f3655f7c9320F482674258FFE1B89D5296855D502E753290349
+    public function createToken()
+    {
+
         $group = Http::get("http://wl.ngmk.uz/wialon/ajax.html", [
             'svc' => 'token/update',
             'params' => json_encode([
@@ -66,15 +66,20 @@ class PointController extends Controller
                 "items" => "",
             ]),
         ]);
-        
+
         dd(json_decode($group, true));
     }
 
-    public function getTiles(){
+    public function getTiles()
+    {
         return Gurtam::getTiles();
     }
 
 }
+
+
+// f5289e1f1e82404625a8e440cc9cc3620EA1CA83C8F02E03B3EEF3F51ABC2D16E7FCC250
+// 94e3f3e1ac97def632645f3655f7c9320F482674258FFE1B89D5296855D502E753290349
 
 // $pieces = array_chunk($array[5], count($array[5]) / 4);
 // 9748 55 Tn avto
@@ -82,3 +87,11 @@ class PointController extends Controller
 // 9750 91 Tn Avto
 // 9751 92 Tn Avto
 
+// return Point::whereBetween('time', ['2023-12-18 09:00:00', '2023-12-18 11:59:59'])
+// ->where('column',65)
+// ->get();
+
+// return Point::select('zonax as column', 'zonay as row','id', 'y', 'x')->whereBetween('t', ['2023-12-18 09:00:00', '2023-12-18 11:59:59'])->where([
+//     ['zonax', 76],
+//     ['zonay', 72],
+// ])->get();
