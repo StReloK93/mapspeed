@@ -99,10 +99,16 @@ export default class {
         this.store.points.forEach((point) => {
             if (point.image == image) {
                 point.active = true
+                setTimeout(() => {
+                    point.image.style.zIndex = 1000
+                })
+                point.image.src = '/images/red.png'
                 point.image.classList.add('animate-marker')
             }
             else {
                 point.active = false
+                point.image.src = '/images/marker-icon.png'
+                point.image.style.zIndex = 200
                 point.image.classList.remove('animate-marker')
             }
         })
