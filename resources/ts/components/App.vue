@@ -3,18 +3,22 @@
         <HeaderButton :custom-wialon="customWialon" :UIData="UIData" />
         <PreLoader :loading="UIData.loading" />
         <SpeedColors />
-        <main class="h-full overflow-y-auto p-2 absolute top-0 right-0 z-30">
+        <main class="h-full overflow-y-auto p-2 absolute top-0 right-0 z-30 text-right flex flex-col items-end">
+            <h3 class="font-semibold pb-2">Tezlik tushgan nuqtalar ( Km/s)</h3>
             <button
                 v-for="point in appStore.points"
                 :class="{ '!bg-gray-700 !text-white': point.active }"
-                class="btn-line !border bg-white !px-1 mb-1 block w-52" @click="customWialon.leafMap.fixedToPoint(point.center, point.image)" >
+                class="btn-line !border bg-white !px-2 mb-1 inline-block w-20 text-left" @click="customWialon.leafMap.fixedToPoint(point.center, point.image)"
+            >
                <!-- <span class="inline-flex w-6 h-6 rounded-full items-center justify-center bg-gray-400 text-white">{{ point.item.QT }}</span>  -->
-               Tezlik
-               {{ point.item.SpeedAvg }} dan
-               {{ point.item.SpeedAvgL }} Km/s tushgan
+               <span class="font-bold">{{ point.item.SpeedAvg }}</span>
+                <span class="text-gray-400 mx-1">dan</span> 
+               <span class="font-bold">{{ point.item.SpeedAvgL }}</span>
+               
             </button>
         </main>
         <div id="map" class="h-screen"></div>
+
     </section>
 </template>
 

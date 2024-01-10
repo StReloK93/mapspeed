@@ -14,7 +14,7 @@ class PointController extends Controller
     public function show($index)
     {
         if($index == 0){
-            return DB::select('select * from dbo.ProblemZonesAll()');
+            return DB::select('select * from  [dbo].[ProblemZonesAllNKun](5,6,10)');
         }
         else{
             return DB::select('select * from  dbo.ProblemZonesAll() WHERE qt = '.$index.'');

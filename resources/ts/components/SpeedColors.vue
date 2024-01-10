@@ -3,6 +3,9 @@
         <main v-for="color in colors" :class="color.color" class="w-14 text-sm text-white rounded-sm shadow-sm mr-1">
             {{color.speed}}
         </main>
+        <span class="bg-white px-3 ml-4">
+            Malumot va takliflar uchun :<span class="font-semibold">597-22-44</span> 
+        </span>
     </div>
 </template>
 
