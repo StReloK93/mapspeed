@@ -1,36 +1,25 @@
 <template>
-    <section class="relative">
-        <HeaderButton :custom-wialon="customWialon" :UIData="UIData" />
+    <section class="p-1.5 h-screen">
         <PreLoader :loading="UIData.loading" />
-        <SpeedColors />
-        <main class="h-full overflow-y-auto p-2 absolute top-0 right-0 z-30 text-right flex flex-col items-end">
-            <h3 class="font-semibold pb-2">Tezlik tushgan nuqtalar ( Km/s)</h3>
-            <button
-                v-for="point in appStore.points"
-                :class="{ '!bg-gray-700 !text-white': point.active }"
-                class="btn-line !border bg-white !px-2 mb-1 inline-block w-20 text-left" @click="customWialon.leafMap.fixedToPoint(point.center, point.image)"
-            >
-               <!-- <span class="inline-flex w-6 h-6 rounded-full items-center justify-center bg-gray-400 text-white">{{ point.item.QT }}</span>  -->
-               <span class="font-bold">{{ point.item.SpeedAvg }}</span>
-                <span class="text-gray-400 mx-1">dan</span> 
-               <span class="font-bold">{{ point.item.SpeedAvgL }}</span>
-               
-            </button>
+        <Info />
+        <main class="h-full w-full relative rounded-xl overflow-hidden flex">
+            <SpeedColors />
+            <div id="map" class="h-full flex-grow"></div>
+            <MenuRight :custom-wialon="customWialon" :UIData="UIData" />
         </main>
-        <div id="map" class="h-screen"></div>
-
     </section>
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/store/useAppStore'
-import PreLoader from './PreLoader.vue'
-import HeaderButton from './HeaderButton.vue'
+import MenuRight from './MenuRight.vue'
 import SpeedColors from './SpeedColors.vue'
+import Info from './Info.vue'
+
+import PreLoader from './PreLoader.vue'
+
 import Wialon from '@/modules/Wialon'
 import { onMounted, reactive, ref } from 'vue'
 
-const appStore = useAppStore()
 
 const UIData = reactive({
     groups: [],

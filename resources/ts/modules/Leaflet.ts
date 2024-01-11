@@ -38,7 +38,7 @@ export default class {
         return map
     }
 
-    drawSquare(item, size) {
+    drawSquare(item, size, index) {
         const row = +item.ZonaX
         const column = +item.ZonaY
 
@@ -56,15 +56,17 @@ export default class {
         )
         const center = this.getCenterCubic(boxTL, boxBR)
         const rect = L.rectangle([boxTL, boxBR], { color: 'black', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
-        const marker = L.marker(center).addTo(this.map)
-        // marker._icon.classList.add('animate-marker')
+
+        const marker = L.marker(center, {
+            icon: L.divIcon({ className: 'custom-marker-class', html: index}),
+        }).addTo(this.map)
 
         this.points.push({ rect, marker })
-        this.store.points.push({ center, item, image: marker._icon, active: false })
-        
-        this.store.points = this.store.points.sort((d1, d2) => (
-            +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
-        ) ? -1 : 1)
+        this.store.points.push({ center, item, image: marker._icon, active: false, index })
+
+        // this.store.points = this.store.points.sort((d1, d2) => (
+        //     +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
+        // ) ? -1 : 1)
         rect.on('click', function (event) { })
     }
 
@@ -77,8 +79,8 @@ export default class {
 
 
     drawCubics(points) {
-        points.forEach((point) => {
-            this.drawSquare(point, 50)
+        points.forEach((point, index) => {
+            this.drawSquare(point, 50, index + 1)
         })
     }
 
@@ -99,12 +101,10 @@ export default class {
         this.store.points.forEach((point) => {
             if (point.image == image) {
                 point.active = true
-                point.image.src = '/images/red.png'
                 point.image.classList.add('animate-marker')
             }
             else {
                 point.active = false
-                point.image.src = '/images/marker-icon.png'
                 point.image.classList.remove('animate-marker')
             }
         })

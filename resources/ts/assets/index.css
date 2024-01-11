@@ -1,23 +1,19 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
 
-.btn-line{
-    @apply border-2 border-gray-700  text-gray-700 shadow-sm px-3 py-1 text-sm rounded-sm font-medium active:bg-gray-500 hover:bg-gray-700 hover:text-white;
+.btn-line {
+    @apply  border-2 border-[#14284a]  rounded-full w-14 h-14 text-[#14284a] text-xs;
 }
-
 
 .loader {
     position: relative;
     width: 85px;
     height: 50px;
     background-repeat: no-repeat;
-    background-image: linear-gradient(#FFF 50px, transparent 0),
-        linear-gradient(#FFF 50px, transparent 0),
-        linear-gradient(#FFF 50px, transparent 0),
-        linear-gradient(#FFF 50px, transparent 0),
-        linear-gradient(#FFF 50px, transparent 0),
-        linear-gradient(#FFF 50px, transparent 0);
+    background-image: linear-gradient(#fff 50px, transparent 0), linear-gradient(#fff 50px, transparent 0), linear-gradient(#fff 50px, transparent 0), linear-gradient(#fff 50px, transparent 0), linear-gradient(#fff 50px, transparent 0), linear-gradient(#fff 50px, transparent 0);
     background-position: 0px center, 15px center, 30px center, 45px center, 60px center, 75px center, 90px center;
     animation: rikSpikeRoll 0.65s linear infinite alternate;
 }
@@ -28,27 +24,27 @@
     }
 
     16% {
-        background-size: 10px 50px, 10px 3px, 10px 3px, 10px 3px, 10px 3px, 10px 3px
+        background-size: 10px 50px, 10px 3px, 10px 3px, 10px 3px, 10px 3px, 10px 3px;
     }
 
     33% {
-        background-size: 10px 30px, 10px 50px, 10px 3px, 10px 3px, 10px 3px, 10px 3px
+        background-size: 10px 30px, 10px 50px, 10px 3px, 10px 3px, 10px 3px, 10px 3px;
     }
 
     50% {
-        background-size: 10px 10px, 10px 30px, 10px 50px, 10px 3px, 10px 3px, 10px 3px
+        background-size: 10px 10px, 10px 30px, 10px 50px, 10px 3px, 10px 3px, 10px 3px;
     }
 
     66% {
-        background-size: 10px 3px, 10px 10px, 10px 30px, 10px 50px, 10px 3px, 10px 3px
+        background-size: 10px 3px, 10px 10px, 10px 30px, 10px 50px, 10px 3px, 10px 3px;
     }
 
     83% {
-        background-size: 10px 3px, 10px 3px, 10px 10px, 10px 30px, 10px 50px, 10px 3px
+        background-size: 10px 3px, 10px 3px, 10px 10px, 10px 30px, 10px 50px, 10px 3px;
     }
 
     100% {
-        background-size: 10px 3px, 10px 3px, 10px 3px, 10px 10px, 10px 30px, 10px 50px
+        background-size: 10px 3px, 10px 3px, 10px 3px, 10px 10px, 10px 30px, 10px 50px;
     }
 }
 
@@ -62,18 +58,53 @@
     opacity: 0;
 }
 
+
+.colorafter {
+    @apply after:content-[""] after:absolute after:left-0  after:-top-px after:w-5 after:border-b-2;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+    display: none;
+}
+
+
+.custom-marker-class{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 11px;
+    width: 30px!important;
+    height: 30px!important;
+    margin-left: -15px!important;
+    margin-top: -15px!important;
+    flex-shrink: 0;
+    box-shadow: 0 0 0px 1px rgb(255 255 255 / 21%);
+    color: white;
+    background: rgb(73, 75, 209, 0.8);
+}
+
+
 .animate-marker {
+    background: rgba(214, 16, 76, 0.8);
     position: relative;
     animation: bounce 1s infinite; /* Пример анимации: bounce - это название анимации */
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
         top: 0;
     }
+
     40% {
-        top: -7px;
+        top: -10px;
     }
+
     60% {
         top: -3px;
     }

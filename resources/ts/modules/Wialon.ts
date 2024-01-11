@@ -19,8 +19,14 @@ export default class {
         const groups: any = await this.initReports()
         groups.forEach((group) => {
             const onlyNumber = group.getName().replace(/\D/g, "")
-            const name = onlyNumber == "" ? "Barchasi" : onlyNumber + ' Tonna'
+            var name
 
+            if (onlyNumber == "") name = "Barcha"
+            else if(onlyNumber == "55") name = "55 tn"
+            else if(onlyNumber == "90") name = "90 tn"
+            else if(onlyNumber == "91") name = "Komatsu"
+            else if (onlyNumber == "92") name = "KAT"
+            
             UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
         })
         this.selectUnit(groups[0].getId(), UIData)
