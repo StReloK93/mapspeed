@@ -4,8 +4,9 @@
         <Info />
         <main class="h-full w-full relative rounded-xl overflow-hidden flex">
             <SpeedColors />
-            <div id="map" class="h-full flex-grow"></div>
-            <MenuRight :custom-wialon="customWialon" :UIData="UIData" />
+            <!-- <Charts /> -->
+            <Map :UIData="UIData" />
+            <MenuRight :UIData="UIData" />
         </main>
     </section>
 </template>
@@ -14,27 +15,34 @@
 import MenuRight from './MenuRight.vue'
 import SpeedColors from './SpeedColors.vue'
 import Info from './Info.vue'
-
+import Charts from './Charts.vue'
 import PreLoader from './PreLoader.vue'
-
+import Map from './Map.vue'
 import Wialon from '@/modules/Wialon'
 import { onMounted, reactive, ref } from 'vue'
 
 
+// axios.get('api/tracks').then(({data}) => {
+//     console.log(data)
+// })
+//     .catch((error) => {
+//     console.log(error)
+    
+// })
 const UIData = reactive({
     groups: [],
     active: null,
     loading: false,
+    customWialon: null,
 })
 
-const customWialon: any = ref(null)
 onMounted(async () => {
     const token = "94e3f3e1ac97def632645f3655f7c9320F482674258FFE1B89D5296855D502E753290349"
     wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz")
     wialon.core.Session.getInstance().loginToken(token, "", (code) => {
         if (code) return
         const id = wialon.core.Session.getInstance().getId()
-        customWialon.value = new Wialon(id, UIData)
+        UIData.customWialon = new Wialon(id, UIData)
     })
 })
 </script>

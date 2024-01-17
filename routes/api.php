@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::apiResource('tracks', PointController::class);
+Route::post('tracks/show', [PointController::class, 'show']);
 Route::get('generate-tracks/{id}', [PointController::class, 'generate']);
 Route::get('get_tiles', [PointController::class, 'getTiles']);
 Route::get('get_report', [PointController::class, 'getReport']);

@@ -13,11 +13,15 @@ class Point extends Model
 
     public $timestamps = false;
     protected $fillable = [
-        "car_id",
-        "x",
-        "y",
-        "speed",
-        "time",
+        "ID",
+        "ObjectID",
+        "X",
+        "Y",
+        "Z",
+        "Speed",
+        "Created",
+        "ZonaX",
+        "ZonaY",
     ];
 
     protected $casts = [

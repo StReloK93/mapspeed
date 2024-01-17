@@ -7,18 +7,38 @@ use Illuminate\Http\Request;
 use App\Facades\MyHttpFacade as Gurtam;
 use App\Models\Point;
 use DB;
-
+use Carbon\Carbon;
 class PointController extends Controller
 {
 
-    public function show($index)
+
+    public function index(){
+        try {
+            return Point::whereBetween("T", [date('2024-01-11 00:00'), date('2024-01-17 23:59')])->get();
+        } catch (\Throwable $th) {
+            return $th;
+        }
+        
+    }
+    public function show(Request $request)
     {
-        if($index == 0){
-            return DB::select('select * from  [dbo].[ProblemZonesAllNKun](5,6,10)');
+
+        if($request->index == 0){
+            return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
+                $request->oldDays,
+                $request->hourPeriod,
+                $request->speedRange,
+                $request->selectedTime
+            ]);
         }
-        else{
-            return DB::select('select * from  dbo.ProblemZonesAll() WHERE qt = '.$index.'');
-        }
+
+        return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?) WHERE qt = ?", [
+            $request->oldDays,
+            $request->hourPeriod,
+            $request->speedRange,
+            $request->selectedTime,
+            $request->index
+        ]);
     }
 
 

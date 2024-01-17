@@ -1,15 +1,18 @@
 import Leaflet from "./Leaflet"
-
+import moment from 'moment'
+import { useAppStore } from "@/store/useAppStore"
 export default class {
     Tlayer
     map
     leafMap
     drawSquare
+    store
     to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
     session = wialon.core.Session.getInstance()
 
     constructor(sid, UIData) {
         this.initWialon(sid, UIData)
+        this.store = useAppStore()
     }
 
     async initWialon(sid, UIData) {
@@ -25,8 +28,7 @@ export default class {
             else if(onlyNumber == "55") name = "55 tn"
             else if(onlyNumber == "90") name = "90 tn"
             else if(onlyNumber == "91") name = "Komatsu"
-            else if (onlyNumber == "92") name = "KAT"
-            
+            else if (onlyNumber == "92") name = "CAT"
             UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
         })
         this.selectUnit(groups[0].getId(), UIData)
@@ -38,13 +40,19 @@ export default class {
         this.map.setView([42.2628699, 63.891215], 13);
         const select = UIData.groups.find((group) => group.id == unitId)
         await this.executeReport(unitId, UIData)
-        await axios.get(`/api/tracks/${select.number}`).then(({ data: points }) => {
+        console.log(this.store.oldDays, this.store.hourPeriod);
+        
+        await axios.post('/api/tracks/show', {
+            index: select.number,
+            oldDays: this.store.oldDays,
+            hourPeriod: this.store.hourPeriod,
+            speedRange: this.store.speedRange,
+            selectedTime: moment(this.store.time.value).format('YYYY-MM-DD HH:mm'),
+        }).then(({ data: points }) => {
             this.leafMap.drawCubics(points)
         })
 
         UIData.loading = false
-
-
     }
 
     async initReports() {

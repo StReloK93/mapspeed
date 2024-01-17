@@ -17,6 +17,8 @@
     "dependencies": {
         "@programic/vue3-tooltip": "^1.0.0",
         "@turf/turf": "^6.5.0",
+        "chart.js": "^4.4.1",
+        "moment": "^2.30.1",
         "pinia": "^2.1.7",
         "vue": "^3.3.10"
     }
