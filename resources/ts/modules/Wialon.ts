@@ -10,15 +10,15 @@ export default class {
     to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
     session = wialon.core.Session.getInstance()
 
-    constructor(sid, UIData) {
-        this.initWialon(sid, UIData)
+    constructor(sid, UIData, canvas) {
         this.store = useAppStore()
+        this.initWialon(UIData, sid, canvas)
     }
 
-    async initWialon(sid, UIData) {
-        this.leafMap = new Leaflet(sid)
+    async initWialon(UIData, sid, canvas) {
+        
+        this.leafMap = new Leaflet(sid, canvas)
         this.map = this.leafMap.map
-
         const groups: any = await this.initReports()
         groups.forEach((group) => {
             const onlyNumber = group.getName().replace(/\D/g, "")
@@ -40,8 +40,6 @@ export default class {
         this.map.setView([42.2628699, 63.891215], 13);
         const select = UIData.groups.find((group) => group.id == unitId)
         await this.executeReport(unitId, UIData)
-        console.log(this.store.oldDays, this.store.hourPeriod);
-        
         await axios.post('/api/tracks/show', {
             index: select.number,
             oldDays: this.store.oldDays,

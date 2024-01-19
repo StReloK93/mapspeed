@@ -8,22 +8,52 @@ use App\Facades\MyHttpFacade as Gurtam;
 use App\Models\Point;
 use DB;
 use Carbon\Carbon;
+
 class PointController extends Controller
 {
 
+    // ttracks
+    public function index(Request $request)
+    {
 
-    public function index(){
-        try {
-            return Point::whereBetween("T", [date('2024-01-11 00:00'), date('2024-01-17 23:59')])->get();
-        } catch (\Throwable $th) {
-            return $th;
-        }
-        
+        return Point::select(
+            DB::raw('DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0) AS hour'),
+            DB::raw('ROUND(AVG(CASE WHEN Speed <> 0 THEN CAST(Speed AS DECIMAL(10, 2)) ELSE NULL END), 2) AS average_speed'),
+        )
+        ->whereBetween('T', [$request->startDay, $request->endDay])
+        ->groupBy(DB::raw('DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0)'))
+        ->orderBy('hour')
+        ->get();
+
+
+        // return DB::select('SELECT DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0) AS HourlyTimestamp,
+        //     ROUND(AVG(CASE WHEN Speed <> 0 THEN CAST(Speed AS DECIMAL(10, 2)) ELSE NULL END), 2) AS AverageSpeed,
+        //     COUNT(*) AS NumberOfRecords
+        // FROM
+        //     ttracks
+        // WHERE
+        //     T BETWEEN :startTime AND :endTime
+        // GROUP BY
+        //     DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0)
+        // ORDER BY
+        //     HourlyTimestamp
+        // ', ['startTime' => $request->startDay, 'endTime' => $request->endDay]);
+
+        // return Point::select(
+        //     DB::raw('CAST(T AS DATE) AS day'),
+        //     DB::raw("FORMAT(AVG(CAST(speed AS DECIMAL(10, 2))), 'N2') AS middle_speed")
+        // )
+        // ->where('speed', '<>', 0)
+        // ->whereBetween('T', [$request->startDay, $request->endDay])
+        // ->groupBy(DB::raw('CAST(T AS DATE)'))
+        // ->orderBy(DB::raw('CAST(T AS DATE)'))
+        // ->get();
+
     }
     public function show(Request $request)
     {
 
-        if($request->index == 0){
+        if ($request->index == 0) {
             return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
                 $request->oldDays,
                 $request->hourPeriod,
@@ -96,6 +126,9 @@ class PointController extends Controller
     }
 
 }
+
+
+
 
 
 // f5289e1f1e82404625a8e440cc9cc3620EA1CA83C8F02E03B3EEF3F51ABC2D16E7FCC250

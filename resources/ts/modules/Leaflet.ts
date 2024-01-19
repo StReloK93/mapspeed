@@ -4,14 +4,14 @@ export default class {
     map
     store
     points = []
-    constructor(sid) {
+    constructor(sid, canvas) {
         this.store = useAppStore()
-        this.map = this.createMap(sid)
+        this.map = this.createMap(sid, canvas)
     }
 
-    createMap(sid) {
+    createMap(sid, canvas) {
         const sess = wialon.core.Session.getInstance()
-        const map = L.map('map', { zoomControl: false }).setView([42.2628699, 63.891215], 12)
+        const map = L.map(canvas, { zoomControl: false }).setView([42.2628699, 63.891215], 12)
 
         L.TileLayer.WebGis = L.TileLayer.extend({
             initialize: function (url, options) {

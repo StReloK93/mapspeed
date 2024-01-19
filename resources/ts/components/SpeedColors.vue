@@ -6,9 +6,6 @@
                 {{ speed.speed }}
             </span>
         </main>
-        <!-- <span class="bg-white px-3 ml-4">
-            Malumot va takliflar uchun :<span class="font-semibold">597-22-44</span> 
-        </span> -->
     </div>
 </template>
 

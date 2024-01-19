@@ -4,7 +4,6 @@
         <Info />
         <main class="h-full w-full relative rounded-xl overflow-hidden flex">
             <SpeedColors />
-            <!-- <Charts /> -->
             <Map :UIData="UIData" />
             <MenuRight :UIData="UIData" />
         </main>
@@ -15,20 +14,13 @@
 import MenuRight from './MenuRight.vue'
 import SpeedColors from './SpeedColors.vue'
 import Info from './Info.vue'
-import Charts from './Charts.vue'
 import PreLoader from './PreLoader.vue'
 import Map from './Map.vue'
 import Wialon from '@/modules/Wialon'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive } from 'vue'
 
 
-// axios.get('api/tracks').then(({data}) => {
-//     console.log(data)
-// })
-//     .catch((error) => {
-//     console.log(error)
-    
-// })
+
 const UIData = reactive({
     groups: [],
     active: null,

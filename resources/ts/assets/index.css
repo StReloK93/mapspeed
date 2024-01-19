@@ -5,8 +5,9 @@
 @tailwind utilities;
 
 .btn-line {
-    @apply  border-2 border-[#14284a]  rounded-full w-14 h-14 text-[#14284a] text-xs;
+    @apply  border border-[#14284a]  rounded-full w-14 h-14 text-[#14284a] text-xs;
 }
+
 
 .loader {
     position: relative;
@@ -63,6 +64,7 @@
     @apply after:content-[""] after:absolute after:left-0  after:-top-px after:w-5 after:border-b-2;
 }
 
+
 .leaflet-top,
 .leaflet-bottom {
     display: none;
@@ -108,4 +110,25 @@
     60% {
         top: -3px;
     }
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -25,10 +25,12 @@ class Point extends Model
     ];
 
     protected $casts = [
-        'x' => 'float',
-        'y' => 'float',
-        'speed' => 'integer',
-        'row' => 'integer',
-        'column' => 'integer',
+        'average_speed' =>  'float'
+        // 'x' => 'float',
+        // 'y' => 'float',
+        // 'objectid' => 'integer',
+        // 'speed' => 'integer',
+        // 'row' => 'integer',
+        // 'column' => 'integer',
     ];
 }
