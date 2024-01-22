@@ -1,59 +1,7 @@
 <template>
     <section class="w-80 bg-slate-900 h-full px-3 relative">
-        <Transports :UIData="UIData" />
-        <!-- <main>
-            <p>Oldingi necha kun bilan berilgan muddatni solishtirsin</p>
-            <select v-model="appStore.oldDays" class="text-gray-700 w-full">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-            </select>
-            <p>Berilgan muddatdan nechi soat oldin</p>
-            <select v-model="appStore.hourPeriod" class="text-gray-700 w-full">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-            </select>
-            <p>Tezlik farqi</p>
-            <select v-model="appStore.speedRange" class="text-gray-700 w-full">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-            </select>
-            <p>
-                Boshlangich vaqt
-            </p>
-            <input type="datetime-local" v-model="appStore.selectedTime" class="text-gray-700 w-full">
-        </main> -->
-        <PointsList :custom-wialon="UIData.customWialon" class="px-3 -mx-3" />
+        <Transports />
+        <PointsList :custom-wialon="appStore.UIData.customWialon" class="px-3 -mx-3" />
     </section>
 </template>
 
@@ -61,7 +9,5 @@
 import Transports from './Transports.vue'
 import PointsList from './PointsList.vue'
 import { useAppStore } from '@/store/useAppStore'
-const { UIData } = defineProps(['UIData'])
-
 const appStore = useAppStore()
 </script>

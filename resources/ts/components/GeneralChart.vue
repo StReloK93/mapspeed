@@ -1,7 +1,7 @@
 <template>
     <nav page class="w-full h-full flex">
         <header class="flex-grow relative">
-            <div ref="chartdiv" class="h-full w-full border "></div>
+            <div ref="chartdiv" class="h-full w-full border"></div>
             <PreLoader :loading="pageData.loading" />
         </header>
         <section class="w-64 flex items-center flex-col">

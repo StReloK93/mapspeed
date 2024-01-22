@@ -10,12 +10,12 @@ export default class {
     to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
     session = wialon.core.Session.getInstance()
 
-    constructor(sid, UIData, canvas) {
+    constructor(sid, canvas) {
         this.store = useAppStore()
-        this.initWialon(UIData, sid, canvas)
+        this.initWialon( sid, canvas)
     }
 
-    async initWialon(UIData, sid, canvas) {
+    async initWialon(sid, canvas) {
         
         this.leafMap = new Leaflet(sid, canvas)
         this.map = this.leafMap.map
@@ -29,28 +29,29 @@ export default class {
             else if(onlyNumber == "90") name = "90 tn"
             else if(onlyNumber == "91") name = "Komatsu"
             else if (onlyNumber == "92") name = "CAT"
-            UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
+            this.store.UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
         })
-        this.selectUnit(groups[0].getId(), UIData)
+        this.store.withLoading(() => this.selectUnit(groups[0].getId()))
+        
     }
 
-    async selectUnit(unitId, UIData) {
-        UIData.loading = true
+    async selectUnit(unitId) {
         this.leafMap.removeCubics()
-        this.map.setView([42.2628699, 63.891215], 13);
-        const select = UIData.groups.find((group) => group.id == unitId)
-        await this.executeReport(unitId, UIData)
-        await axios.post('/api/tracks/show', {
+
+        this.map.setView([42.2628699, 63.891215], 13)
+
+        const select = this.store.UIData.groups.find((group) => group.id == unitId)
+
+        this.executeReport(unitId)
+        const { data: points } = await axios.post('/api/tracks/show', {
             index: select.number,
             oldDays: this.store.oldDays,
             hourPeriod: this.store.hourPeriod,
             speedRange: this.store.speedRange,
             selectedTime: moment(this.store.time.value).format('YYYY-MM-DD HH:mm'),
-        }).then(({ data: points }) => {
-            this.leafMap.drawCubics(points)
         })
 
-        UIData.loading = false
+        this.leafMap.drawCubics(points)
     }
 
     async initReports() {
@@ -77,10 +78,10 @@ export default class {
         })
     }
 
-    public async executeReport(group_id, UIData) { // execute selected report
-        if (UIData.active == group_id) return
+    public async executeReport(group_id) { // execute selected report
+        if (this.store.UIData.active == group_id) return
 
-        UIData.active = group_id
+        this.store.UIData.active = group_id
         var renderer = this.session.getRenderer()
         var report = this.session.getItems("avl_resource")[0]
         var template = report.getReports()

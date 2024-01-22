@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-
 const speeds = [
     { speed: '0',  color: 'bg-[#f80000]', text: 'text-[#f80000]' , border: 'after:border-[#f80000]' },
     { speed: '5',  color: 'bg-[#f86000]', text: 'text-[#f86000]' , border: 'after:border-[#f86000]' },

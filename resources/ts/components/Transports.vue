@@ -1,21 +1,26 @@
 <template>
-    <main v-if="UIData.customWialon" class="flex gap-1.5 flex-wrap flex-col absolute top-1/2 -translate-y-1/2 -left-16">
+    <main class="flex gap-1.5 flex-wrap flex-col absolute top-1/2 -translate-y-1/2 -left-16">
         <button 
-            v-for="button in UIData.groups"
-            :class="{ '!bg-slate-900 !text-white': button.id == UIData.active }"
-            @click="UIData.customWialon.selectUnit(button.id, UIData)"
+            v-for="button in appStore.UIData.groups"
+            :class="{ '!bg-slate-900 !text-white': button.id == appStore.UIData.active }"
+            @click="selectUnit(button.id)"
             class="btn-line"
         >
             {{ button.name }}
         </button>
-        <button @click="" class="btn-line">
+        <button
+            :class="{ '!bg-slate-900 !text-white': appStore.openControl }"
+            @click="appStore.openControl = true" class="btn-line">
             <i class="fa-duotone fa-gear text-xl"></i>
         </button>
     </main>
 </template>
 
 <script setup lang="ts">
-// 91 komatsu
-// 92 Cat
-defineProps(['UIData'])
+import { useAppStore } from '@/store/useAppStore'
+const appStore = useAppStore()
+
+function selectUnit(id) {
+    appStore.withLoading(() => appStore.UIData.customWialon.selectUnit(id))
+}
 </script>
