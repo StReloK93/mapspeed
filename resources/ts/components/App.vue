@@ -1,6 +1,6 @@
 <template>
     <section class="p-1.5 h-screen">
-        <PreLoader />
+        <PreLoader :loading="appStore.UIData.loading" />
         <Info />
         <main class="h-full w-full relative rounded-xl overflow-hidden flex">
             <SpeedColors />
@@ -16,4 +16,6 @@ import SpeedColors from './SpeedColors.vue'
 import Info from './Info.vue'
 import PreLoader from './PreLoader.vue'
 import WialonMap from './Map.vue'
+import { useAppStore } from '@/store/useAppStore'
+const appStore = useAppStore()
 </script>

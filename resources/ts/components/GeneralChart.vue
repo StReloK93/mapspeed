@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import moment from '@/modules/Moment'
-import { formatDate, daysAgo, splitDayNightShifts, middleSpeed, chunkArray } from '@/modules/TimezoneDate'
+import { formatDate, daysAgo, splitDayNightShifts } from '@/modules/TimezoneDate'
 // @ts-ignore
 import Highcharts from 'highcharts'
 import PreLoader from './PreLoader.vue'

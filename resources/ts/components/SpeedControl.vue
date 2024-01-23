@@ -39,7 +39,7 @@
                             <nav class="absolute right-[16px] -bottom-[11px] flex flex-col items-center">
                                 <i class="fa-solid fa-pipe text-2xl"></i>
                                 <span class="relative -top-1">
-                                    A  <span class="text-xs text-gray-400">Vaqt</span>
+                                    A <span class="text-xs text-gray-400">Vaqt</span>
                                 </span>
                             </nav>
                         </div>
@@ -88,32 +88,32 @@
                             </select>
                         </aside>
                     </main>
+                
+                    
                     <main class="w-1/2 pl-2">
                         <h3 class="text-center text-[17px] font-semibold mb-3">Funksiyaning ishlash prinsipi haqida</h3>
                         <p class="text-gray-500 text-sm w-full">
-                            Karyer 50x50 setkalarga bo'lingan. Formulada har bir katak uchun 
+                            Kon hududi xaritada 50x50m o'lchamdagi kataklarga bo'lingan.
+                            Har bir katak uchun tanlangan
                             <i class="fa-light fa-bracket-round"></i>
-                                <span class="text-base text-gray-700 font-semibold">A</span>
+                            <span class="text-base text-gray-700 font-semibold">A</span>
                             <i class="fa-light fa-bracket-round-right"></i>
-                            tanlangan vaqtdan boshlab belgilangan
+                            vaqtdan boshlab, belgilangan
                             <i class="fa-light fa-bracket-round"></i>
-                                <span class="text-base text-gray-700 font-semibold">B</span>
+                            <span class="text-base text-gray-700 font-semibold">B</span>
                             <i class="fa-light fa-bracket-round-right"></i>
-                            soat oldingi vaqt oralig'idagi avtoa'gdargichlarni o'rtacha tezligini hisoblaydi va
-                            undan olgingi 
+                            soat oldingi vaqt oralig'ida avtoa'gdargichlarning o'rtacha tezligini hisoblaydi
+                            va undan olgingi 
                             <i class="fa-light fa-bracket-round"></i>
-                                <span class="text-base text-gray-700 font-semibold">C</span>
+                            <span class="text-base text-gray-700 font-semibold">C</span>
                             <i class="fa-light fa-bracket-round-right"></i>
-                            kun ichidagi avtoa'gdargichlarni o'rtacha tezligini
-                            solishtiradi.
-                            Agar <b>C</b> kun va <b>B</b> soat ichidagi o'rtacha tezliklarni farqi <b>D</b> ga teng yoki katta bo'lsa usha kataklarni
-                            bizga topib beradi
+                            kun ichidagi avtoa'gdargichlarning o'rtacha tezligini hisoblab solishtiriladi.
+                            Solishtirilgan o'rtacha tezliklar farqi <b>D</b> ga teng yoki undan katta bo'lgan kataklar aniqlab beriladi.
                         </p>
                     </main>
                 </div>
                 <div class="w-full text-right">
-                    <button
-                        @click="append"
+                    <button @click="append"
                         class="bg-slate-900 text-white px-4 py-1.5 rounded-sm shadow active:bg-slate-70 hover:bg-slate-800 active:shadow-none">
                         <i class="fa-light fa-rotate-right mr-3"></i>
                         Yangilash
@@ -137,7 +137,7 @@ const formData = reactive({
 })
 
 function append() {
-    if(appStore.openControl == false) return
+    if (appStore.openControl == false) return
     appStore.oldDays = formData.oldDays
     appStore.hourPeriod = formData.hourPeriod
     appStore.selectedTime = formData.selectedTime
