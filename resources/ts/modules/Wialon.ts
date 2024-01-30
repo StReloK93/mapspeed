@@ -83,7 +83,9 @@ export default class {
 
         this.store.UIData.active = group_id
         var renderer = this.session.getRenderer()
-        var report = this.session.getItems("avl_resource")[0]
+        var report = this.session.getItems("avl_resource").find((item) => item._id == 9779)
+        // console.log(this.session.getItems("avl_resource"));
+        
         var template = report.getReports()
 
 
