@@ -24,7 +24,7 @@ const appStore = useAppStore()
 
 
 onMounted(async () => {
-    const token = "94e3f3e1ac97def632645f3655f7c9320F482674258FFE1B89D5296855D502E753290349"
+    const token = "94e3f3e1ac97def632645f3655f7c9325FBF8B37B9070360D58D2FC728179D2C5ABA96B9"
     wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz")
     wialon.core.Session.getInstance().loginToken(token, "", (code) => {
         if (code) return

@@ -17,8 +17,8 @@ const speeds = [
     { speed: '15', color: 'bg-[#60f880]', text: 'text-[#60f880]' , border: 'after:border-[#60f880]' },
     { speed: '20', color: 'bg-[#10c050]', text: 'text-[#10c050]' , border: 'after:border-[#10c050]' },
     { speed: '25', color: 'bg-[#187830]', text: 'text-[#187830]' , border: 'after:border-[#187830]' },
-    { speed: '30', color: 'bg-[#009830]', text: 'text-[#009830]' , border: 'after:border-[#009830]' },
-    { speed: '35', color: 'bg-[#0060c8]', text: 'text-[#0060c8]' , border: 'after:border-[#0060c8]' },
-    { speed: '40', color: 'bg-[#0000f8]', text: 'text-[#0000f8]' , border: 'after:border-[#0000f8]' },
+    { speed: '30', color: 'bg-[#0060c8]', text: 'text-[#0060c8]' , border: 'after:border-[#0060c8]' },
+    { speed: '35', color: 'bg-[#0000f8]', text: 'text-[#0000f8]' , border: 'after:border-[#0000f8]' },
+    { speed: '40', color: 'bg-[#111]', text: 'text-[#111]' , border: 'after:border-[#111]' },
 ]
 </script>
