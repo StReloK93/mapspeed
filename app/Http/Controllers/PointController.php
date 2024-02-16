@@ -5,17 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Point;
 use App\Models\Geozone;
-use App\Services\WialonService;
 use DB;
 
 class PointController extends Controller
 {
-
-    protected $wialon;
-    function __construct(WialonService $wialon)
-    {
-        $this->wialon = $wialon;
-    }
 
     // ttracks
     public function index(Request $request)
