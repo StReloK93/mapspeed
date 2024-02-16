@@ -4,12 +4,13 @@ export default class {
     map
     store
     points = []
-    constructor(sid, canvas) {
+    constructor(canvas) {
         this.store = useAppStore()
-        this.map = this.createMap(sid, canvas)
+        this.map = this.createMap(canvas)
     }
 
-    createMap(sid, canvas) {
+    createMap(canvas) {
+        const sid = wialon.core.Session.getInstance().getId()
         const sess = wialon.core.Session.getInstance()
         const map = L.map(canvas, { zoomControl: false }).setView([42.2628699, 63.891215], 12)
 
@@ -29,7 +30,7 @@ export default class {
         function getTile(tilePoint) {
             return L.Util.template(this._url, L.extend({
                 s: this._getSubdomain(tilePoint),
-                z: 17 - this._map._zoom,
+                z: 17 - tilePoint.z,
                 x: tilePoint.x,
                 y: tilePoint.y
             }, this.options));

@@ -4,7 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Storage;
+use App\Services\WialonService;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,12 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        Storage::put('kimchinin.txt', date('Y-m-d H:i:s',time()).'yangsi');
-        // $schedule->command('inspire')->hourly();
-        $schedule->call(function () {
-            Storage::put('kimchin.txt', 'Bu yangisi');
-        })->everyTwoMinutes();
-
+        $wialon = new WialonService();
+        $wialon->writeGeozonesToDB();
+        // $schedule->call(function () {
+        //     Storage::put('kimchin.txt', 'Bu yangisi');
+        // })->hourlyAt(32);
+        // $wialon->getGeozones();
     }
 
     /**

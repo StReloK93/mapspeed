@@ -7,7 +7,7 @@ export const useAppStore = defineStore('useAppStore', () => {
     const speedRange = ref(10)
     const selectedTime = ref(null)
     const openControl = ref(false)
-    const time = computed(() => {
+    const time:any = computed(() => {
         if (selectedTime.value == null) return new Date()
         else return selectedTime
     })

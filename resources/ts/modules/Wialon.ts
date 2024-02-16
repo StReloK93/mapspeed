@@ -1,191 +1,107 @@
-import Leaflet from "./Leaflet"
 import moment from 'moment'
 import { useAppStore } from "@/store/useAppStore"
 export default class {
-    Tlayer
+    layer
     map
-    leafMap
-    drawSquare
-    store
-    to = Math.round(new Date().getTime() / 1000); from = this.to - 3600 * 24 - 1
+    store = useAppStore()
     session = wialon.core.Session.getInstance()
-
-    constructor(sid, canvas) {
-        this.store = useAppStore()
-        this.initWialon( sid, canvas)
+    onSelectStart = null
+    onSelectEnd = null
+    onInit = null
+    constructor(map) {
+        this.map = map
+        this.initWialon()
     }
 
-    async initWialon(sid, canvas) {
-        
-        this.leafMap = new Leaflet(sid, canvas)
-        this.map = this.leafMap.map
+    async initWialon() {
         const groups: any = await this.initReports()
+        if (this.onInit) this.onInit(groups)
+    }
+
+    groupsUI(groups) {
         groups.forEach((group) => {
-            const onlyNumber = group.getName().replace(/\D/g, "")
-            var name
-
-            if (onlyNumber == "") name = "Barcha"
-            else if(onlyNumber == "55") name = "55 tn"
-            else if(onlyNumber == "90") name = "90 tn"
-            else if(onlyNumber == "91") name = "Komatsu"
-            else if (onlyNumber == "92") name = "CAT"
-            this.store.UIData.groups.push({ id: group.getId(), name: name, number: onlyNumber == "" ? 0 : onlyNumber })
-        })
-        this.store.withLoading(() => this.selectUnit(groups[0].getId()))
-        
-    }
-
-    async selectUnit(unitId) {
-        this.leafMap.removeCubics()
-
-        this.map.setView([42.2628699, 63.891215], 13)
-
-        const select = this.store.UIData.groups.find((group) => group.id == unitId)
-
-        this.executeReport(unitId)
-        const { data: points } = await axios.post('/api/tracks/show', {
-            index: select.number,
-            oldDays: this.store.oldDays,
-            hourPeriod: this.store.hourPeriod,
-            speedRange: this.store.speedRange,
-            selectedTime: moment(this.store.time.value).format('YYYY-MM-DD HH:mm'),
-        })
-
-        this.leafMap.drawCubics(points)
-    }
-
-    async initReports() {
-        const session = this.session
-        function update_renderer() {
-            var renderer = session.getRenderer()
-            if (this.Tlayer && this.Tlayer.setUrl) this.Tlayer.setUrl(this.getTiles(renderer))
-        }
-
-        return await new Promise(function (resolve, reject) {
-
-            var renderer = session.getRenderer()
-            session.loadLibrary("resourceReports")
-            renderer.addListener("changeVersion", update_renderer);
-            session.updateDataFlags([
-                { type: "type", data: "avl_resource", flags: wialon.item.Item.dataFlag.base | wialon.item.Resource.dataFlag.reports, mode: 0 },
-                { type: "type", data: "avl_unit", flags: wialon.item.Item.dataFlag.base | wialon.item.Unit.dataFlag.lastMessage, mode: 0 },
-                { type: "type", data: "avl_unit_group", flags: wialon.item.Item.dataFlag.base | wialon.item.Unit.dataFlag.lastMessage, mode: 0 }
-
-            ], (code) => {
-                var units = session.getItems("avl_unit_group")
-                resolve(units)
+            const groupGen = this.getGroupName(group)
+            this.store.UIData.groups.push({
+                id: group.getId(), name: groupGen.name,
+                number: groupGen.onlyNumber == "" ? 0 : groupGen.onlyNumber
             })
         })
     }
 
-    public async executeReport(group_id) { // execute selected report
-        if (this.store.UIData.active == group_id) return
+    async initReports() {
+        return await new Promise(function (resolve) {
+            const render = this.session.getRenderer()
+            render.addListener("changeVersion", () => {
+                if (this.layer?.setUrl) this.layer.setUrl(this.getTiles(this.session.getRenderer()))
+            })
+            this.session.loadLibrary("resourceReports")
+            this.session.updateDataFlags([
+                { type: "type", data: "avl_resource", flags: wialon.item.Item.dataFlag.base | wialon.item.Resource.dataFlag.reports, mode: 0 },
+                { type: "type", data: "avl_unit_group", flags: wialon.item.Item.dataFlag.base | wialon.item.Unit.dataFlag.lastMessage, mode: 0 }
 
-        this.store.UIData.active = group_id
+            ], () => resolve(this.session.getItems("avl_unit_group")))
+        }.bind(this))
+    }
+
+    public async executeReport(group_id, from, to) {
         var renderer = this.session.getRenderer()
-        var report = this.session.getItems("avl_resource").find((item) => item._id == 9779)
-        // console.log(this.session.getItems("avl_resource"));
+        var user = this.session.getItems("avl_resource").find((item) => item._id == 9779)
+        var template = user.getReports()
         
-        var template = report.getReports()
-
-
-        return await new Promise(function (resolve, reject) {
-
-            report.execReport(template[1], group_id, 0, { "from": this.from, "to": this.to, "flags": wialon.item.MReport.intervalFlag.absolute },
-                (code, layer) => {
-                    if (!layer) return
-                    if (!this.Tlayer) this.Tlayer = L.tileLayer(this.getTiles(renderer), { zoomReverse: true, zoomOffset: -1 }).addTo(this.map)
-                    else this.Tlayer.setUrl(this.getTiles(renderer))
+        return await new Promise(function (resolve) {
+            user.execReport(
+                template[1],
+                group_id, 0,
+                { "from": from, "to": to, "flags": wialon.item.MReport.intervalFlag.absolute },
+                () => {
+                    if (!this.layer) this.layer = L.tileLayer(this.getTiles(renderer), { zoomReverse: true, zoomOffset: -1 }).addTo(this.map)
+                    else this.layer.setUrl(this.getTiles(renderer))
                     resolve('magic')
                 }
             )
-
         }.bind(this))
 
     }
 
 
-    getTiles(renderer) {
-        return this.session.getBaseUrl() + "/adfurl" + renderer.getVersion() + "/avl_render/{x}_{y}_{z}/" + this.session.getId() + ".png"
+    async selectGroup(group_id) {
+        if (this.onSelectStart) this.onSelectStart()
+        
+        const select = this.store.UIData.groups.find((group) => group.id == group_id)
+        const to = moment().unix()
+        const from = to - 3600 * 24 - 1
+        
+        if (this.store.UIData.active == group_id) return
+        this.store.UIData.active = group_id
+        this.executeReport(group_id, from, to)
+        const { data: points } = await axios.post('/api/tracks/show', {
+            index: select.number,
+            oldDays: this.store.oldDays,
+            hourPeriod: this.store.hourPeriod,
+            speedRange: this.store.speedRange,
+            selectedTime: moment(this.store.time).format('YYYY-MM-DD HH:mm'),
+        })
+
+        if (this.onSelectEnd) this.onSelectEnd(points)
+    }
+
+    getTiles(render) {
+        const sess = this.session
+        return `${sess.getBaseUrl()}/adfurl${render.getVersion()}/avl_render/{x}_{y}_{z}/${sess.getId()}.png`
     }
 
 
+    getGroupName(group) {
+        const onlyNumber = group.getName().replace(/\D/g, "")
+        var name
+
+        if (onlyNumber == "") name = "Barcha"
+        else if (onlyNumber == "55") name = "55 tn"
+        else if (onlyNumber == "90") name = "90 tn"
+        else if (onlyNumber == "91") name = "Komatsu"
+        else if (onlyNumber == "92") name = "CAT"
+
+        return { onlyNumber, name }
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function delete_track (evt) {
-// 	const unit_id = evt
-// 	const sess = wialon.core.Session.getInstance()
-// 	const renderer = sess.getRenderer()
-// 	if (layers && layers[unit_id])
-// 	{
-// 		// delete layer from renderer
-// 		renderer.removeLayer(layers[unit_id], function(code) {
-// 			if (code)
-// 				msg(wialon.core.Errors.getErrorText(code)); // exit if error code
-// 			else
-// 				msg("Track removed."); // else send message, then ok
-// 		});
-// 		delete layers[unit_id]; // delete layer from container
-// 	}
-// 	// move marker behind bounds
-// 	if (map)
-// 		map.removeLayer(markers[unit_id]);
-// 	delete markers[unit_id];
-// }
-
-
-// export function show_track(unit_id, map) {
-//     var sess = wialon.core.Session.getInstance() // get instance of current Session
-//     var renderer = sess.getRenderer()
-
-//     var unit = sess.getItem(unit_id)
-//     if (document.getElementById(unit_id) || !unit || !unit.getPosition()) return
-
-//     // callback is performed, when messages are ready and layer is formed
-//     const callback = qx.lang.Function.bind((code, layer) => {
-//         if (layer) {
-//             var layer_bounds = layer.getBounds()
-//             if (layer_bounds.length != 4) return
-//             if (map) {
-//                 // const bounds = new L.LatLngBounds(
-//                 //     L.latLng(layer_bounds[0], layer_bounds[1]),
-//                 //     L.latLng(layer_bounds[2], layer_bounds[3])
-//                 // )
-//                 // map.fitBounds(bounds)
-//                 if (!Tlayer) Tlayer = L.tileLayer(getTiles(sess, renderer), { zoomReverse: true, zoomOffset: -1 }).addTo(map)
-//                 else Tlayer.setUrl(getTiles(sess, renderer))
-//             }
-//         }
-//     });
-//     // query params
-//     const params = {
-//         "layerName": "route_unit_" + unit_id, // layer name
-//         "itemId": unit_id, // ID of unit which messages will be requested
-//         "timeFrom": from, //interval beginning
-//         "timeTo": to, // interval end
-//         "tripDetector": 0, //use trip detector: 0 - no, 1 - yes
-//         "trackColor": '00ffaa', //track color in ARGB format (A - alpha channel or transparency level)
-//         "trackWidth": 2, // track line width in pixels
-//         "arrows": 0, //show course of movement arrows: 0 - no, 1 - yes
-//         "points": 0, // show points at places where messages were received: 0 - no, 1 - yes
-//         "pointColor": '00ffaa', // points color
-//         "annotations": 0 //show annotations for points: 0 - no, 1 - yes
-//     }
-//     renderer.createMessagesLayer(params, callback)
-// }

@@ -1,5 +1,5 @@
 <template>
-    <section class="w-80 bg-slate-900 h-full px-3 relative">
+    <section class="w-80 bg-slate-900 h-full px-3 relative z-10">
         <Transports />
         <PointsList :custom-wialon="appStore.UIData.customWialon" class="px-3 -mx-3" />
     </section>

@@ -28,5 +28,6 @@ Route::get('generate-tracks/{id}', [PointController::class, 'generate']);
 Route::get('get_tiles', [PointController::class, 'getTiles']);
 Route::get('get_report', [PointController::class, 'getReport']);
 Route::get('create_token', [PointController::class, 'createToken']);
+Route::get('get_geozones/{data}', [PointController::class, 'getGeozones']);
 
 
