@@ -43,7 +43,7 @@
 import moment from 'moment'
 import Wialon from '@/modules/Wialon'
 import Leaflet from '@/modules/Leaflet'
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref, reactive , toRaw } from 'vue'
 import PreLoader from '@/components/PreLoader.vue'
 const geozonemap = ref()
 
@@ -55,6 +55,8 @@ const pageData = reactive({
 	selected: null,
 	loading: false,
 })
+
+
 
 async function getGeozones(date) {
 	const { data: geozonesObj } = await axios.get(`api/get_geozones/${date}`)
@@ -78,34 +80,46 @@ function clearGeozonesInMap() {
 }
 
 function writeGeozonesToMap(index) {
+	const geozone = pageData.geozones[index]
+	createLines(geozone.dateTime)
+	
 	clearGeozonesInMap()
 	if (pageData.geozones.length == 0) return
 	pageData.selected = index
-	pageData.geozones[index].points.forEach((geozone) => {
-		const coords = geozone.points[0]
-		geozonesList.push(L.circle([coords.y, coords.x], {
-			radius: coords.r,
-			color: '#333',
-			weight: 3,
-			fillColor: "red",
-			fillOpacity: 0.5
-		}).addTo(pageData.leaflet.map))
+	geozone.points.forEach((geozone) => {
+		const popupContent = geozone.name;
+		const style = { color: '#333', weight: 3, fillColor: "red", fillOpacity: 0.5 }
+
+		if (geozone.points.length > 1) {
+			const points = geozone.points.map(item => [item.y, item.x])
+			const polygon = L.polygon(points, style).addTo(toRaw(pageData.leaflet.map))
+			polygon.bindTooltip(popupContent)
+			geozonesList.push(polygon)
+		}
+		else {
+			const points = geozone.points[0]
+			const circle = L.circle([points.y, points.x], {radius: points.r, ...style }).addTo(toRaw(pageData.leaflet.map))
+			circle.bindTooltip(popupContent)
+			geozonesList.push(circle)
+		}
 
 	})
 }
 
-async function createLines() {
-	const from = moment(`${pageData.currentDate} 00:00`).unix()
-	const to = moment(`${pageData.currentDate} 23:59`).unix()
+async function createLines(dateTime) {
+	pageData.loading = true
+	console.log(moment(dateTime).add( -1.5,'h'), moment(dateTime));
+	
+	const from = moment(dateTime).add( -1.5,'h').unix()
+	const to = moment(dateTime).unix()
 	await pageData.wialon.executeReport(7381, from, to)
+	pageData.loading = false
+
 }
 
 async function selectDay() {
-	pageData.loading = true
-	await createLines()
 	pageData.geozones = await getGeozones(pageData.currentDate)
 	writeGeozonesToMap(pageData.geozones.length - 1)
-	pageData.loading = false
 }
 
 onMounted(async () => {

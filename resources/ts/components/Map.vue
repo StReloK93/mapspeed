@@ -1,7 +1,7 @@
 <template>
     <section class="h-full flex-grow relative">
         <button @click="$emit('call')" class="absolute right-20 top-3 btn-line bg-white shadow-md !text-xl z-20">
-            <i class="fa-duotone fa-location-crosshairs"></i>
+            <i class="fa-solid fa-hexagon"></i>
         </button>
         <TransitionGroup>
             <Charts v-if="chartToggle" @close="chartToggle = false" />
