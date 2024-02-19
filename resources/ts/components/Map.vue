@@ -29,7 +29,10 @@ const appStore = useAppStore()
 
 onMounted(async () => {
     const leaflet = new Leaflet(map.value)
-    const wialon = appStore.UIData.customWialon = new Wialon(leaflet.map)
+    const wialon = new Wialon(leaflet.map)
+
+    appStore.UIData.wialon = wialon
+    appStore.UIData.map = leaflet
 
     wialon.onInit = (groups) => {
         if (groups.length == 0) return

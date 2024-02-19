@@ -4,7 +4,7 @@
 		<button @click="$emit('close')" class="absolute right-3 top-3 btn-line bg-white shadow-md !text-xl z-50">
 			<i class="fa-sharp fa-light fa-xmark"></i>
 		</button>
-		<div class="absolute bottom-[105px] left-0 p-2 w-full z-50">
+		<div class="absolute bottom-[105px] left-0 p-2 z-50">
 			<select class="px-4 py-1.5 rounded-full" v-model="pageData.currentDate" @change="selectDay()">
 				<option v-for="n in 11">
 					{{ moment().add(-(n - 1), 'd').format('YYYY-MM-DD') }}
@@ -108,8 +108,6 @@ function writeGeozonesToMap(index) {
 
 async function createLines(dateTime) {
 	pageData.loading = true
-	console.log(moment(dateTime).add( -1.5,'h'), moment(dateTime));
-	
 	const from = moment(dateTime).add( -1.5,'h').unix()
 	const to = moment(dateTime).unix()
 	await pageData.wialon.executeReport(7381, from, to)

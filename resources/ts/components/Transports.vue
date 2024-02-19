@@ -21,6 +21,6 @@ import { useAppStore } from '@/store/useAppStore'
 const appStore = useAppStore()
 
 function selectUnit(group_id) {
-    appStore.withLoading(() => appStore.UIData.customWialon.selectGroup(group_id))
+    appStore.withLoading(() => appStore.UIData.wialon.selectGroup(group_id))
 }
 </script>

@@ -16,7 +16,8 @@ export const useAppStore = defineStore('useAppStore', () => {
         groups: [],
         active: null,
         loading: false,
-        customWialon: null,
+        wialon: null,
+        map: null,
     })
     
 

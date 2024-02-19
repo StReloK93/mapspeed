@@ -143,7 +143,7 @@ function append() {
     appStore.selectedTime = formData.selectedTime
     appStore.speedRange = formData.speedRange
 
-    appStore.withLoading(() => appStore.UIData.customWialon.selectUnit(appStore.UIData.active))
+    appStore.withLoading(() => appStore.UIData.wialon.selectUnit(appStore.UIData.active))
     appStore.openControl = false
 }
 </script>

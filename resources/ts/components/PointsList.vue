@@ -7,7 +7,7 @@
         </h3>
         <main class="w-full flex-grow relative">
             <aside class="absolute inset-0 overflow-y-auto flex items-start flex-wrap gap-y-1.5 content-start">
-                <div @click="customWialon.leafMap.fixedToPoint(point.center, point.image)" v-for="(point) in appStore.points" class="w-1/3 px-1 cursor-pointer">
+                <div @click="map.fixedToPoint(point.center, point.image)" v-for="(point) in appStore.points" class="w-1/3 px-1 cursor-pointer">
                     <main 
                         :class="{'!bg-gray-100 !text-gray-700': point.active }"
                         class="w-full bg-white/10 text-gray-300 h-12 flex overflow-hidden hover:bg-gray-100 hover:text-gray-700"
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-const { customWialon } = defineProps(['customWialon'])
 import { useAppStore } from '@/store/useAppStore'
 const appStore = useAppStore()
+const map = appStore.UIData.map
 </script>
