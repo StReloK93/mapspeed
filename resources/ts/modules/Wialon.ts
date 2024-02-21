@@ -71,7 +71,7 @@ export default class {
         const to = moment().unix()
         const from = to - 3600 * 24 - 1
         
-        if (this.store.UIData.active == group_id) return
+        // if (this.store.UIData.active == group_id) return
         this.store.UIData.active = group_id
         this.executeReport(group_id, from, to)
         const { data: points } = await axios.post('/api/tracks/show', {
