@@ -78,7 +78,6 @@ class WialonService
             'svc' => 'resource/get_zone_data',
             'params' => json_encode([
                 'itemId' => $qaynarovId,
-                'col' => $qaynarovZonesGroup,
                 'flags' => 0,
             ])
         ]);
