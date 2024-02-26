@@ -37,7 +37,8 @@ onMounted(async () => {
     wialon.onInit = (groups) => {
         if (groups.length == 0) return
         wialon.groupsUI(groups)
-        appStore.withLoading(() => wialon.selectGroup(groups[0].getId()))
+        
+        appStore.withLoading(() => wialon.selectGroup(groups[1].getId()))
     }
 
     wialon.onSelectStart = () => {

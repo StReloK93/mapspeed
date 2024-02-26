@@ -19,8 +19,11 @@ export default class {
     }
 
     groupsUI(groups) {
+        
         groups.forEach((group) => {
+            if(group.getName().includes('Ekskavator')) return
             const groupGen = this.getGroupName(group)
+            
             this.store.UIData.groups.push({
                 id: group.getId(), name: groupGen.name,
                 number: groupGen.onlyNumber == "" ? 0 : groupGen.onlyNumber
@@ -93,13 +96,13 @@ export default class {
 
     getGroupName(group) {
         const onlyNumber = group.getName().replace(/\D/g, "")
-        var name
+        
 
-        if (onlyNumber == "") name = "Barcha"
-        else if (onlyNumber == "55") name = "55 tn"
-        else if (onlyNumber == "90") name = "90 tn"
-        else if (onlyNumber == "91") name = "Komatsu"
-        else if (onlyNumber == "92") name = "CAT"
+        if (onlyNumber == "") var name = "Barcha"
+        else if (onlyNumber == "55") var name = "55 tn"
+        else if (onlyNumber == "90") var name = "90 tn"
+        else if (onlyNumber == "91") var name = "Komatsu"
+        else if (onlyNumber == "92") var name = "CAT"
 
         return { onlyNumber, name }
     }
