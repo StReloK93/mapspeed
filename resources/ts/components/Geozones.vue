@@ -5,11 +5,7 @@
 			<i class="fa-sharp fa-light fa-xmark"></i>
 		</button>
 		<div class="absolute bottom-[105px] left-0 p-2 z-50">
-			<select class="px-4 py-1.5 rounded-full" v-model="pageData.currentDate" @change="selectDay()">
-				<option v-for="n in 11">
-					{{ moment().add(-(n - 1), 'd').format('YYYY-MM-DD') }}
-				</option>
-			</select>
+			<input type="date" v-model="pageData.currentDate" @change="selectDay()" class="px-4 py-1.5 rounded-full">
 		</div>
 		<aside class="absolute left-0 bottom-0  z-50 w-full p-2 ">
 			<main class="flex flex-wrap gap-1 justify-between px-6 items-center h-24 bg-white relative rounded-md shadow-md">
