@@ -8,12 +8,12 @@ use Http;
 class AuthWialon
 {
     private static $instance;
-    private $token = '94e3f3e1ac97def632645f3655f7c9325FBF8B37B9070360D58D2FC728179D2C5ABA96B9';
+    private $token;
     private $baseUrl = 'http://wl.ngmk.uz/wialon/ajax.html';
-
 
     function __construct()
     {
+        $this->token = env('WIALON_TOKEN');
         if (Session::get('eid') == null) $this->login();
     }
 
