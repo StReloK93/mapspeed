@@ -1,5 +1,5 @@
 <template>
-    <section class="absolute inset-0 p-8 z-50 bg-black/45 flex justify-center items-center">
+    <section class="absolute inset-0 p-8 z-50 bg-black/45 backdrop-blur-sm flex justify-center items-center">
         <main class="bg-white rounded shadow-md p-5 min-w-[992px] max-w-[992px] h-[550px] flex flex-col overflow-hidden">
             <header class="flex justify-between items-center -m-5 mb-0 px-2 bg-slate-900 text-white">
                 <div></div>

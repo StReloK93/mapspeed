@@ -7,13 +7,14 @@ export const useAppStore = defineStore('useAppStore', () => {
     const speedRange = ref(10)
     const selectedTime = ref(null)
     const openControl = ref(false)
+
+
     const time:any = computed(() => {
         if (selectedTime.value == null) return new Date()
         else return selectedTime
     })
 
     const UIData = reactive({
-        groups: [],
         active: null,
         loading: false,
         wialon: null,
@@ -21,11 +22,19 @@ export const useAppStore = defineStore('useAppStore', () => {
     })
     
 
+    const transport_groups = [
+        { id: SERVER_DATA.BASE_ALLCARS_ID, name: "Barcha" },
+        { id: SERVER_DATA.BASE_T55_ID, name: "55" },
+        { id: SERVER_DATA.BASE_T90_ID, name: "90" },
+        { id: SERVER_DATA.BASE_KOMATSU_ID, name: "Komatsu" }, /* '91' */
+        { id: SERVER_DATA.BASE_CAT_ID, name: "CAT"},  /* '92' */
+    ]
+
     async function withLoading(func:Function) {
         UIData.loading = true
         await func()
         UIData.loading = false
     }
 
-    return { points, oldDays, hourPeriod, speedRange, selectedTime , time, openControl, UIData, withLoading }
+    return { points, oldDays, hourPeriod, speedRange, selectedTime , time, openControl, UIData, withLoading, transport_groups }
 })

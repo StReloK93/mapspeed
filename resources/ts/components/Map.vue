@@ -1,12 +1,18 @@
 <template>
     <section class="h-full flex-grow relative">
-        <button @click="$emit('call')" class="absolute right-20 top-3 btn-line bg-white shadow-md !text-xl z-20">
-            <i class="fa-solid fa-hexagon"></i>
-        </button>
         <TransitionGroup>
             <Charts v-if="chartToggle" @close="chartToggle = false" />
             <SpeedControl v-if="appStore.openControl" />
+            <OffendersReportModal v-if="reportOffendersModal" :wialon="wialon" @close="reportOffendersModal = false" />
         </TransitionGroup>
+
+
+        <button @click="reportOffendersModal = true" class="absolute right-36 -translate-x-2 top-3 btn-line bg-white shadow-md !text-xl z-20">
+            <i class="fa-solid fa-hexagon-exclamation"></i>
+        </button>
+        <button @click="$emit('call')" class="absolute right-20 top-3 btn-line bg-white shadow-md !text-xl z-20">
+            <i class="fa-solid fa-hexagon"></i>
+        </button>
         <button @click="chartToggle = true" class="absolute right-2 top-3 btn-line bg-white shadow-md !text-xl z-10">
             <i class="fa-regular fa-chart-mixed"></i>
         </button>
@@ -15,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+import OffendersReportModal from '@/components/OffendersReportModal.vue'
 import Charts from './Charts.vue'
 import SpeedControl from './SpeedControl.vue'
 import Wialon from '@/modules/Wialon'
@@ -24,28 +31,26 @@ import { onMounted, ref } from 'vue'
 const chartToggle = ref(false)
 const map = ref()
 const appStore = useAppStore()
+const reportOffendersModal = ref(false)
 
-
+const wialon = ref(null)
 
 onMounted(async () => {
     const leaflet = new Leaflet(map.value)
-    const wialon = new Wialon(leaflet.map)
+    wialon.value = new Wialon(leaflet.map)
 
     appStore.UIData.wialon = wialon
     appStore.UIData.map = leaflet
-
-    wialon.onInit = (groups) => {
-        if (groups.length == 0) return
-        wialon.groupsUI(groups)
-        
-        appStore.withLoading(() => wialon.selectGroup(groups[1].getId()))
+    
+    wialon.value.onInit = () => {
+        appStore.withLoading(() => wialon.value.selectGroup(appStore.transport_groups[0]))
     }
 
-    wialon.onSelectStart = () => {
+    wialon.value.onSelectStart = () => {
         leaflet.removeCubics()
         leaflet.map.setView([42.2628699, 63.891215], 13)
     }
 
-    wialon.onSelectEnd = (points) => leaflet.drawCubics(points)
+    wialon.value.onSelectEnd = (points) => leaflet.drawCubics(points)
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <main class="flex -mx-0.5 flex-col h-full">
+    <main class="flex flex-col h-full px-3 -mx-3">
         <h3 class="text-indigo-100 py-2 text-center">
             <i class="fa-solid fa-circle-small scale-50"></i>
             Tezlik tushgan nuqtalar
@@ -7,7 +7,7 @@
         </h3>
         <main class="w-full flex-grow relative">
             <aside class="absolute inset-0 overflow-y-auto flex items-start flex-wrap gap-y-1.5 content-start">
-                <div @click="map.fixedToPoint(point.center, point.image)" v-for="(point) in appStore.points" class="w-1/3 px-1 cursor-pointer">
+                <div @click="appStore.UIData.map.fixedToPoint(point.center, point.image)" v-for="(point) in appStore.points" class="w-1/3 px-1 cursor-pointer">
                     <main 
                         :class="{'!bg-gray-100 !text-gray-700': point.active }"
                         class="w-full bg-white/10 text-gray-300 h-12 flex overflow-hidden hover:bg-gray-100 hover:text-gray-700"
@@ -33,5 +33,4 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/useAppStore'
 const appStore = useAppStore()
-const map = appStore.UIData.map
 </script>

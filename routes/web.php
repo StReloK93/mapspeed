@@ -13,5 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/{path}', function () {
-    return view('app');
+    return view('app', [
+        'wialon_token' => env('WIALON_TOKEN'),
+        'BASE_T55_ID' => env('BASE_T55_ID'),
+        'BASE_T90_ID' => env('BASE_T90_ID'),
+        'BASE_KOMATSU_ID' => env('BASE_KOMATSU_ID'),
+        'BASE_CAT_ID' => env('BASE_CAT_ID'),
+        'BASE_ALLCARS_ID' => env('BASE_ALLCARS_ID'),
+    ]);
 })->where('path', '.*');

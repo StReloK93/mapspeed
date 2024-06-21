@@ -6,4 +6,5 @@ declare global {
     var wialon: any;
     var L: any
     var qx: any
+    var SERVER_DATA: any
 }

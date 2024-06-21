@@ -26,8 +26,7 @@ class PointController extends Controller
     }
     public function show(Request $request)
     {
-
-        if ($request->index == 0) {
+        if ($request->index == "7381") {
             return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
                 $request->oldDays,
                 $request->hourPeriod,

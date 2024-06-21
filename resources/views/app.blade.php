@@ -15,4 +15,14 @@
     <section id="app"></section>
     @vite('resources/ts/app.ts')
 </body>
+<script>
+    const SERVER_DATA = {
+        wialon_token: "{{ $wialon_token }}",
+        BASE_T55_ID: "{{ $BASE_T55_ID }}",
+        BASE_T90_ID: "{{ $BASE_T90_ID }}",
+        BASE_KOMATSU_ID: "{{ $BASE_KOMATSU_ID }}",
+        BASE_CAT_ID: "{{ $BASE_CAT_ID }}",
+        BASE_ALLCARS_ID: "{{ $BASE_ALLCARS_ID }}",
+    }
+</script>
 </html>

@@ -1,16 +1,12 @@
 <template>
     <main class="flex gap-1.5 flex-wrap flex-col absolute top-1/2 -translate-y-1/2 -left-16">
-        <button 
-            v-for="button in appStore.UIData.groups"
-            :class="{ '!bg-slate-900 !text-white': button.id == appStore.UIData.active }"
-            @click="selectUnit(button.id)"
-            class="btn-line"
-        >
-            {{ button.name }}
+        <button v-for="group in appStore.transport_groups"
+            :class="{ '!bg-slate-900 !text-white': group.id == appStore.UIData.active }" @click="selectUnit(group)"
+            class="btn-line">
+            {{ group.name }}
         </button>
-        <button
-            :class="{ '!bg-slate-900 !text-white': appStore.openControl }"
-            @click="appStore.openControl = true" class="btn-line">
+        <button :class="{ '!bg-slate-900 !text-white': appStore.openControl }" @click="appStore.openControl = true"
+            class="btn-line">
             <i class="fa-duotone fa-gear text-xl"></i>
         </button>
     </main>
@@ -20,7 +16,7 @@
 import { useAppStore } from '@/store/useAppStore'
 const appStore = useAppStore()
 
-function selectUnit(group_id) {
-    appStore.withLoading(() => appStore.UIData.wialon.selectGroup(group_id))
+function selectUnit(group) {
+    appStore.withLoading(() => appStore.UIData.wialon.selectGroup(group))
 }
 </script>
