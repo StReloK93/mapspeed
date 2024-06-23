@@ -62,6 +62,7 @@ export default class {
     }
 
     public async offerdersReport(group_id, from, to) {
+        
         const qaynarov = this.session.getItems("avl_resource")[0];
         const reports = qaynarov.getReports();
         
@@ -71,8 +72,8 @@ export default class {
                 group_id,
                 0,
                 {
-                    from: from,
-                    to: to,
+                    from: moment(from).unix(),
+                    to: moment(to).unix(),
                     flags: wialon.item.MReport.intervalFlag.absolute,
                 },
                 async (error, report) => {
@@ -92,8 +93,12 @@ export default class {
                                     if (error) {
                                         return reject(error);
                                     }
-                                    
-                                    allrows = allrows.concat(column);
+
+                                    const array = column.map((row) => {
+                                        return {transport: row.c[1], qoida: row.c[2].t, batafsil:row.c[4].t, manzil: row.c[5].t  }
+                                    })
+
+                                    allrows = allrows.concat(array);
                                     resolve('good');
                                 }
                             );
@@ -149,16 +154,16 @@ export default class {
 
         if (this.store.UIData.active == group.id) return;
         this.store.UIData.active = group.id;
-        await this.executeReport(group.id, from, to);
-        const { data: points } = await axios.post("/api/tracks/show", {
-            index: group.id,
-            oldDays: this.store.oldDays,
-            hourPeriod: this.store.hourPeriod,
-            speedRange: this.store.speedRange,
-            selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
-        });
+        // await this.executeReport(group.id, from, to);
+        // const { data: points } = await axios.post("/api/tracks/show", {
+        //     index: group.id,
+        //     oldDays: this.store.oldDays,
+        //     hourPeriod: this.store.hourPeriod,
+        //     speedRange: this.store.speedRange,
+        //     selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
+        // });
 
-        if (this.onSelectEnd) this.onSelectEnd(points);
+        // if (this.onSelectEnd) this.onSelectEnd(points);
     }
 
     getTiles(render) {

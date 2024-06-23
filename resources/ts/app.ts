@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import App from '@/components/App.vue'
 import '@/assets/index.css'
 import 'v-calendar/style.css'
+import 'devextreme/dist/css/dx.material.teal.light.compact.css'
 import { createPinia } from 'pinia'
 
 wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz")
