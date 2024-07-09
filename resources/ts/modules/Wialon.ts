@@ -55,6 +55,8 @@ export default class {
                     ],
                     () => {
                         resolve(this.session.getItems("avl_unit_group"));
+                        const qaynarov = this.session.getItems("avl_resource")[0];
+                        console.log(qaynarov);
                     }
                 );
             }.bind(this)
@@ -64,6 +66,7 @@ export default class {
     public async offerdersReport(group_id, from, to) {
         
         const qaynarov = this.session.getItems("avl_resource")[0];
+        
         const reports = qaynarov.getReports();
         
         return await new Promise((resolve) => {
@@ -114,6 +117,31 @@ export default class {
         });
     }
 
+
+    public async greyderReport(from, to) {
+        const qaynarov = this.session.getItems("avl_resource")[0];
+        const reports = qaynarov.getReports();
+        return await new Promise((resolve) => {
+            qaynarov.execReport(
+                reports[60],
+                10259,
+                0,
+                {from: from,to: to,flags: wialon.item.MReport.intervalFlag.absolute},
+                async () => {
+                    var renderer = this.session.getRenderer();
+                    if (!this.layer)
+                        this.layer = L.tileLayer(this.getTiles(renderer), {
+                            zoomReverse: true,
+                            zoomOffset: -1,
+                        }).addTo(this.map);
+                    else this.layer.setUrl(this.getTiles(renderer));
+                    resolve("magic");
+                }
+            );
+        });
+    }
+
+
     public async executeReport(group_id, from, to) {
         var user = this.session
             .getItems("avl_resource")
@@ -152,18 +180,17 @@ export default class {
         const to = moment().unix();
         const from = to - 3600 * 24 - 1;
 
-        if (this.store.UIData.active == group.id) return;
         this.store.UIData.active = group.id;
         await this.executeReport(group.id, from, to);
-        const { data: points } = await axios.post("/api/tracks/show", {
-            index: group.id,
-            oldDays: this.store.oldDays,
-            hourPeriod: this.store.hourPeriod,
-            speedRange: this.store.speedRange,
-            selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
-        });
+        // const { data: points } = await axios.post("/api/tracks/show", {
+        //     index: group.id,
+        //     oldDays: this.store.oldDays,
+        //     hourPeriod: this.store.hourPeriod,
+        //     speedRange: this.store.speedRange,
+        //     selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
+        // });
 
-        if (this.onSelectEnd) this.onSelectEnd(points);
+        // if (this.onSelectEnd) this.onSelectEnd(points);
     }
 
     getTiles(render) {

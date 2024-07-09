@@ -1,4 +1,10 @@
 {
+  "_Leaflet-a35bc9b0.js": {
+    "file": "assets/Leaflet-a35bc9b0.js",
+    "imports": [
+      "resources/ts/app.ts"
+    ]
+  },
   "node_modules/devextreme/dist/css/fonts/Roboto-300.ttf": {
     "file": "assets/Roboto-300-a6d343d4.ttf",
     "src": "node_modules/devextreme/dist/css/fonts/Roboto-300.ttf"
@@ -60,7 +66,7 @@
     "src": "node_modules/devextreme/dist/css/icons/dxiconsmaterial.woff2"
   },
   "resources/ts/app.css": {
-    "file": "assets/app-87cec962.css",
+    "file": "assets/app-d0f08601.css",
     "src": "resources/ts/app.css"
   },
   "resources/ts/app.ts": {
@@ -82,10 +88,42 @@
       "assets/dxiconsmaterial-555d0578.ttf"
     ],
     "css": [
-      "assets/app-87cec962.css"
+      "assets/app-d0f08601.css"
     ],
-    "file": "assets/app-7f1e9db8.js",
+    "dynamicImports": [
+      "resources/ts/pages/HomePage.vue",
+      "resources/ts/pages/GeozonesPage.vue",
+      "resources/ts/pages/GreydersPage.vue"
+    ],
+    "file": "assets/app-76b5f029.js",
     "isEntry": true,
     "src": "resources/ts/app.ts"
+  },
+  "resources/ts/pages/GeozonesPage.vue": {
+    "file": "assets/GeozonesPage-dd963923.js",
+    "imports": [
+      "resources/ts/app.ts",
+      "_Leaflet-a35bc9b0.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/GeozonesPage.vue"
+  },
+  "resources/ts/pages/GreydersPage.vue": {
+    "file": "assets/GreydersPage-d8b8e8e2.js",
+    "imports": [
+      "resources/ts/app.ts",
+      "_Leaflet-a35bc9b0.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/GreydersPage.vue"
+  },
+  "resources/ts/pages/HomePage.vue": {
+    "file": "assets/HomePage-b4f0a823.js",
+    "imports": [
+      "_Leaflet-a35bc9b0.js",
+      "resources/ts/app.ts"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/HomePage.vue"
   }
 }
