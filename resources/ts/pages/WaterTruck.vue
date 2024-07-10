@@ -16,7 +16,7 @@
 import moment from 'moment'
 import Wialon from '@/modules/Wialon'
 import Leaflet from '@/modules/Leaflet'
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref, reactive, onUnmounted } from 'vue'
 import PreLoader from '@/components/PreLoader.vue'
 const geozonemap = ref()
 
@@ -30,7 +30,7 @@ const pageData = reactive({
 })
 
 
-setInterval(() => {
+const interval = setInterval(() => {
    createLines(pageData.currentDate)
 },10000)
 
@@ -54,5 +54,9 @@ onMounted(async () => {
 	pageData.wialon = new Wialon(pageData.leaflet.map)
 	pageData.wialon.onInit = () => selectDay()
 
+})
+
+onUnmounted(() => {
+   clearInterval(interval)
 })
 </script>
