@@ -1,6 +1,6 @@
 {
-  "_Leaflet-9a1f6bbd.js": {
-    "file": "assets/Leaflet-9a1f6bbd.js",
+  "_Leaflet-604483e5.js": {
+    "file": "assets/Leaflet-604483e5.js",
     "imports": [
       "resources/ts/app.ts"
     ]
@@ -66,7 +66,7 @@
     "src": "node_modules/devextreme/dist/css/icons/dxiconsmaterial.woff2"
   },
   "resources/ts/app.css": {
-    "file": "assets/app-d0f08601.css",
+    "file": "assets/app-aca9a4ee.css",
     "src": "resources/ts/app.css"
   },
   "resources/ts/app.ts": {
@@ -88,42 +88,52 @@
       "assets/dxiconsmaterial-555d0578.ttf"
     ],
     "css": [
-      "assets/app-d0f08601.css"
+      "assets/app-aca9a4ee.css"
     ],
     "dynamicImports": [
       "resources/ts/pages/HomePage.vue",
       "resources/ts/pages/GeozonesPage.vue",
-      "resources/ts/pages/GreydersPage.vue"
+      "resources/ts/pages/GreydersPage.vue",
+      "resources/ts/pages/WaterTruck.vue"
     ],
-    "file": "assets/app-4e4c38d2.js",
+    "file": "assets/app-97b8b5fb.js",
     "isEntry": true,
     "src": "resources/ts/app.ts"
   },
   "resources/ts/pages/GeozonesPage.vue": {
-    "file": "assets/GeozonesPage-58ed8512.js",
+    "file": "assets/GeozonesPage-ec3bb7b3.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Leaflet-9a1f6bbd.js"
+      "_Leaflet-604483e5.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GeozonesPage.vue"
   },
   "resources/ts/pages/GreydersPage.vue": {
-    "file": "assets/GreydersPage-c4db3299.js",
+    "file": "assets/GreydersPage-880e4654.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Leaflet-9a1f6bbd.js"
+      "_Leaflet-604483e5.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GreydersPage.vue"
   },
   "resources/ts/pages/HomePage.vue": {
-    "file": "assets/HomePage-2e0eee91.js",
+    "file": "assets/HomePage-297ab63f.js",
     "imports": [
-      "_Leaflet-9a1f6bbd.js",
+      "_Leaflet-604483e5.js",
       "resources/ts/app.ts"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/HomePage.vue"
+  },
+  "resources/ts/pages/WaterTruck.vue": {
+    "file": "assets/WaterTruck-a2778b79.js",
+    "imports": [
+      "resources/ts/app.ts",
+      "_Leaflet-604483e5.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/WaterTruck.vue"
   }
 }

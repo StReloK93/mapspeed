@@ -8,6 +8,9 @@
         <RouterLink to="/greyders" class="absolute left-2 top-2 btn-line bg-white shadow-md !text-xl z-20 text-center content-center">
             <i class="fa-solid fa-truck-plow"></i>
         </RouterLink>
+        <RouterLink to="/water-truck" class="absolute left-20 top-2 btn-line bg-white shadow-md !text-xl z-20 text-center content-center">
+            <i class="fa-solid fa-truck-droplet"></i>
+        </RouterLink>
 
         <button @click="reportOffendersModal = true" class="absolute right-36 -translate-x-2 top-2 btn-line bg-white shadow-md !text-xl z-20">
             <i class="fa-solid fa-hexagon-exclamation"></i>
