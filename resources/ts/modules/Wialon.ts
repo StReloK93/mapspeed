@@ -182,15 +182,15 @@ export default class {
 
         this.store.UIData.active = group.id;
         await this.executeReport(group.id, from, to);
-        // const { data: points } = await axios.post("/api/tracks/show", {
-        //     index: group.id,
-        //     oldDays: this.store.oldDays,
-        //     hourPeriod: this.store.hourPeriod,
-        //     speedRange: this.store.speedRange,
-        //     selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
-        // });
+        const { data: points } = await axios.post("/api/tracks/show", {
+            index: group.id,
+            oldDays: this.store.oldDays,
+            hourPeriod: this.store.hourPeriod,
+            speedRange: this.store.speedRange,
+            selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
+        });
 
-        // if (this.onSelectEnd) this.onSelectEnd(points);
+        if (this.onSelectEnd) this.onSelectEnd(points);
     }
 
     getTiles(render) {

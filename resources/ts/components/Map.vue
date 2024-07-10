@@ -46,8 +46,6 @@ onMounted(async () => {
     
     wialon.value.onInit = () => {
         appStore.withLoading(() => wialon.value.selectGroup(appStore.transport_groups[0]))
-        console.log('assad');
-        
     }
 
     wialon.value.onSelectStart = () => {
