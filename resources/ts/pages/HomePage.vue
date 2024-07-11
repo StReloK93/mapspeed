@@ -5,7 +5,7 @@
          <RouterLink to="graders" class="bg-yellow-200 w-28 h-28 p-1.5 rounded-xl shadow-md grayscale hover:grayscale-0 transition-all">
             <img src="@icons/grader.png">
             <tippy target="_parent">
-               <div>Greyderlar ishlagan yo'llarini ko'rish</div>
+               <div>Greyderlar ishini kuzatish</div>
             </tippy>
          </RouterLink>
 
@@ -13,13 +13,13 @@
             class="bg-orange-200 w-28 h-28 p-1.5 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
             <img src="@icons/truck.png">
             <tippy target="_parent">
-               <div>Avtoag'dargichlarni tezliklari tushgan nuqtalar</div>
+               <div>Avtoag'dargichlar tezlik xaritasi</div>
             </tippy>
          </RouterLink>
          <RouterLink to="water-truck" class="bg-sky-200 w-28 h-28 p-1.5 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
             <img src="@icons/watertruck.png">
             <tippy target="_parent">
-               <div>Suv sepuvchi transportlar harakatlari</div>
+               <div>Suv sepuvchi texnikalar harakati</div>
             </tippy>
          </RouterLink>
          <RouterLink to="offenders" class="bg-red-400 w-28 h-28 p-4 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
@@ -33,13 +33,9 @@
             class="bg-gray-200 w-28 h-28 p-3 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
             <img src="@icons/excavator.png">
             <tippy target="_parent">
-               <div>Excavatorlar geozonalari</div>
+               <div>Geozonalar</div>
             </tippy>
          </RouterLink>
       </div>
    </main>
 </template>
-
-<script setup lang="ts">
-
-</script>
