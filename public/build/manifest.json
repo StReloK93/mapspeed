@@ -1,9 +1,19 @@
 {
-  "_Leaflet-d3a47846.js": {
-    "file": "assets/Leaflet-d3a47846.js",
+  "_PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js": {
+    "file": "assets/PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js",
+    "imports": [
+      "_Wialon-50db6f35.js",
+      "resources/ts/app.ts"
+    ]
+  },
+  "_Wialon-50db6f35.js": {
+    "file": "assets/Wialon-50db6f35.js",
     "imports": [
       "resources/ts/app.ts"
     ]
+  },
+  "__commonjsHelpers-de833af9.js": {
+    "file": "assets/_commonjsHelpers-de833af9.js"
   },
   "node_modules/devextreme/dist/css/fonts/Roboto-300.ttf": {
     "file": "assets/Roboto-300-a6d343d4.ttf",
@@ -65,8 +75,28 @@
     "file": "assets/dxiconsmaterial-a6e5feb6.woff2",
     "src": "node_modules/devextreme/dist/css/icons/dxiconsmaterial.woff2"
   },
+  "public/icons/excavator.png": {
+    "file": "assets/excavator-12f298b0.png",
+    "src": "public/icons/excavator.png"
+  },
+  "public/icons/grader.png": {
+    "file": "assets/grader-be2a5f5c.png",
+    "src": "public/icons/grader.png"
+  },
+  "public/icons/speed.png": {
+    "file": "assets/speed-07bc973a.png",
+    "src": "public/icons/speed.png"
+  },
+  "public/icons/truck.png": {
+    "file": "assets/truck-b5c15b80.png",
+    "src": "public/icons/truck.png"
+  },
+  "public/icons/watertruck.png": {
+    "file": "assets/watertruck-ca1850c9.png",
+    "src": "public/icons/watertruck.png"
+  },
   "resources/ts/app.css": {
-    "file": "assets/app-aca9a4ee.css",
+    "file": "assets/app-f6c970df.css",
     "src": "resources/ts/app.css"
   },
   "resources/ts/app.ts": {
@@ -88,50 +118,82 @@
       "assets/dxiconsmaterial-555d0578.ttf"
     ],
     "css": [
-      "assets/app-aca9a4ee.css"
+      "assets/app-f6c970df.css"
     ],
     "dynamicImports": [
       "resources/ts/pages/HomePage.vue",
       "resources/ts/pages/GeozonesPage.vue",
+      "resources/ts/pages/TrucksPage.vue",
       "resources/ts/pages/GreydersPage.vue",
-      "resources/ts/pages/WaterTruck.vue"
+      "resources/ts/pages/WaterTruck.vue",
+      "resources/ts/pages/OffendersReportPage.vue"
     ],
-    "file": "assets/app-feea65f6.js",
+    "file": "assets/app-de6d0cfb.js",
     "isEntry": true,
     "src": "resources/ts/app.ts"
   },
   "resources/ts/pages/GeozonesPage.vue": {
-    "file": "assets/GeozonesPage-d9bdfa85.js",
+    "file": "assets/GeozonesPage-150ae094.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Leaflet-d3a47846.js"
+      "_Wialon-50db6f35.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GeozonesPage.vue"
   },
   "resources/ts/pages/GreydersPage.vue": {
-    "file": "assets/GreydersPage-af81bad3.js",
+    "file": "assets/GreydersPage-34c40bab.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Leaflet-d3a47846.js"
+      "_Wialon-50db6f35.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GreydersPage.vue"
   },
   "resources/ts/pages/HomePage.vue": {
-    "file": "assets/HomePage-75190421.js",
+    "assets": [
+      "assets/grader-be2a5f5c.png",
+      "assets/truck-b5c15b80.png",
+      "assets/watertruck-ca1850c9.png",
+      "assets/speed-07bc973a.png",
+      "assets/excavator-12f298b0.png"
+    ],
+    "file": "assets/HomePage-a8dbf049.js",
     "imports": [
-      "_Leaflet-d3a47846.js",
       "resources/ts/app.ts"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/HomePage.vue"
   },
-  "resources/ts/pages/WaterTruck.vue": {
-    "file": "assets/WaterTruck-029441a0.js",
+  "resources/ts/pages/OffendersReportPage.vue": {
+    "file": "assets/OffendersReportPage-f771fe2a.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Leaflet-d3a47846.js"
+      "__commonjsHelpers-de833af9.js",
+      "_Wialon-50db6f35.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/OffendersReportPage.vue"
+  },
+  "resources/ts/pages/TrucksPage.vue": {
+    "file": "assets/TrucksPage-023c9e68.js",
+    "imports": [
+      "_Wialon-50db6f35.js",
+      "resources/ts/app.ts",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js",
+      "__commonjsHelpers-de833af9.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/ts/pages/TrucksPage.vue"
+  },
+  "resources/ts/pages/WaterTruck.vue": {
+    "file": "assets/WaterTruck-e07ca0d5.js",
+    "imports": [
+      "resources/ts/app.ts",
+      "_Wialon-50db6f35.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-fa687f8c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/WaterTruck.vue"

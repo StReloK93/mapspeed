@@ -5,7 +5,7 @@
 			<i class="fa-sharp fa-light fa-xmark"></i>
 		</RouterLink>
 		<div class="absolute bottom-3 left-0 p-2 z-50">
-			<input type="date" v-model="pageData.currentDate" @change="selectDay()" class="px-4 py-1.5 rounded-full">
+			<input type="date" v-model="pageData.currentDate" @change="createLines()" class="px-4 py-1.5 rounded-full">
 		</div>
 
 		<div ref="geozonemap" class="h-full w-full z-40"></div>
@@ -31,28 +31,24 @@ const pageData = reactive({
 
 
 const interval = setInterval(() => {
-   createLines(pageData.currentDate)
+   createLines()
 },10000)
 
-async function createLines(dateTime) {
+async function createLines() {
 	pageData.loading = true
-	const from = moment(dateTime).add(-10, 'hours').unix()
-	const to = moment(dateTime).unix()
+	const from = moment().add(-24, 'hours').unix()
+	const to = moment().unix()
 
 	await pageData.wialon.waterTruckReport(from, to)
 	pageData.loading = false
 
 }
 
-async function selectDay() {
-	createLines(pageData.currentDate)
-}
-
 onMounted(async () => {
 
 	pageData.leaflet = new Leaflet(geozonemap.value)
 	pageData.wialon = new Wialon(pageData.leaflet.map)
-	pageData.wialon.onInit = () => selectDay()
+	pageData.wialon.onInit = () => createLines()
 
 })
 

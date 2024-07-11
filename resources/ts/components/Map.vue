@@ -3,21 +3,8 @@
         <TransitionGroup>
             <Charts v-if="chartToggle" @close="chartToggle = false" />
             <SpeedControl v-if="appStore.openControl" />
-            <OffendersReportModal v-if="reportOffendersModal" :wialon="wialon" @close="reportOffendersModal = false" />
         </TransitionGroup>
-        <RouterLink to="/greyders" class="absolute left-2 top-2 btn-line bg-white shadow-md !text-xl z-20 text-center content-center">
-            <i class="fa-solid fa-truck-plow"></i>
-        </RouterLink>
-        <RouterLink to="/water-truck" class="absolute left-20 top-2 btn-line bg-white shadow-md !text-xl z-20 text-center content-center">
-            <i class="fa-solid fa-truck-droplet"></i>
-        </RouterLink>
 
-        <button @click="reportOffendersModal = true" class="absolute right-36 -translate-x-2 top-2 btn-line bg-white shadow-md !text-xl z-20">
-            <i class="fa-solid fa-hexagon-exclamation"></i>
-        </button>
-        <RouterLink to="/geozones" class="absolute right-20 top-2 btn-line bg-white shadow-md !text-xl z-20  text-center content-center">
-            <i class="fa-solid fa-hexagon"></i>
-        </RouterLink>
         <button @click="chartToggle = true" class="absolute right-2 top-2 btn-line bg-white shadow-md !text-xl z-10">
             <i class="fa-regular fa-chart-mixed"></i>
         </button>
@@ -26,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import OffendersReportModal from '@/components/OffendersReportModal.vue'
 import Charts from './Charts.vue'
 import SpeedControl from './SpeedControl.vue'
 import Wialon from '@/modules/Wialon'

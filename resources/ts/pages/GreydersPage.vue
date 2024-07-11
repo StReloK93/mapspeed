@@ -32,18 +32,20 @@ const pageData = reactive({
 
 
 
-async function createLines(dateTime) {
+async function createLines() {
 	pageData.loading = true
-	const from = moment(dateTime).add(-10, 'hours').unix()
-	const to = moment(dateTime).unix()
+	const from = moment().add(-24, 'hours').unix()
+	const to = moment().unix()
 
+	console.log(moment());
+	
 	await pageData.wialon.greyderReport(from, to)
 	pageData.loading = false
 
 }
 
 async function selectDay() {
-	createLines(pageData.currentDate)
+	createLines()
 }
 
 onMounted(async () => {

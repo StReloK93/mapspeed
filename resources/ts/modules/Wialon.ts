@@ -53,10 +53,10 @@ export default class {
 						},
 					],
 					() => {
+
 						resolve(this.session.getItems("avl_unit_group"));
 						const qaynarov =
 							this.session.getItems("avl_resource")[0];
-						console.log(qaynarov);
 					}
 				);
 			}.bind(this)
@@ -65,7 +65,6 @@ export default class {
 
 	public async offerdersReport(group_id, from, to) {
 		const qaynarov = this.session.getItems("avl_resource")[0];
-
 		const reports = qaynarov.getReports();
 
 		return await new Promise((resolve) => {
