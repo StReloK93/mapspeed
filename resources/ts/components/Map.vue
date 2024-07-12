@@ -4,10 +4,12 @@
             <Charts v-if="chartToggle" @close="chartToggle = false" />
             <SpeedControl v-if="appStore.openControl" />
         </TransitionGroup>
-
         <button @click="chartToggle = true" class="absolute right-2 top-2 btn-line bg-white shadow-md !text-xl z-10">
             <i class="fa-regular fa-chart-mixed"></i>
         </button>
+        <RouterLink to="/" class="absolute left-2 top-2 btn-line bg-white shadow-md !text-xl z-10 text-center content-center">
+            <i class="fa-regular fa-close"></i>
+        </RouterLink>
         <div ref="map" class="h-full w-full z-[1]"></div>
     </section>
 </template>
@@ -22,8 +24,6 @@ import { onMounted, ref } from 'vue'
 const chartToggle = ref(false)
 const map = ref()
 const appStore = useAppStore()
-const reportOffendersModal = ref(false)
-
 const wialon = ref(null)
 
 onMounted(async () => {
