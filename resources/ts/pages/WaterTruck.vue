@@ -6,8 +6,8 @@
 		</RouterLink>
 		<div class="absolute bottom-3 left-0 p-2 z-50">
 			<input type="date" v-model="pageData.currentDate" @change="createLines" class="px-4 py-1.5 rounded-full shadow-sm">
-			<button :class="{'bg-teal-600 text-white': pageData.smena == 1}" @click="onChangeSmena(1)" class="bg-white px-4 ml-2 py-1.5 rounded-full">1 Smena</button>
-			<button :class="{'bg-teal-600 text-white': pageData.smena == 2}" @click="onChangeSmena(2)" class="bg-white px-4 ml-2 py-1.5 rounded-full">2 Smena</button>
+			<button :class="{'!bg-teal-600 !text-white': pageData.smena == 1}" @click="onChangeSmena(1)" class="bg-white px-4 ml-2 py-1.5 rounded-full">1 Smena</button>
+			<button :class="{'!bg-teal-600 !text-white': pageData.smena == 2}" @click="onChangeSmena(2)" class="bg-white px-4 ml-2 py-1.5 rounded-full">2 Smena</button>
 		</div>
 
 		<div ref="geozonemap" class="h-full w-full z-40"></div>
