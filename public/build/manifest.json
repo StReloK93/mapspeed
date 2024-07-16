@@ -1,19 +1,19 @@
 {
-  "_PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js": {
-    "file": "assets/PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js",
+  "_PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js": {
+    "file": "assets/PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js",
     "imports": [
-      "_Wialon-5bea6e37.js",
+      "_Wialon-f2b3155b.js",
       "resources/ts/app.ts"
     ]
   },
-  "_TimezoneDate-3db36fbe.js": {
-    "file": "assets/TimezoneDate-3db36fbe.js",
+  "_TimezoneDate-beed4947.js": {
+    "file": "assets/TimezoneDate-beed4947.js",
     "imports": [
-      "_Wialon-5bea6e37.js"
+      "_Wialon-f2b3155b.js"
     ]
   },
-  "_Wialon-5bea6e37.js": {
-    "file": "assets/Wialon-5bea6e37.js",
+  "_Wialon-f2b3155b.js": {
+    "file": "assets/Wialon-f2b3155b.js",
     "imports": [
       "resources/ts/app.ts"
     ]
@@ -134,26 +134,27 @@
       "resources/ts/pages/WaterTruck.vue",
       "resources/ts/pages/OffendersReportPage.vue"
     ],
-    "file": "assets/app-2b3e698b.js",
+    "file": "assets/app-50a67d41.js",
     "isEntry": true,
     "src": "resources/ts/app.ts"
   },
   "resources/ts/pages/GeozonesPage.vue": {
-    "file": "assets/GeozonesPage-c4cef3c1.js",
+    "file": "assets/GeozonesPage-d92a3c56.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-5bea6e37.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js"
+      "_Wialon-f2b3155b.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GeozonesPage.vue"
   },
   "resources/ts/pages/GreydersPage.vue": {
-    "file": "assets/GreydersPage-6b688c6a.js",
+    "file": "assets/GreydersPage-19579692.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-5bea6e37.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js"
+      "_Wialon-f2b3155b.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js",
+      "_TimezoneDate-beed4947.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GreydersPage.vue"
@@ -166,7 +167,7 @@
       "assets/speed-07bc973a.png",
       "assets/excavator-12f298b0.png"
     ],
-    "file": "assets/HomePage-37e556c4.js",
+    "file": "assets/HomePage-170d579e.js",
     "imports": [
       "resources/ts/app.ts"
     ],
@@ -174,34 +175,34 @@
     "src": "resources/ts/pages/HomePage.vue"
   },
   "resources/ts/pages/OffendersReportPage.vue": {
-    "file": "assets/OffendersReportPage-afb65042.js",
+    "file": "assets/OffendersReportPage-ff2d80dc.js",
     "imports": [
       "resources/ts/app.ts",
       "__commonjsHelpers-de833af9.js",
-      "_Wialon-5bea6e37.js"
+      "_Wialon-f2b3155b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/OffendersReportPage.vue"
   },
   "resources/ts/pages/TrucksPage.vue": {
-    "file": "assets/TrucksPage-0114799f.js",
+    "file": "assets/TrucksPage-3905edd5.js",
     "imports": [
-      "_Wialon-5bea6e37.js",
+      "_Wialon-f2b3155b.js",
       "resources/ts/app.ts",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js",
-      "_TimezoneDate-3db36fbe.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js",
+      "_TimezoneDate-beed4947.js",
       "__commonjsHelpers-de833af9.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/TrucksPage.vue"
   },
   "resources/ts/pages/WaterTruck.vue": {
-    "file": "assets/WaterTruck-0fbed73d.js",
+    "file": "assets/WaterTruck-9a7f6c48.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-5bea6e37.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-6f51ad3c.js",
-      "_TimezoneDate-3db36fbe.js"
+      "_Wialon-f2b3155b.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-b2af1a11.js",
+      "_TimezoneDate-beed4947.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/WaterTruck.vue"

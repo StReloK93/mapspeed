@@ -38,13 +38,6 @@ function onChangeSmena(smena) {
 	createLines()
 }
 
-
-
-
-// const interval = setInterval(() => {
-//    createLines()
-// },10000)
-
 async function createLines() {
 	pageData.loading = true
 
