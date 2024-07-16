@@ -1,8 +1,8 @@
 <template>
 	<section class="fixed inset-0">
 		<PreLoader :loading="pageData.loading" />
-		<RouterLink to="/" class="absolute right-3 top-3 btn-line bg-white shadow-md !text-xl z-50 text-center content-center">
-			<i class="fa-sharp fa-light fa-xmark"></i>
+		<RouterLink to="/" class="absolute left-3 top-3 btn-line bg-white shadow-md !text-xl z-50 text-center content-center">
+			<i class="fa-duotone fa-house"></i>
 		</RouterLink>
 		<div class="absolute bottom-[105px] left-0 p-2 z-50">
 			<input type="date" v-model="pageData.currentDate" @change="selectDay()" class="px-4 py-1.5 rounded-full">

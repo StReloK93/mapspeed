@@ -4,12 +4,12 @@
             <Charts v-if="chartToggle" @close="chartToggle = false" />
             <SpeedControl v-if="appStore.openControl" />
         </TransitionGroup>
+        <RouterLink to="/" class="absolute left-3 top-3 btn-line bg-white shadow-md !text-xl z-50 text-center content-center">
+            <i class="fa-duotone fa-house"></i>
+        </RouterLink>
         <button @click="chartToggle = true" class="absolute right-2 top-2 btn-line bg-white shadow-md !text-xl z-10">
             <i class="fa-regular fa-chart-mixed"></i>
         </button>
-        <RouterLink to="/" class="absolute left-2 top-2 btn-line bg-white shadow-md !text-xl z-10 text-center content-center">
-            <i class="fa-regular fa-close"></i>
-        </RouterLink>
         <div ref="map" class="h-full w-full z-[1]"></div>
     </section>
 </template>
