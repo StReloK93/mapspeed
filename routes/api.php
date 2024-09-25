@@ -31,3 +31,5 @@ Route::get('create_token', [PointController::class, 'createToken']);
 Route::get('get_geozones/{data}', [PointController::class, 'getGeozones']);
 
 
+Route::post('get_way_speed', [PointController::class, 'getWaySpeed']);
+

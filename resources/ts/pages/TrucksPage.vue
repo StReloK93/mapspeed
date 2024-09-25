@@ -1,7 +1,6 @@
 <template>
    <main class="h-full w-full relative rounded-xl overflow-hidden flex">
       <PreLoader :loading="store.UIData.loading" />
-      <Info />
       <SpeedColors />
       <WialonMap />
       <MenuRight />
@@ -15,7 +14,5 @@ import Info from '@/components/Info.vue'
 import PreLoader from '@/components/PreLoader.vue'
 import WialonMap from '@/components/Map.vue'
 import { useAppStore } from '@/store/useAppStore'
-
-
 const store = useAppStore()
 </script>
