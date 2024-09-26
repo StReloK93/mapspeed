@@ -73,7 +73,6 @@ onMounted(async () => {
 	pageData.leaflet = new Leaflet(geozonemap.value, true)
 	pageData.wialon = new Wialon(pageData.leaflet.map)
 
-
-	createLines(new Date())
+	pageData.wialon.onInit = () => createLines(new Date())
 })
 </script>
