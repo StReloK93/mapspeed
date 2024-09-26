@@ -10,7 +10,10 @@
 			<ChartLine ref="chartLineRef" />
 			<VDatePicker v-model="range" mode="date" class="my-2"  is-range expanded>
 			</VDatePicker>
-			<button @click="sendPoints" class="px-4 py-1.5 rounded-full bg-blue-500 text-white">Tasdiqlash</button>
+			<button @click="sendPoints" class="px-4 py-1.5 rounded-full bg-blue-500 text-white">
+				<i v-if="pageData.loading" class="fa-sharp fa-regular fa-spinner fa-spin-pulse"></i>
+				<span v-else>Tasdiqlash</span>
+			</button>
 		</div>
 		<div ref="geozonemap" class="h-full w-full z-40"></div>
 	</section>
@@ -50,6 +53,7 @@ function clearData() {
 }
 
 async function sendPoints() {
+	pageData.loading = true
 	const points = pageData.leaflet.getRectanglePoints()
 
 	const data = await WaysRepository.getWaysSpeed({
@@ -57,8 +61,19 @@ async function sendPoints() {
 		endDay: moment(range.value.end).format('YYYY-MM-DD'),
 		points: points
 	})
+	.catch((event) => {
+		if(range.value.start == null && range.value.end  == null){
+			alert('Kunni tanlang');
+		}
+
+		if(points.length == 0){
+			alert("Yo'lni tanlang");
+		}
+		pageData.loading = false
+	})
 
 	chartLineRef.value.getChartData(data)
+	pageData.loading = false
 }
 
 async function createLines(dateTime) {
