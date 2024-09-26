@@ -200,7 +200,7 @@ export default class {
 		const from = to - 3600 * 24 - 1;
 
 		this.store.UIData.active = group.id;
-		// await this.executeReport(group.id, from, to);
+		await this.executeReport(group.id, from, to);
 		const { data: points } = await axios.post("/api/tracks/show", {
 			index: group.id,
 			oldDays: this.store.oldDays,

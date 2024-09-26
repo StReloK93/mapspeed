@@ -61,9 +61,19 @@ async function sendPoints() {
 	chartLineRef.value.getChartData(data)
 }
 
+async function createLines(dateTime) {
+	pageData.loading = true
+	const from = moment(dateTime).add( -6,'h').unix()
+	const to = moment(dateTime).unix()
+	await pageData.wialon.executeReport(7381, from, to)
+	pageData.loading = false
+}
 
 onMounted(async () => {
 	pageData.leaflet = new Leaflet(geozonemap.value, true)
 	pageData.wialon = new Wialon(pageData.leaflet.map)
+
+
+	createLines(new Date())
 })
 </script>

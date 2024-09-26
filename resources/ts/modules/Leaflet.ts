@@ -36,7 +36,6 @@ export default class {
         
         // Рисуем квадрат
         if (!this.rectangleFind(row, column)) {
-            console.log(row, column);
             this.drawSquare({ ZonaX: row, ZonaY: column }, this.size, 1);
         }
         else {
@@ -100,7 +99,7 @@ export default class {
         return map
     }
 
-    drawSquare(item, size, index) {
+    drawSquare(item, size, index, withCircle = false) {
         const row = +item.ZonaX
         const column = +item.ZonaY
 
@@ -119,16 +118,16 @@ export default class {
         const rect = L.rectangle([boxTL, boxBR], { color: 'red', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
         this.rectangles.push({ row, column, rectangle: rect });
 
-        // rect.on('click', function (event) {
-        //     event
-        // })
-        // const center = this.getCenterCubic(boxTL, boxBR)
-        // const marker = L.marker(center, {
-        //     icon: L.divIcon({ className: 'custom-marker-class', html: index}),
-        // }).addTo(this.map)
+        const center = this.getCenterCubic(boxTL, boxBR)
 
-        // this.points.push({ rect, marker })
-        // this.store.points.push({ center, item, image: marker._icon, active: false, index })
+        if(withCircle){
+            const marker = L.marker(center, {
+                icon: L.divIcon({ className: 'custom-marker-class', html: index}),
+            }).addTo(this.map)
+    
+            this.points.push({ rect, marker })
+            this.store.points.push({ center, item, image: marker._icon, active: false, index })
+        }
 
         // this.store.points = this.store.points.sort((d1, d2) => (
         //     +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
@@ -145,7 +144,7 @@ export default class {
 
     drawCubics(points) {
         points.forEach((point, index) => {
-            this.drawSquare(point, 50, index + 1)
+            this.drawSquare(point, 50, index + 1, true)
         })
     }
 
