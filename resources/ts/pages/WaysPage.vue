@@ -8,6 +8,9 @@
 		<div class="absolute top-0 right-0 p-2 z-50 flex w-96 flex-col bg-blue-200/50 rounded-b-2xl">
 			<button @click="clearData" class="bg-white px-4 py-1.5 rounded-full mb-2">Tozalash</button>
 			<ChartLine ref="chartLineRef" />
+			<div class="text-center text-xl">
+				O'rtacha tezlik: {{ middleTotalSpeed }}
+			</div>
 			<VDatePicker v-model="range" mode="date" class="my-2"  is-range expanded>
 			</VDatePicker>
 			<button @click="sendPoints" class="px-4 py-1.5 rounded-full bg-blue-500 text-white">
@@ -30,6 +33,7 @@ import { onMounted, ref, reactive } from 'vue'
 import PreLoader from '@/components/PreLoader.vue'
 const geozonemap = ref()
 const smena = detectSmenaDay(moment())
+const middleTotalSpeed = ref(0)
 const pageData = reactive({
 	currentDate: smena.date,
 	wialon: null,
@@ -71,6 +75,14 @@ async function sendPoints() {
 		}
 		pageData.loading = false
 	})
+	
+	if(data.length){
+		const zero = data.reduce((sum, total) => sum+total.average_speed, 0)
+		middleTotalSpeed.value = Math.round(zero/data.length) 
+	}
+	else{
+		middleTotalSpeed.value = 0
+	}
 
 	chartLineRef.value.getChartData(data)
 	pageData.loading = false
