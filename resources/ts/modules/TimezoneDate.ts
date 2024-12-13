@@ -94,3 +94,15 @@ export function chunkArray(array, chunkSize) {
 }
 
 
+export function secondsToFormatTime(seconds) {
+    var houre, minute, second;
+    houre = Math.floor(seconds / 3600);
+    const remainderOfHour = Math.floor(seconds % 3600);
+    minute = Math.floor(remainderOfHour / 60);
+    second = Math.floor(remainderOfHour % 60);
+ 
+    const hour = houre > 9 ? houre : `0${houre}`;
+    const minut = minute > 9 ? minute : `0${minute}`;
+    const secund = second > 9 ? second : `0${second}`;
+    return `${hour}:${minut}:${secund}`;
+ }

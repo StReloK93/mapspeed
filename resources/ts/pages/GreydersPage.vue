@@ -1,6 +1,7 @@
 <template>
 	<section class="fixed inset-0">
 		<PreLoader :loading="pageData.loading" />
+		<GrayderModal v-if="modalToggle" @close="modalToggle = false"/>
 		<RouterLink to="/" class="absolute left-3 top-3 btn-line bg-white shadow-md !text-xl z-50 text-center content-center">
 			<i class="fa-duotone fa-house"></i>
 		</RouterLink>
@@ -8,6 +9,7 @@
 			<input type="date" v-model="pageData.currentDate" @change="createLines" class="px-4 py-1.5 rounded-full shadow-sm">
 			<button :class="{'!bg-teal-600 !text-white': pageData.smena == 1}" @click="onChangeSmena(1)" class="bg-white px-4 ml-2 py-1.5 rounded-full">1 Smena</button>
 			<button :class="{'!bg-teal-600 !text-white': pageData.smena == 2}" @click="onChangeSmena(2)" class="bg-white px-4 ml-2 py-1.5 rounded-full">2 Smena</button>
+			<button @click="modalToggle = true" class="bg-white px-4 ml-2 py-1.5 rounded-full">Контроль зачистки забоя в пересменку</button>
 		</div>
 
 		<div ref="geozonemap" class="h-full w-full z-40"></div>
@@ -16,12 +18,14 @@
 
 <script setup lang="ts">
 import moment from 'moment'
+import GrayderModal from '@/components/GrayderModal.vue'
 import Wialon from '@/modules/Wialon'
 import Leaflet from '@/modules/Leaflet'
 import { getTimesBySmena, detectSmenaDay } from '@/modules/TimezoneDate'
 import { onMounted, ref, reactive, onUnmounted } from 'vue'
 import PreLoader from '@/components/PreLoader.vue'
 const geozonemap = ref()
+const modalToggle = ref(false)
 const smena = detectSmenaDay(moment())
 const pageData = reactive({
 	currentDate: smena.date,
@@ -55,9 +59,5 @@ onMounted(async () => {
 	pageData.wialon = new Wialon(pageData.leaflet.map)
 	pageData.wialon.onInit = () => createLines()
 
-})
-
-onUnmounted(() => {
-   // clearInterval(interval)
 })
 </script>
