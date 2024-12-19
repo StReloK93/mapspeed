@@ -18,7 +18,7 @@
                <DxDataGrid v-if="tableValues.length" :data-source="tableValues" @exporting="onExporting">
                   <DxExport :enabled="true" :allow-export-selected-data="true" />
                   <DxColumn data-field="name" caption="Техника" width="120"></DxColumn>
-                  <DxColumn data-field="active" cell-template="grid-cell" />
+                  <DxColumn data-field="active" caption="Статус" cell-template="grid-cell" />
                   <template #grid-cell="{ data }">
                      <div v-if="data.data.active" style="color: red">В ремонте</div>
                      <div v-else style="color:green">В работе</div>
