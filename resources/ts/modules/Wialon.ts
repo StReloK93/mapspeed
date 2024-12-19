@@ -8,7 +8,7 @@ export default class {
 	onSelectStart = null;
 	onSelectEnd = null;
 	onInit = null;
-	constructor(map) {
+	constructor(map = null) {
 		this.map = map;
 		this.initWialon();
 	}
@@ -260,7 +260,6 @@ export default class {
 					allrows[col.c[1]].in_smena = period
 				}
 			});
-			console.log('next1');
 			await this.getTableById(2, report, (col) => {
 				const period = col['t2'] - col['t1']
 				if (allrows[col.c[1]] && allrows[col.c[1]].in_not_excavator_move) {
@@ -271,7 +270,6 @@ export default class {
 					allrows[col.c[1]].in_not_excavator_move = period
 				}
 			});
-			console.log('next2');
 			await this.getTableById(3, report, (col) => {
 				const period = col['t2'] - col['t1']
 				if (allrows[col.c[1]] && allrows[col.c[1]].in_not_excavator_stop) {

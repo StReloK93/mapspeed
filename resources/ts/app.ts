@@ -9,12 +9,14 @@ import { createPinia } from "pinia";
 import router from "./router";
 import { TippyDirective, Tippy, TippySingleton } from "tippy.vue";
 import "tippy.js/dist/tippy.css";
+import OutsideClick from "./modules/OutsideClick";
 wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz");
 wialon.core.Session.getInstance().loginToken(
     SERVER_DATA.wialon_token,
     "",
     () => {
         createApp(App)
+            .directive('click-outside', OutsideClick)
             .directive("tippy", TippyDirective)
             .component("tippy", Tippy)
             .component("tippy-singleton", TippySingleton)

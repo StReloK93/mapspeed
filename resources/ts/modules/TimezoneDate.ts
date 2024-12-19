@@ -106,3 +106,18 @@ export function secondsToFormatTime(seconds) {
     const secund = second > 9 ? second : `0${second}`;
     return `${hour}:${minut}:${secund}`;
  }
+
+ export function getDateAndSmena(time = undefined) {
+    const current = moment(time);
+    const startToday = moment(moment().format(`YYYY-MM-DD 09:40`));
+    const endToday = moment(moment().format(`YYYY-MM-DD 21:40`));
+ 
+    if (startToday < current && endToday > current) {
+       return { date: current.toDate(), smena: 1 };
+    } else if (endToday < current) {
+       return { date: current.toDate(), smena: 2 };
+    } else {
+       const currentClone = current.clone();
+       return { date: currentClone.subtract(1, "day").toDate(), smena: 2 };
+    }
+ }
