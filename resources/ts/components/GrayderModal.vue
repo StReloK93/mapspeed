@@ -33,7 +33,7 @@
             </div>
             <div class="absolute bottom-0 w-full bg-gray-100 px-2 py-1.5 text-xl uppercase">
                количество зачищенных забоев на 1 ед. работающей техники - {{ zaboy }}  <br>
-               время вне геозоны в ожидании, % от доступного времени - {{ prosent }}%
+               Вне геозоны ЭКС, без движении % от доступного времени - {{ prosent }}%
             </div>
          </main>
       </main>
@@ -82,7 +82,7 @@ async function getDataTable() {
          active:  object[key]['in_not_excavator_move'] == 0 &&
                   object[key]['in_not_excavator_stop'] == 0 &&
                   object[key]['time_in_excavator'] == 0,
-         in_smena:  '08:30 - 09:40 | 70 мин',
+         in_smena:  inputSmena.value == 1 ? '08:30 - 09:40 | 70 мин': '20:30 - 21:40 | 70 мин' ,
          in_not_excavator_move:  (object[key]['in_not_excavator_move']/60).toFixed(1),
          in_not_excavator_stop:  (object[key]['in_not_excavator_stop']/60).toFixed(1),
          excavator_move: object[key]['in_not_excavator_move'],
