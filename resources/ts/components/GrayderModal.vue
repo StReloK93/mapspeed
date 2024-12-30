@@ -95,8 +95,6 @@ async function getDataTable() {
 
 
 const zaboy = computed(() => {
-   console.log(tableValues.value);
-   
    const activeCars = tableValues.value.reduce((reduce, total) => total.active == false ? reduce += 1 : reduce, 0)
    const greyder = tableValues.value.reduce((reduce, total) => total.count != 0? reduce += total.counts : reduce, 0)
    return (greyder + activeCars == 0 ? 0 : greyder / activeCars).toFixed(1)

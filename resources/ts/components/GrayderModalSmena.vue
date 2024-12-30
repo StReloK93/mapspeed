@@ -33,6 +33,10 @@
                </DxDataGrid>
             </div>
          </main>
+         <div class="absolute bottom-0 w-full bg-gray-100 px-2 py-1.5 text-xl uppercase">
+            Время в движении, % от доступного времени: {{ maxProsent  + '%' }}
+         </div>
+         
       </main>
    </section>
 </template>
@@ -53,6 +57,8 @@ wialon.value = new Wialon()
 const currentSmena = getDateAndSmena()
 inputDate.value = currentSmena.date
 inputSmena.value = currentSmena.smena
+
+const maxTime = 660
 
 async function getDataTable() {
    tableValues.value = []
@@ -82,15 +88,27 @@ async function getDataTable() {
          active:  object[key]['in_not_excavator_move'] == 0 &&
                   object[key]['in_not_excavator_stop'] == 0 &&
                   object[key]['time_in_excavator'] == 0,
-         in_smena:  inputSmena.value == 1 ? '08:30 - 20:30 | 720 мин' : '20:30 - 08:30 | 720 мин',
+         in_smena:  inputSmena.value == 1 ? `08:30 - 20:30 | ${maxTime} мин` : `20:30 - 08:30 | ${maxTime} мин`,
          in_not_excavator_move:  (object[key]['in_not_excavator_move']/60).toFixed(1),
          in_not_excavator_stop:  (object[key]['in_not_excavator_stop']/60).toFixed(1),
+         excavator_stop: Math.round(((object[key]['time_in_excavator'] + object[key]['in_not_excavator_move']) / (maxTime * 60)) * 100) + '%',
          excavator_move: object[key]['in_not_excavator_move'],
-         excavator_stop: Math.round((object[key]['in_not_excavator_stop'] / (10 * 60 * 60)) * 100) + '%',
+         time_in_excavator: object[key]['time_in_excavator'],
       })
    }
 }
 
+
+const maxProsent = computed(() => {
+   const activeCars = tableValues.value.reduce((reduce, total) => total.active == false ? reduce += 1 : reduce, 0)
+   const in_excavator = tableValues.value.reduce((reduce, total) => total.time_in_excavator != 0? reduce += total.time_in_excavator : reduce, 0)
+   const not_excavator= tableValues.value.reduce((reduce, total) => total.excavator_move != 0? reduce += total.excavator_move : reduce, 0)
+   const fullSmenaTime = activeCars * maxTime * 60
+   console.log(in_excavator , not_excavator , fullSmenaTime);
+
+   
+   return isNaN((in_excavator + not_excavator) / fullSmenaTime * 100) ? 0 : Math.round( (in_excavator + not_excavator) / fullSmenaTime * 100 )
+})
 
 
 onMounted(() => {
