@@ -84,6 +84,144 @@ class WialonService
     }
 
 
+    public function execReport($from, $to)
+    {
+        $this->wialon->get([
+            'svc' => 'report/exec_report',
+            'params' => json_encode([
+                'reportResourceId' => 3638,
+                'reportTemplateId' => 65,
+                'reportObjectId' => 10587,
+                'reportObjectSecId' => 0,
+                'interval' => [
+                    'from' => $from,
+                    'to' => $to,
+                    'flags' => 0,
+                ],
+            ]),
+        ]);
+
+        $finalArray = [];
+
+
+        $rows = $this->resultRows(0);
+
+        foreach ($rows as $key => $row) {
+            $colums =  $this->resultSubRows(0, $row['n']);
+            foreach ($colums as $key => $col) {
+                $period = null;
+                if(is_array($col['c'][4])) {
+                    $period = $col['c'][4]['v'] - $col['c'][3]['v'];
+                }
+                if(array_key_exists($col['c'][1], $finalArray)){
+                    $finalArray[$col['c'][1]]['time_in_excavator'] += $period;
+
+                    if(in_array( $col['c'][2], $finalArray[$col['c'][1]]['counts']) == false){
+                        array_push($finalArray[$col['c'][1]]['counts'], $col['c'][2]);
+                    }
+                }
+                else{
+                    $finalArray[$col['c'][1]]['time_in_excavator'] = $period;
+                    $finalArray[$col['c'][1]]['counts'] = [$col['c'][2]];
+                }
+            }
+        }
+
+        $rows = $this->resultRows(1);
+
+        foreach ($rows as $key => $row) {
+            $colums =  $this->resultSubRows(1, $row['n']);
+            foreach ($colums as $key => $col) {
+                $carName = $col['c'][1];
+                $period = null;
+                if(is_array($col['c'][4])) {
+                    $period = $col['c'][4]['v'] - $col['c'][3]['v'];
+                }
+
+                $issetCar = array_key_exists($carName, $finalArray);
+                $issetInSmena = array_key_exists('in_smena', $finalArray[$carName]);
+                if($issetCar && $issetInSmena){
+                    $finalArray[$carName]['in_smena'] += $period;
+                }
+                else{
+                    $finalArray[$carName]['in_smena'] = $period;
+                }
+            }
+        }
+
+        $rows = $this->resultRows(2);
+
+        foreach ($rows as $key => $row) {
+            $colums =  $this->resultSubRows(2, $row['n']);
+            foreach ($colums as $key => $col) {
+                $carName = $col['c'][1];
+                $period = $col['t2'] - $col['t1'];
+
+                $issetCar = array_key_exists($carName, $finalArray);
+                $issetInSmena = array_key_exists('in_not_excavator_move', $finalArray[$carName]);
+                if($issetCar && $issetInSmena){
+                    $finalArray[$carName]['in_not_excavator_move'] += $period;
+                }
+                else{
+                    $finalArray[$carName]['in_not_excavator_move'] = $period;
+                }
+            }
+        }
+
+        $rows = $this->resultRows(3);
+
+        foreach ($rows as $key => $row) {
+            $colums =  $this->resultSubRows(3, $row['n']);
+            foreach ($colums as $key => $col) {
+                $carName = $col['c'][1];
+                $period = $col['t2'] - $col['t1'];
+
+                $issetCar = array_key_exists($carName, $finalArray);
+                $issetInSmena = array_key_exists('in_not_excavator_stop', $finalArray[$carName]);
+                if($issetCar && $issetInSmena){
+                    $finalArray[$carName]['in_not_excavator_stop'] += $period;
+                }
+                else{
+                    $finalArray[$carName]['in_not_excavator_stop'] = $period;
+                }
+            }
+        }
+
+
+        return $finalArray;
+    }
+
+
+    public function resultRows($tableIndex)
+    {
+        return $this->wialon->get([
+            'svc' => 'report/get_result_rows',
+            'params' => json_encode([
+                'tableIndex' => $tableIndex,
+                'indexFrom' => 0,
+                'indexTo' => 10000,
+            ]),
+        ]);
+    }
+
+
+    public function resultSubRows($tableIndex, $rowIndex)
+    {
+        return $this->wialon->get([
+            'svc' => 'report/get_result_subrows',
+            'params' => json_encode([
+                'tableIndex' => $tableIndex,
+                'rowIndex' => $rowIndex,
+            ]),
+        ]);
+    }
+
+    public function getReportByTime(){
+        
+        $from = Carbon::parse('15-01-2025 08:30')->timestamp;
+        $to = Carbon::parse('15-01-2025 09:40')->timestamp;
+        return $this->execReport($from, $to);
+    }
 
     public function getUnits()
     {

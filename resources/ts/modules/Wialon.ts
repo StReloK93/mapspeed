@@ -228,9 +228,6 @@ export default class {
 				)
 			);
 
-			// console.log(report.getTables());
-			
-			// Создаем объект для результата
 			const allrows: any = {};
 
 			await this.getTableById(0, report, (col) => {
@@ -250,6 +247,7 @@ export default class {
 					allrows[col.c[1]].counts = new Set([col.c[2]])
 				}
 			});
+
 			await this.getTableById(1, report, (col) => {
 				const period = col.c[4]['v'] - col.c[3]['v']
 				if (allrows[col.c[1]] && allrows[col.c[1]].in_smena) {

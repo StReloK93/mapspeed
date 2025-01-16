@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PointController;
+use App\Services\WialonService;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +30,10 @@ Route::get('get_tiles', [PointController::class, 'getTiles']);
 Route::get('get_report', [PointController::class, 'getReport']);
 Route::get('create_token', [PointController::class, 'createToken']);
 Route::get('get_geozones/{data}', [PointController::class, 'getGeozones']);
+
+
+
+Route::get('exec_report', [WialonService::class, 'getReportByTime']);
 
 
 Route::post('get_way_speed', [PointController::class, 'getWaySpeed']);
