@@ -6,5 +6,6 @@ export default [
    { path: "/water-truck", component: () => import("@/pages/WaterTruckPage.vue") },
    { path: "/offenders", component: () => import("@/pages/OffendersReportPage.vue") },
    { path: "/ways", component: () => import("@/pages/WaysPage.vue") },
+   { path: "/ways-redactor", component: () => import("@/pages/WaysRedactor.vue") },
 ]
 

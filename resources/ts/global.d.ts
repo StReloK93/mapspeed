@@ -7,4 +7,8 @@ declare global {
     var L: any
     var qx: any
     var SERVER_DATA: any
+    var ENV: {
+        PIVOT_LAT: number,
+        PIVOT_LON: number,
+    }
 }

@@ -103,7 +103,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () use ($wialon) {
             $day = now()->format('Y-m-d');
-            $subday = Carbon::now()->subDay(1)->format('Y-m-d');
+            $subday = Carbon::now()->subDays(1)->format('Y-m-d');
             $from = Carbon::parse("$subday 20:30")->timestamp;
             $to = Carbon::parse("$day 08:30")->timestamp;
             $reports = $wialon->execReport($from, $to);

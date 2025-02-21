@@ -132,3 +132,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+.table-auto td{
+    @apply px-2 border py-0.5
+}
+
+
+.table-auto tr:first-child{
+    @apply font-semibold
+}

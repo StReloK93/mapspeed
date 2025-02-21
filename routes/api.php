@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PointController;
 use App\Services\WialonService;
+use App\Http\Controllers\OrderWayController;
+use App\Http\Controllers\OrderPointController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,3 +40,9 @@ Route::get('exec_report', [WialonService::class, 'getReportByTime']);
 
 Route::post('get_way_speed', [PointController::class, 'getWaySpeed']);
 
+
+Route::post('orderway/{id}/update-name', [OrderWayController::class, 'updateName']);
+
+Route::post('greyder-jobs/analyze', [OrderPointController::class, 'greyderJobs']);
+
+Route::apiResource('orderway', OrderWayController::class);

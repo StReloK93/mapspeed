@@ -9,41 +9,36 @@ export default class {
     size
     rectangles
     constructor(canvas, picker = false) {
-        this.pivotLat = 42.32; // Начальная широта
-        this.pivotLon = 63.82; // Начальная долгота
+        if (ENV.PIVOT_LAT == null || ENV.PIVOT_LAT == null) {
+            console.error('ENV ga PIVOT_LAT va PIVOT_LAT qiymatlar kiritilmagan')
+            return
+        }
+        // this.pivotLat = 42.32; // Начальная широта
+        // this.pivotLon = 63.82; // Начальная долгота
+        this.pivotLat = ENV.PIVOT_LAT; // Начальная широта
+        this.pivotLon = ENV.PIVOT_LON; // Начальная долгота
         this.size = 50
         this.store = useAppStore()
         this.map = this.createMap(canvas)
         this.rectangles = []
 
-        // for (let index = 0; index < 250; index++) {
-        //     for (let fix = 0; fix < 250; fix++) {
-        //         if(fix%5 == 0 && index%5 == 0) this.drawSquare({ZonaX: index, ZonaY: fix}, 50, 1)
-        //     }
-        // }
         if (picker) this.map.on('click', this.handleMapClick.bind(this));
     }
 
-    handleMapClick(e) {
-        // Получаем координаты клика
-        const clickedLat = e.latlng.lat;
-        const clickedLon = e.latlng.lng;
-
-        // Вычисляем индексы ячейки сетки на основе координатов клика
-        const row = Math.floor((this.pivotLat - clickedLat) * 111000 / this.size);
-        const column = Math.floor((clickedLon - this.pivotLon) * (111000 * Math.cos(this.deg2rad(this.pivotLat))) / this.size);
-
-        
-        // Рисуем квадрат
-        if (!this.rectangleFind(row, column)) {
-            this.drawSquare({ ZonaX: row, ZonaY: column }, this.size, 1);
+    handleMapClick(event) {
+        if(event.originalEvent.ctrlKey){
+            const row = Math.floor((this.pivotLat - event.latlng.lat) * 111000 / this.size);
+            const column = Math.floor((event.latlng.lng - this.pivotLon) * (111000 * Math.cos(this.deg2rad(this.pivotLat))) / this.size);
+    
+            if (!this.rectangleFind(row, column)) {
+                this.drawSquare({ ZonaX: row, ZonaY: column, color: 'red' }, this.size, 1);
+            }
+            else {
+                const { rectangle } = this.rectangleFind(row, column)
+                rectangle.remove()
+                this.rectangleDelete(row, column)
+            }
         }
-        else {
-            const { rectangle } = this.rectangleFind(row, column)
-            rectangle.remove()
-            this.rectangleDelete(row, column)
-        }
-
     }
 
     rectangleFind(row, column) {
@@ -51,8 +46,8 @@ export default class {
     }
 
 
-    rectanglesClear(){
-        this.rectangles.forEach(({rectangle}) => {
+    rectanglesClear() {
+        this.rectangles.forEach(({ rectangle }) => {
             rectangle.remove()
         })
 
@@ -64,17 +59,24 @@ export default class {
         this.rectangles.splice(index, 1)
     }
 
-    getRectanglePoints(){
+    getRectanglePoints() {
         return this.rectangles.map((rect) => {
-            return { ZonaX: rect.row, ZonaY: rect.column }
+            return { ZonaX: rect.row, ZonaY: rect.column, color: rect.color }
         })
     }
 
     createMap(canvas) {
         const sid = wialon.core.Session.getInstance().getId()
         const sess = wialon.core.Session.getInstance()
-        const map = L.map(canvas, { zoomControl: false }).setView([42.2628699, 63.891215], 12)
+        const map = L.map(canvas, { zoomControl: false }).setView([this.pivotLat, this.pivotLon], 12)
 
+        // var latlngs = [
+        //     [this.pivotLat, this.pivotLon],
+        //     [37.77, -122.43],
+        //     [34.04, -118.2]
+        // ];
+        
+        // var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
         L.TileLayer.WebGis = L.TileLayer.extend({
             initialize: function (url, options) {
                 this._url = `http://wl.ngmk.uz/gis_render/{x}_{y}_{z}/${options.userId}/tile.png?sid=${sid}`
@@ -100,38 +102,35 @@ export default class {
     }
 
     drawSquare(item, size, index, withCircle = false) {
-        const row = +item.ZonaX
-        const column = +item.ZonaY
+        const row = item.ZonaX !== undefined ? item.ZonaX : item.x
+        const column = item.ZonaY !== undefined ? item.ZonaY : item.y
 
-        const pivotLat = 42.32;
-        const pivotLon = 63.82;
+        const pivotLat = this.pivotLat;
+        const pivotLon = this.pivotLon;
 
         const boxTL = L.latLng(
-            pivotLat - row * (size / 111000), // преобразуем размер в градусы широты
-            pivotLon + column * (size / (111000 * Math.cos(this.deg2rad(pivotLat)))) // преобразуем размер в градусы долготы
+            pivotLat - row * (size / 111000),
+            pivotLon + column * (size / (111000 * Math.cos(this.deg2rad(pivotLat))))
         )
+
 
         const boxBR = L.latLng(
             pivotLat - (row + 1) * (size / 111000),
             pivotLon + (column + 1) * (size / (111000 * Math.cos(this.deg2rad(pivotLat))))
         )
-        const rect = L.rectangle([boxTL, boxBR], { color: 'red', weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
-        this.rectangles.push({ row, column, rectangle: rect });
+        const rect = L.rectangle([boxTL, boxBR], { color: item.color, weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
+        this.rectangles.push({ row, column, rectangle: rect, color: item.color });
 
         const center = this.getCenterCubic(boxTL, boxBR)
 
-        if(withCircle){
+        if (withCircle) {
             const marker = L.marker(center, {
-                icon: L.divIcon({ className: 'custom-marker-class', html: index}),
+                icon: L.divIcon({ className: 'custom-marker-class', html: index }),
             }).addTo(this.map)
-    
+
             this.points.push({ rect, marker })
             this.store.points.push({ center, item, image: marker._icon, active: false, index })
         }
-
-        // this.store.points = this.store.points.sort((d1, d2) => (
-        //     +d1.item.SpeedAvg - +d1.item.SpeedAvgL > +d2.item.SpeedAvg - +d2.item.SpeedAvgL
-        // ) ? -1 : 1)
     }
 
     getCenterCubic(boxTL, boxBR) {
@@ -142,9 +141,9 @@ export default class {
     }
 
 
-    drawCubics(points) {
+    drawCubics(points, numbers = true) {
         points.forEach((point, index) => {
-            this.drawSquare(point, 50, index + 1, true)
+            this.drawSquare(point, this.size, index + 1, numbers)
         })
     }
 
