@@ -115,7 +115,7 @@ export default class {
 		const qaynarov = this.session.getItems("avl_resource")[0];
 		const reports = qaynarov.getReports();
 		return await new Promise((resolve) => {
-			qaynarov.execReport(reports[60], 10259, 0,
+			qaynarov.execReport(reports[60], 10587, 0,
 				{ from: from, to: to, flags: wialon.item.MReport.intervalFlag.absolute },
 				async () => {
 					var renderer = this.session.getRenderer();
