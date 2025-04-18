@@ -54,6 +54,10 @@ class PointController extends Controller
     public function getWaySpeed(Request $request){
         // $request->points
         $coordinates = $request->points;
+
+        foreach ($coordinates as $key => $value) {
+            $coordinates[$key]['ZonaY'] = -$value['ZonaY'];
+        }
         return Point::select(
             DB::raw('DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0) AS hour'),
             DB::raw('ROUND(AVG(CASE WHEN Speed <> 0 THEN CAST(Speed AS DECIMAL(10, 2)) ELSE NULL END), 2) AS average_speed'),
