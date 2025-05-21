@@ -10,7 +10,7 @@ import router from "./router";
 import { TippyDirective, Tippy, TippySingleton } from "tippy.vue";
 import "tippy.js/dist/tippy.css";
 import OutsideClick from "./modules/OutsideClick";
-wialon.core.Session.getInstance().initSession("http://wl.ngmk.uz");
+wialon.core.Session.getInstance().initSession("http://172.16.0.166:8025");
 wialon.core.Session.getInstance().loginToken(
     SERVER_DATA.wialon_token,
     "",
