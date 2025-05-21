@@ -79,7 +79,7 @@ export default class {
         // var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
         L.TileLayer.WebGis = L.TileLayer.extend({
             initialize: function (url, options) {
-                this._url = `http://wl.ngmk.uz/gis_render/{x}_{y}_{z}/${options.userId}/tile.png?sid=${sid}`
+                this._url = `http://172.16.0.166:8025/gis_render/{x}_{y}_{z}/${options.userId}/tile.png?sid=${sid}`
             },
             getTileUrl: getTile
         })

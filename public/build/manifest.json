@@ -1,19 +1,19 @@
 {
-  "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js": {
-    "file": "assets/PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js",
+  "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js": {
+    "file": "assets/PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js",
     "imports": [
-      "_Wialon-e53a39fc.js",
+      "_Wialon-a2e0a235.js",
       "resources/ts/app.ts"
     ]
   },
-  "_TimezoneDate-ca043b98.js": {
-    "file": "assets/TimezoneDate-ca043b98.js",
+  "_TimezoneDate-aaa23fc0.js": {
+    "file": "assets/TimezoneDate-aaa23fc0.js",
     "imports": [
-      "_Wialon-e53a39fc.js"
+      "_Wialon-a2e0a235.js"
     ]
   },
-  "_Wialon-e53a39fc.js": {
-    "file": "assets/Wialon-e53a39fc.js",
+  "_Wialon-a2e0a235.js": {
+    "file": "assets/Wialon-a2e0a235.js",
     "imports": [
       "resources/ts/app.ts"
     ]
@@ -21,8 +21,8 @@
   "__commonjsHelpers-de833af9.js": {
     "file": "assets/_commonjsHelpers-de833af9.js"
   },
-  "_data-grid-a5469ed4.js": {
-    "file": "assets/data-grid-a5469ed4.js",
+  "_data-grid-cebfacc6.js": {
+    "file": "assets/data-grid-cebfacc6.js",
     "imports": [
       "__commonjsHelpers-de833af9.js",
       "resources/ts/app.ts"
@@ -153,28 +153,28 @@
       "resources/ts/pages/WaysPage.vue",
       "resources/ts/pages/WaysRedactor.vue"
     ],
-    "file": "assets/app-5ad52092.js",
+    "file": "assets/app-5e9f9567.js",
     "isEntry": true,
     "src": "resources/ts/app.ts"
   },
   "resources/ts/pages/GeozonesPage.vue": {
-    "file": "assets/GeozonesPage-1f5fc520.js",
+    "file": "assets/GeozonesPage-24ebf075.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-e53a39fc.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js"
+      "_Wialon-a2e0a235.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/GeozonesPage.vue"
   },
   "resources/ts/pages/GreydersPage.vue": {
-    "file": "assets/GreydersPage-73fac2d6.js",
+    "file": "assets/GreydersPage-5636b4ab.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-e53a39fc.js",
-      "_TimezoneDate-ca043b98.js",
-      "_data-grid-a5469ed4.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js",
+      "_Wialon-a2e0a235.js",
+      "_TimezoneDate-aaa23fc0.js",
+      "_data-grid-cebfacc6.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js",
       "__commonjsHelpers-de833af9.js"
     ],
     "isDynamicEntry": true,
@@ -189,7 +189,7 @@
       "assets/excavator-12f298b0.png",
       "assets/road-f18faddd.png"
     ],
-    "file": "assets/HomePage-6eb3ec66.js",
+    "file": "assets/HomePage-46dc2d1c.js",
     "imports": [
       "resources/ts/app.ts"
     ],
@@ -197,23 +197,23 @@
     "src": "resources/ts/pages/HomePage.vue"
   },
   "resources/ts/pages/OffendersReportPage.vue": {
-    "file": "assets/OffendersReportPage-ea8e187e.js",
+    "file": "assets/OffendersReportPage-3b64f1ad.js",
     "imports": [
       "resources/ts/app.ts",
-      "_data-grid-a5469ed4.js",
-      "_Wialon-e53a39fc.js",
+      "_data-grid-cebfacc6.js",
+      "_Wialon-a2e0a235.js",
       "__commonjsHelpers-de833af9.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/OffendersReportPage.vue"
   },
   "resources/ts/pages/TrucksPage.vue": {
-    "file": "assets/TrucksPage-dc571717.js",
+    "file": "assets/TrucksPage-f3967b23.js",
     "imports": [
-      "_Wialon-e53a39fc.js",
+      "_Wialon-a2e0a235.js",
       "resources/ts/app.ts",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js",
-      "_TimezoneDate-ca043b98.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js",
+      "_TimezoneDate-aaa23fc0.js",
       "_highcharts-ba9c9956.js",
       "__commonjsHelpers-de833af9.js"
     ],
@@ -221,35 +221,35 @@
     "src": "resources/ts/pages/TrucksPage.vue"
   },
   "resources/ts/pages/WaterTruckPage.vue": {
-    "file": "assets/WaterTruckPage-2c3ed071.js",
+    "file": "assets/WaterTruckPage-58be8142.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-e53a39fc.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js",
-      "_TimezoneDate-ca043b98.js"
+      "_Wialon-a2e0a235.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js",
+      "_TimezoneDate-aaa23fc0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/WaterTruckPage.vue"
   },
   "resources/ts/pages/WaysPage.vue": {
-    "file": "assets/WaysPage-859f0f1b.js",
+    "file": "assets/WaysPage-6aea1fec.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-e53a39fc.js",
+      "_Wialon-a2e0a235.js",
       "_highcharts-ba9c9956.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js",
-      "_TimezoneDate-ca043b98.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js",
+      "_TimezoneDate-aaa23fc0.js",
       "__commonjsHelpers-de833af9.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/WaysPage.vue"
   },
   "resources/ts/pages/WaysRedactor.vue": {
-    "file": "assets/WaysRedactor-5342368e.js",
+    "file": "assets/WaysRedactor-911c42d5.js",
     "imports": [
       "resources/ts/app.ts",
-      "_Wialon-e53a39fc.js",
-      "_PreLoader.vue_vue_type_script_setup_true_lang-3a40b14f.js"
+      "_Wialon-a2e0a235.js",
+      "_PreLoader.vue_vue_type_script_setup_true_lang-8362e1f3.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/ts/pages/WaysRedactor.vue"
