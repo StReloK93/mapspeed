@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('order_points', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
-            $table->bigInteger('x');
-            $table->bigInteger('y');
+            $table->double('lat');
+            $table->double('lng');
+            $table->integer('index');
             $table->string('color');
         });
     }

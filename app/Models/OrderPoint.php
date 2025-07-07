@@ -13,14 +13,16 @@ class OrderPoint extends Model
 
     protected $fillable = [
         'order_id',
-        'x',
-        'y',
+        'lng',
+        'lat',
         'color',
+        'index',
     ];
 
     protected $casts = [
-        'x' => 'integer',
-        'y' => 'integer',
+        'lat' => 'float',
+        'lng' => 'float',
+        'index' => 'integer',
     ];
 
 }

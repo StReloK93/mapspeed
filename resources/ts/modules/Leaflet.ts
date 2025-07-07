@@ -1,14 +1,24 @@
 import { useAppStore } from "@/store/useAppStore"
+interface IDrawLine {
+    circle: any,
+    color: any,
+    line: any,
+    point: any[],
+}
 
 export default class {
     map
     store
     points = []
+    drawPoints: IDrawLine[] = []
     pivotLat
     pivotLon
     size
     rectangles
-    constructor(canvas, picker = false) {
+    selectedCircle: IDrawLine
+    onSelectCircle: Function
+    onClearSelectCircle: Function
+    constructor(canvas, picker = 0) {
         if (ENV.PIVOT_LAT == null || ENV.PIVOT_LAT == null) {
             console.error('ENV ga PIVOT_LAT va PIVOT_LAT qiymatlar kiritilmagan')
             return
@@ -21,15 +31,17 @@ export default class {
         this.store = useAppStore()
         this.map = this.createMap(canvas)
         this.rectangles = []
+        this.drawPoints = []
+        if (picker == 1) this.map.on('click', this.handleMapClick.bind(this));
+        if (picker == 2) this.writeLine(this.map)
 
-        if (picker) this.map.on('click', this.handleMapClick.bind(this));
     }
 
     handleMapClick(event) {
-        if(event.originalEvent.ctrlKey){
+        if (event.originalEvent.ctrlKey) {
             const row = Math.floor((this.pivotLat - event.latlng.lat) * 111000 / this.size);
             const column = Math.floor((event.latlng.lng - this.pivotLon) * (111000 * Math.cos(this.deg2rad(this.pivotLat))) / this.size);
-    
+
             if (!this.rectangleFind(row, column)) {
                 this.drawSquare({ ZonaX: row, ZonaY: column, color: 'red' }, this.size, 1);
             }
@@ -41,9 +53,162 @@ export default class {
         }
     }
 
+
+    geetDrawPoints() {
+        return this.drawPoints.map((drawPoint, index) => ({
+            index: index,
+            lat: drawPoint.point[0],
+            lng: drawPoint.point[1],
+            color: drawPoint.color,
+        }))
+    }
+
+    writeLine(currentMap) {
+
+        currentMap.on('click', (event) => {
+            const point = [event.latlng.lat, event.latlng.lng]
+            if (event.originalEvent.target.classList.contains('circle')) return
+
+            if (this.selectedCircle) movePoint(point)
+            else createPoint(point)
+
+        });
+
+
+
+
+        const movePoint = (point) => {
+            this.selectedCircle.circle.setLatLng(point);
+            this.selectedCircle.point = point
+
+            this.selectedCircle.circle.setStyle({ color: this.selectedCircle.color })
+
+            if (this.selectedCircle.line) this.selectedCircle.line.setStyle({ color: this.selectedCircle.color })
+
+            this.reDrawLines()
+
+            if (this.onClearSelectCircle) this.onClearSelectCircle()
+
+            this.selectedCircle = null
+        }
+
+
+
+        const createPoint = (point) => {
+            const circle = this.createCircle(point)
+
+
+            if (this.drawPoints.length > 0) {
+                var line = L.polyline([this.drawPoints.at(-1).point, point], { color: 'red', weight: 2, interactive: false }).addTo(currentMap);
+            }
+            this.drawPoints.push({ point: point, circle: circle, line: line, color: 'red' })
+        }
+
+    }
+
+    createCircle(point, color = 'red') {
+        const circle = L.circle(point, { radius: 10, weight: 1, color: color }).addTo(this.map);
+        circle._path.classList.add('circle')
+
+
+        circle.on('click', () => {
+            if (this.selectedCircle) {
+                this.selectedCircle.circle.setStyle({ color: this.selectedCircle.color })
+                if (this.selectedCircle.line) {
+                    this.selectedCircle.line.setStyle({ color: this.selectedCircle.color })
+                }
+            }
+            
+            this.selectedCircle = this.drawPoints.find((gedo) => gedo.circle._leaflet_id == circle._leaflet_id)
+            this.selectedCircle.circle.setStyle({ color: 'blue' })
+
+
+            if (this.selectedCircle.line) this.selectedCircle.line.setStyle({ color: 'blue' })
+            if (this.onSelectCircle) this.onSelectCircle()
+        });
+
+
+        return circle
+    }
+
+    changeColorDrawLine(color) {
+        if (this.selectedCircle) {
+            if (this.selectedCircle.line) this.selectedCircle.line.setStyle({ color: color })
+            this.selectedCircle.circle.setStyle({ color: color })
+            this.selectedCircle.color = color
+            this.selectedCircle = null
+            this.onClearSelectCircle()
+        }
+    }
+
+    clearDrawLinePoints(){
+        this.drawPoints.forEach((drawPoint) => {
+            drawPoint.circle.remove()
+            if(drawPoint.line) drawPoint.line.remove()
+        })
+
+        this.drawPoints = []
+    }
+
+    deleteDrawLine() {
+        if (this.selectedCircle) {
+            const index = this.drawPoints.findIndex((gedo) => gedo.circle == this.selectedCircle.circle)
+            const selectedPoint = this.drawPoints.find((gedo) => gedo.circle == this.selectedCircle.circle)
+
+            if (index == 0) {
+                selectedPoint.circle.remove()
+                this.drawPoints[1].line.remove()
+                this.drawPoints.splice(index, 1)
+                this.reDrawLines()
+
+                this.onClearSelectCircle()
+            }
+            else if (index > 0) {
+
+                selectedPoint.circle.remove()
+                selectedPoint.line.remove()
+                this.drawPoints.splice(index, 1)
+                this.reDrawLines()
+
+                this.onClearSelectCircle()
+            }
+        }
+    }
+
+
+
+    reDrawLines() {
+        this.drawPoints.find((drawPoint, index) => {
+            if (index != 0) {
+                drawPoint.line.remove()
+                const lat = this.drawPoints[index - 1].point
+                var line = L.polyline([lat, drawPoint.point], { color: drawPoint.color, weight: 2, interactive: false }).addTo(this.map);
+                drawPoint.line = line
+            }
+        })
+    }
+
+    reDrawLinesBase(points: any[]) {
+        points.forEach((drawPoint, index) => {
+            const point = [drawPoint.lat, drawPoint.lng]
+            const circle = this.createCircle([drawPoint.lat, drawPoint.lng], drawPoint.color)
+            if (index == 0) {
+                this.drawPoints.push({ point: point, circle: circle, line: null, color: drawPoint.color })
+            }
+            else {
+                const oldPoint = [points[index - 1].lat,points[index - 1].lng]
+                var line = L.polyline([oldPoint, point], { color: drawPoint.color, weight: 2, interactive: false }).addTo(this.map);
+                this.drawPoints.push({ point: point, circle: circle, line: line, color: drawPoint.color })
+            }
+        });
+        console.log(this.drawPoints);
+    }
+
+
     rectangleFind(row, column) {
         return this.rectangles.find(rect => rect.row === row && rect.column === column);
     }
+
 
 
     rectanglesClear() {
@@ -70,13 +235,6 @@ export default class {
         const sess = wialon.core.Session.getInstance()
         const map = L.map(canvas, { zoomControl: false }).setView([this.pivotLat, this.pivotLon], 12)
 
-        // var latlngs = [
-        //     [this.pivotLat, this.pivotLon],
-        //     [37.77, -122.43],
-        //     [34.04, -118.2]
-        // ];
-        
-        // var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
         L.TileLayer.WebGis = L.TileLayer.extend({
             initialize: function (url, options) {
                 this._url = `http://172.16.0.166:8025/gis_render/{x}_{y}_{z}/${options.userId}/tile.png?sid=${sid}`

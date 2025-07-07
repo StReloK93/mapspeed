@@ -32,8 +32,9 @@ class OrderWayController extends Controller
         $formattedPoints = array_map(function ($item) use($id) {
             return [
                 'order_id' => $id,
-                'x' => $item['ZonaX'],
-                'y' => $item['ZonaY'],
+                'index' => $item['index'],
+                'lat' => $item['lat'],
+                'lng' => $item['lng'],
                 'color' => $item['color'],
             ];
         }, $points);

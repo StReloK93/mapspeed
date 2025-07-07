@@ -97,7 +97,7 @@ async function createLines(dateTime) {
 }
 
 onMounted(async () => {
-	pageData.leaflet = new Leaflet(geozonemap.value, true)
+	pageData.leaflet = new Leaflet(geozonemap.value, 1)
 	pageData.wialon = new Wialon(pageData.leaflet.map)
 
 	pageData.wialon.onInit = () => createLines(new Date())

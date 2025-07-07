@@ -9,7 +9,7 @@
 			<h3 class="absolute top-3 right-20 text-xl text-teal-600 z-[1000] font-semibold">
 				{{ pageData.selectedOrderWay?.name }}
 			</h3>
-			<div @click.stop @mousedown.stop :class="[pageData.selectedOrderWay != null ? 'right-0' : '-right-10']"
+			<div @click.stop @mousedown.stop :class="[pageData.selectedOrderWay != null ? 'right-0' : '-right-12']"
 				class="z-[1000] cursor-auto absolute bottom-0 top-0 transition-all bg-gray-50 p-2 shadow-inner border-r border-teal-400 flex flex-col gap-2">
 				<button @click="selectedClear()"
 					class="w-8 h-8 text-sm bg-red-300/20 shadow text-red-900 rounded active:bg-red-500/50 hover:bg-red-500/30">
@@ -22,10 +22,21 @@
 				</button>
 			</div>
 			<div @click.stop @mousedown.stop :class="[pageData.selectedOrderWay != null ? 'bottom-0' : '-bottom-10']"
-				class="z-[1000] cursor-auto absolute right-12 left-0 transition-all p-2 gap-2 text-right">
+				class="z-[1000] justify-end cursor-auto absolute right-12 transition-all p-2 gap-2 flex">
+				<button @click="pageData.leaflet.changeColorDrawLine('green')" v-if="pageData.selectedCircle"
+					class="w-8 h-8 rounded-full border border-green-600 bg-teal-400/60 active:bg-teal-500/50 hover:bg-teal-500/30">
+				</button>
+				<button @click="pageData.leaflet.changeColorDrawLine('red')" v-if="pageData.selectedCircle"
+					class="w-8 h-8 rounded-full border border-rose-600 bg-red-400/80 active:bg-red-500/50 hover:bg-red-500/30">
+				</button>
+				<button @click="pageData.leaflet.deleteDrawLine" v-if="pageData.selectedCircle"
+					class="w-8 h-8 rounded uppercase bg-red-400/40 text-red-900 font-bold active:bg-red-500/50 hover:bg-red-500/30 mx-5">
+					<i class="fa-duotone fa-solid fa-trash"></i>
+				</button>
 				<button @click="sendPoints"
+					v-if="!pageData.selectedCircle"
 					class="w-24 py-1.5 rounded uppercase bg-teal-400/40 text-teal-900 font-bold active:bg-teal-500/50 hover:bg-teal-500/30">
-					<i v-if="pageData.loading" class="fa-solid fa-spinner fa-spin-pulse"></i>
+					<i v-if="pageData.loading " class="fa-solid fa-spinner fa-spin-pulse"></i>
 					<span v-else>Saqlash <i class="fa-solid fa-floppy-disk ml-1.5"></i></span>
 				</button>
 			</div>
@@ -49,14 +60,11 @@
 			</button>
 			<ul class="mt-1.5">
 				<li v-for="order in pageData.orders" class="">
-					<form @submit="upsertOrderWay($event, order)" :class="{'mb-1.5': order.id === undefined}" class="flex gap-1.5">
-						<OrderNameInput :pageData="pageData" :order="order"/>
+					<form @submit="upsertOrderWay($event, order)" :class="{ 'mb-1.5': order.id === undefined }" class="flex gap-1.5">
+						<OrderNameInput :pageData="pageData" :order="order" />
 						<NewOrderEvents v-if="order.id === undefined" @delete="deleteOrderWay(order)" />
-						<ExistOrderEvents v-else  :pageData="pageData" :order="order" 
-							@delete-order-way="deleteOrderWay(order)"
-							@edit-exists-order="editExistsOrder(order)"
-							@selected-way-change="selectedWayChange(order)"
-						/>
+						<ExistOrderEvents v-else :pageData="pageData" :order="order" @delete-order-way="deleteOrderWay(order)"
+							@edit-exists-order="editExistsOrder(order)" @selected-way-change="selectedWayChange(order)" />
 					</form>
 					<main v-if="order.id" class="px-2 mb-1.5">
 						<span class="text-sm text-gray-400">
@@ -90,6 +98,7 @@ const pageData = reactive({
 	selectedLoading: null,
 	orders: [],
 	editable: null,
+	selectedCircle: null,
 })
 
 function newOrderWay() {
@@ -97,9 +106,11 @@ function newOrderWay() {
 	pageData.editable = pageData.orders[0]
 }
 
-function deleteOrderWay(order) {
+async function deleteOrderWay(order) {
+	await OrderWaysRepository.destroy(order.id)
 	const index = pageData.orders.findIndex((orda) => orda == order)
 	pageData.orders.splice(index, 1)
+
 	if (pageData.editable == order) pageData.editable = null
 }
 
@@ -123,16 +134,15 @@ async function upsertOrderWay(event, order) {
 }
 
 function clearData() {
-	pageData.leaflet?.rectanglesClear()
+	pageData.leaflet?.clearDrawLinePoints()
 }
 
 async function sendPoints() {
 	if (pageData.selectedOrderWay == null) return console.log('tanlang');
 
 	pageData.loading = true
-	const points = pageData.leaflet.getRectanglePoints()
+	const points = pageData.leaflet.geetDrawPoints()
 	OrderWaysRepository.update(pageData.selectedOrderWay.id, points)
-
 	setTimeout(() => pageData.loading = false, 2000)
 }
 
@@ -143,7 +153,7 @@ async function selectedWayChange(order) {
 	pageData.selectedOrderWay = null
 	setTimeout(() => {
 		pageData.selectedOrderWay = order
-		pageData.leaflet?.drawCubics(data.points, false)
+		pageData.leaflet?.reDrawLinesBase(data.points)
 	}, 500)
 }
 
@@ -157,7 +167,14 @@ function selectedClear() {
 onMounted(async () => {
 	const { data } = await OrderWaysRepository.index()
 	pageData.orders = data
-	pageData.leaflet = new Leaflet(geozonemap.value, true)
+	pageData.leaflet = new Leaflet(geozonemap.value, 2)
 	pageData.wialon = new Wialon(pageData.leaflet.map)
+	pageData.leaflet.onClearSelectCircle = function () {
+		pageData.selectedCircle = false
+	}
+
+	pageData.leaflet.onSelectCircle = function () {
+		pageData.selectedCircle = true
+	}
 })
 </script>
