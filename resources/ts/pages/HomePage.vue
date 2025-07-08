@@ -48,7 +48,7 @@
             class="bg-gray-200 w-28 h-28 p-3 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
             <img src="@icons/road.webp">
             <tippy target="_parent">
-               <div>Yo'llarni tekshirish</div>
+               <div>Yo'llarni tamirlash</div>
             </tippy>
          </RouterLink>
       </div>
