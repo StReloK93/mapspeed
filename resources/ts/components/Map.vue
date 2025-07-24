@@ -39,7 +39,6 @@ onMounted(async () => {
 
     wialon.value.onSelectStart = () => {
         leaflet.removeCubics()
-        leaflet.map.setView([42.2628699, 63.891215], 13)
     }
 
     wialon.value.onSelectEnd = (points) => leaflet.drawCubics(points)

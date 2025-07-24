@@ -55,7 +55,5 @@
    </main>
 </template>
 <script lang="ts" setup>
-console.log(ENV);
-
 const env = ENV
 </script>
