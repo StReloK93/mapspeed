@@ -154,8 +154,9 @@ export default class {
 
 	public async executeReport(group_id, from, to) {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == 9779);
-		var template = user.getReports();
-
+		var template = user?.getReports();
+		console.log(this.session.getItems("avl_resource"));
+		
 		return await new Promise(
 			function (resolve) {
 				user.execReport(

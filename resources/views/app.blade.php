@@ -14,25 +14,23 @@
         const ENV = {
             PIVOT_LAT: {{ env('PIVOT_LAT') == '' ? 'null' : env('PIVOT_LAT')}},
             PIVOT_LON: {{ env('PIVOT_LON') == '' ? 'null' : env('PIVOT_LON')}},
+            SHARQIY: {{  env('SHARQIY') == '' ? 'null' : env('SHARQIY') }}
+        }
+
+        const SERVER_DATA = {
+            wialon_token: "{{ $wialon_token }}",
+            BASE_T55_ID: "{{ $BASE_T55_ID }}",
+            BASE_T90_ID: "{{ $BASE_T90_ID }}",
+            BASE_KOMATSU_ID: "{{ $BASE_KOMATSU_ID }}",
+            BASE_CAT_ID: "{{ $BASE_CAT_ID }}",
+            BASE_ALLCARS_ID: "{{ $BASE_ALLCARS_ID }}",
         }
     </script>
     <title>Карта Скоростных дорог</title>
+    @vite('resources/ts/app.ts')
 </head>
 
 <body>
     <section id="app"></section>
-    @vite('resources/ts/app.ts')
-
 </body>
-<script>
-    const SERVER_DATA = {
-        wialon_token: "{{ $wialon_token }}",
-        BASE_T55_ID: "{{ $BASE_T55_ID }}",
-        BASE_T90_ID: "{{ $BASE_T90_ID }}",
-        BASE_KOMATSU_ID: "{{ $BASE_KOMATSU_ID }}",
-        BASE_CAT_ID: "{{ $BASE_CAT_ID }}",
-        BASE_ALLCARS_ID: "{{ $BASE_ALLCARS_ID }}",
-    }
-</script>
-
 </html>

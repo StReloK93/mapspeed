@@ -76,9 +76,6 @@ export default class {
         const row = item.ZonaX !== undefined ? +item.ZonaX : item.x
         const column = item.ZonaY !== undefined ? +item.ZonaY : item.y
 
-        console.log(row, column);
-
-
         const pivotLat = this.pivotLat;
         const pivotLon = this.pivotLon;
         const latCos = Math.cos(this.deg2rad(pivotLat));

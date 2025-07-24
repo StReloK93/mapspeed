@@ -10,5 +10,6 @@ declare global {
     var ENV: {
         PIVOT_LAT: number,
         PIVOT_LON: number,
+        SHARQIY: number,
     }
 }

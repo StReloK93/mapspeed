@@ -27,3 +27,4 @@ wialon.core.Session.getInstance().loginToken(
             .mount("#app");
     }
 );
+

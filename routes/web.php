@@ -20,5 +20,6 @@ Route::get('/{path}', function () {
         'BASE_KOMATSU_ID' => env('BASE_KOMATSU_ID'),
         'BASE_CAT_ID' => env('BASE_CAT_ID'),
         'BASE_ALLCARS_ID' => env('BASE_ALLCARS_ID'),
+        'SHARQIY' => env('SHARQIY'),
     ]);
 })->where('path', '.*');
