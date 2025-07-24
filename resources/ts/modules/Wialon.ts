@@ -153,9 +153,8 @@ export default class {
 	}
 
 	public async executeReport(group_id, from, to) {
-		var user = this.session.getItems("avl_resource").find((item) => item._id == 9779);
+		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
 		var template = user?.getReports();
-		console.log(this.session.getItems("avl_resource"));
 		
 		return await new Promise(
 			function (resolve) {
@@ -190,7 +189,6 @@ export default class {
 		const from = to - 3600 * 6 - 1;
 
 		await this.executeReport('7381', from, to);
-		console.log(this.store.time, moment(this.store.time.value).format("YYYY-MM-DD HH:mm"));
 		
 		const { data: points } = await axios.post("/api/tracks/show", {
 			oldDays: this.store.oldDays,

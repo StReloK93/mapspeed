@@ -14,7 +14,8 @@
         const ENV = {
             PIVOT_LAT: {{ env('PIVOT_LAT') == '' ? 'null' : env('PIVOT_LAT')}},
             PIVOT_LON: {{ env('PIVOT_LON') == '' ? 'null' : env('PIVOT_LON')}},
-            SHARQIY: {{  env('SHARQIY') == '' ? 'null' : env('SHARQIY') }}
+            SHARQIY: {{  env('SHARQIY') == '' ? 'null' : env('SHARQIY') }},
+            ACCAUNT_ID: {{  env('ACCAUNT_ID') == '' ? 'null' : env('ACCAUNT_ID') }}
         }
 
         const SERVER_DATA = {

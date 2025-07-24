@@ -11,5 +11,6 @@ declare global {
         PIVOT_LAT: number,
         PIVOT_LON: number,
         SHARQIY: number,
+        ACCAUNT_ID: number,
     }
 }
