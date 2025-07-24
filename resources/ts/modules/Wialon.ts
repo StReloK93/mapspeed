@@ -182,20 +182,20 @@ export default class {
 		);
 	}
 
-	public async selectGroup(group) {
+	public async selectGroup() {
 		if (this.onSelectStart) this.onSelectStart();
 
 		const to = moment().unix();
-		const from = to - 3600 * 24 - 1;
+		const from = to - 3600 * 6 - 1;
 
-		this.store.UIData.active = group.id;
-		await this.executeReport(group.id, from, to);
+		await this.executeReport('7381', from, to);
+		console.log(this.store.time, moment(this.store.time.value).format("YYYY-MM-DD HH:mm"));
+		
 		const { data: points } = await axios.post("/api/tracks/show", {
-			index: group.id,
 			oldDays: this.store.oldDays,
 			hourPeriod: this.store.hourPeriod,
 			speedRange: this.store.speedRange,
-			selectedTime: moment(this.store.time).format("YYYY-MM-DD HH:mm"),
+			selectedTime: moment(this.store.time.value).format("YYYY-MM-DD HH:mm"),
 		});
 
 		if (this.onSelectEnd) this.onSelectEnd(points);

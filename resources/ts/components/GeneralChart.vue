@@ -43,7 +43,8 @@ function getData() {
         endDay: formatDate(range.value.end, 'end'),
     }).then(({ data }) => {
         const days = splitDayNightShifts(data)
-
+        console.log(days);
+        
         pageData.chart.series[0].update({ data: days.map((day) => day.day_speed) }, true, true)
         pageData.chart.series[1].update({ data: days.map((day) => day.night_speed) }, true, true)
         pageData.chart.xAxis[0].update({ categories: days.map((day) => moment(day.date).format('D-MMM')) }, true, true)

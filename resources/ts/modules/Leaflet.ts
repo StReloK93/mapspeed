@@ -23,8 +23,7 @@ export default class {
             console.error('ENV ga PIVOT_LAT va PIVOT_LAT qiymatlar kiritilmagan')
             return
         }
-        // this.pivotLat = 42.32; // Начальная широта
-        // this.pivotLon = 63.82; // Начальная долгота
+
         this.pivotLat = ENV.PIVOT_LAT; // Начальная широта
         this.pivotLon = ENV.PIVOT_LON; // Начальная долгота
         this.size = 50
@@ -38,9 +37,26 @@ export default class {
     }
 
     handleMapClick(event) {
+
+        //      DECLARE @Y0 FLOAT = 42.32;
+        //      DECLARE @X0 FLOAT = 63.82;
+
+        //      DECLARE @ZonaX INT = FLOOR((@Y0 - @Y) * 111000 / 50);
+        //      DECLARE @ZonaY INT = FLOOR(((@X0 - @X) * (111000 * COS(@Y0 * (PI() / 180)))) / 50);
+
+
+
+        // this.size = 50
+        // this.pivotLat = 42.32; // Начальная широта
+        // this.pivotLon = 63.82; // Начальная долгота
+        // deg2rad(degrees) {
+        //     return degrees * (Math.PI / 180);
+        // }
+
         if (event.originalEvent.ctrlKey) {
             const row = Math.floor((this.pivotLat - event.latlng.lat) * 111000 / this.size);
-            const column = Math.floor((event.latlng.lng - this.pivotLon) * (111000 * Math.cos(this.deg2rad(this.pivotLat))) / this.size);
+            const column = Math.floor((this.pivotLon - event.latlng.lng) * (111000 * Math.cos(this.deg2rad(this.pivotLat))) / this.size);
+            console.log(row, column);
 
             if (!this.rectangleFind(row, column)) {
                 this.drawSquare({ ZonaX: row, ZonaY: column, color: 'red' }, this.size, 1);
@@ -53,6 +69,44 @@ export default class {
         }
     }
 
+
+
+    drawSquare(item, size, index, withCircle = false) {
+
+        const row = item.ZonaX !== undefined ? +item.ZonaX : item.x
+        const column = item.ZonaY !== undefined ? +item.ZonaY : item.y
+
+        console.log(row, column);
+
+
+        const pivotLat = this.pivotLat;
+        const pivotLon = this.pivotLon;
+        const latCos = Math.cos(this.deg2rad(pivotLat));
+        const boxTL = L.latLng(
+            pivotLat - row * (size / 111000),
+            pivotLon - column * (size / (111000 * latCos))
+        );
+
+        const boxBR = L.latLng(
+            pivotLat - (row + 1) * (size / 111000),
+            pivotLon - (column + 1) * (size / (111000 * latCos))
+        );
+
+
+        const rect = L.rectangle([boxTL, boxBR], { color: item.color, weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
+        this.rectangles.push({ row, column, rectangle: rect, color: item.color });
+
+        const center = this.getCenterCubic(boxTL, boxBR)
+
+        if (withCircle) {
+            const marker = L.marker(center, {
+                icon: L.divIcon({ className: 'custom-marker-class', html: index }),
+            }).addTo(this.map)
+
+            this.points.push({ rect, marker })
+            this.store.points.push({ center, item, image: marker._icon, active: false, index })
+        }
+    }
 
     geetDrawPoints() {
         return this.drawPoints.map((drawPoint, index) => ({
@@ -118,7 +172,7 @@ export default class {
                     this.selectedCircle.line.setStyle({ color: this.selectedCircle.color })
                 }
             }
-            
+
             this.selectedCircle = this.drawPoints.find((gedo) => gedo.circle._leaflet_id == circle._leaflet_id)
             this.selectedCircle.circle.setStyle({ color: 'blue' })
 
@@ -141,10 +195,10 @@ export default class {
         }
     }
 
-    clearDrawLinePoints(){
+    clearDrawLinePoints() {
         this.drawPoints.forEach((drawPoint) => {
             drawPoint.circle.remove()
-            if(drawPoint.line) drawPoint.line.remove()
+            if (drawPoint.line) drawPoint.line.remove()
         })
 
         this.drawPoints = []
@@ -196,12 +250,11 @@ export default class {
                 this.drawPoints.push({ point: point, circle: circle, line: null, color: drawPoint.color })
             }
             else {
-                const oldPoint = [points[index - 1].lat,points[index - 1].lng]
+                const oldPoint = [points[index - 1].lat, points[index - 1].lng]
                 var line = L.polyline([oldPoint, point], { color: drawPoint.color, weight: 2, interactive: false }).addTo(this.map);
                 this.drawPoints.push({ point: point, circle: circle, line: line, color: drawPoint.color })
             }
         });
-        console.log(this.drawPoints);
     }
 
 
@@ -259,37 +312,7 @@ export default class {
         return map
     }
 
-    drawSquare(item, size, index, withCircle = false) {
-        const row = item.ZonaX !== undefined ? item.ZonaX : item.x
-        const column = item.ZonaY !== undefined ? item.ZonaY : item.y
 
-        const pivotLat = this.pivotLat;
-        const pivotLon = this.pivotLon;
-
-        const boxTL = L.latLng(
-            pivotLat - row * (size / 111000),
-            pivotLon + column * (size / (111000 * Math.cos(this.deg2rad(pivotLat))))
-        )
-
-
-        const boxBR = L.latLng(
-            pivotLat - (row + 1) * (size / 111000),
-            pivotLon + (column + 1) * (size / (111000 * Math.cos(this.deg2rad(pivotLat))))
-        )
-        const rect = L.rectangle([boxTL, boxBR], { color: item.color, weight: 1, opacity: 1, fillOpacity: 0.25 }).addTo(this.map)
-        this.rectangles.push({ row, column, rectangle: rect, color: item.color });
-
-        const center = this.getCenterCubic(boxTL, boxBR)
-
-        if (withCircle) {
-            const marker = L.marker(center, {
-                icon: L.divIcon({ className: 'custom-marker-class', html: index }),
-            }).addTo(this.map)
-
-            this.points.push({ rect, marker })
-            this.store.points.push({ center, item, image: marker._icon, active: false, index })
-        }
-    }
 
     getCenterCubic(boxTL, boxBR) {
         const centerLat = (boxTL.lat + boxBR.lat) / 2;

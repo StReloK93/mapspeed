@@ -27,22 +27,18 @@ class PointController extends Controller
     }
     public function show(Request $request)
     {
-        if ($request->index == "7381") {
-            return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
-                $request->oldDays,
-                $request->hourPeriod,
-                $request->speedRange,
-                $request->selectedTime
-            ]);
-        }
 
-        return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?) WHERE qt = ?", [
-            $request->oldDays,
-            $request->hourPeriod,
-            $request->speedRange,
-            $request->selectedTime,
-            $request->index
+            //         $request->oldDays,
+            // $request->hourPeriod,
+            // $request->speedRange,
+            // $request->selectedTime
+        return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
+            10, // oldingi nechi kun
+            0, // oldingi kun
+            10, // tezlik farqi
+            $request->selectedTime
         ]);
+
     }
 
 
@@ -55,9 +51,6 @@ class PointController extends Controller
         // $request->points
         $coordinates = $request->points;
 
-        foreach ($coordinates as $key => $value) {
-            $coordinates[$key]['ZonaY'] = -$value['ZonaY'];
-        }
         return Point::select(
             DB::raw('DATEADD(HOUR, DATEDIFF(HOUR, 0, T), 0) AS hour'),
             DB::raw('ROUND(AVG(CASE WHEN Speed <> 0 THEN CAST(Speed AS DECIMAL(10, 2)) ELSE NULL END), 2) AS average_speed'),
