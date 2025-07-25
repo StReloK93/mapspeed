@@ -33,9 +33,9 @@ class PointController extends Controller
             // $request->speedRange,
             // $request->selectedTime
         return DB::select("select * from [dbo].[ProblemZonesAllNKun](?,?,?,?)", [
-            10, // oldingi nechi kun
-            0, // oldingi kun
-            10, // tezlik farqi
+            $request->oldDays, // oldingi nechi kun
+            $request->hourPeriod, // oldingi kun
+            $request->speedRange, // tezlik farqi
             $request->selectedTime
         ]);
 

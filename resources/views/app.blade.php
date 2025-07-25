@@ -10,23 +10,7 @@
     <link rel="stylesheet" href="{{ asset('/leaflet/leaflet.css?v=2') }}" />
     <link rel="stylesheet" href="/awesome/css/all.min.css" />
 
-    <script>
-        const ENV = {
-            PIVOT_LAT: {{ env('PIVOT_LAT') == '' ? 'null' : env('PIVOT_LAT')}},
-            PIVOT_LON: {{ env('PIVOT_LON') == '' ? 'null' : env('PIVOT_LON')}},
-            SHARQIY: {{  env('SHARQIY') == '' ? 'null' : env('SHARQIY') }},
-            ACCAUNT_ID: {{  env('ACCAUNT_ID') == '' ? 'null' : env('ACCAUNT_ID') }}
-        }
 
-        const SERVER_DATA = {
-            wialon_token: "{{ $wialon_token }}",
-            BASE_T55_ID: "{{ $BASE_T55_ID }}",
-            BASE_T90_ID: "{{ $BASE_T90_ID }}",
-            BASE_KOMATSU_ID: "{{ $BASE_KOMATSU_ID }}",
-            BASE_CAT_ID: "{{ $BASE_CAT_ID }}",
-            BASE_ALLCARS_ID: "{{ $BASE_ALLCARS_ID }}",
-        }
-    </script>
     <title>Карта Скоростных дорог</title>
     @vite('resources/ts/app.ts')
 </head>
@@ -34,4 +18,16 @@
 <body>
     <section id="app"></section>
 </body>
+<script>
+    const ENV = {
+        PIVOT_LAT: {{ env('PIVOT_LAT') == '' ? 'null' : env('PIVOT_LAT')}},
+        PIVOT_LON: {{ env('PIVOT_LON') == '' ? 'null' : env('PIVOT_LON')}},
+        SHARQIY: {{  env('SHARQIY') == '' ? 'null' : env('SHARQIY') }},
+        ACCAUNT_ID: {{  env('ACCAUNT_ID') == '' ? 'null' : env('ACCAUNT_ID') }},
+        BASE_ALLCARS_ID: {{  env('BASE_ALLCARS_ID') == '' ? 'null' : env('BASE_ALLCARS_ID') }},
+        WIALON_TOKEN: '{{  env('WIALON_TOKEN') == '' ? 'null' : env('WIALON_TOKEN') }}',
+        REPORT_INDEX: {{  env('REPORT_INDEX') == '' ? 'null' : env('REPORT_INDEX') }},
+    }
+</script>
+
 </html>

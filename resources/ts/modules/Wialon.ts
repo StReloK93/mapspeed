@@ -152,14 +152,14 @@ export default class {
 		});
 	}
 
-	public async executeReport(group_id, from, to) {
+	public async executeReport(group_id, from, to, report_index) {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
 		var template = user?.getReports();
 		
 		return await new Promise(
 			function (resolve) {
 				user.execReport(
-					template[1],
+					template[report_index],
 					group_id,
 					0,
 					{
@@ -188,7 +188,7 @@ export default class {
 		const to = moment().unix();
 		const from = to - 3600 * 6 - 1;
 
-		await this.executeReport('7381', from, to);
+		await this.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.REPORT_INDEX);
 		
 		const { data: points } = await axios.post("/api/tracks/show", {
 			oldDays: this.store.oldDays,

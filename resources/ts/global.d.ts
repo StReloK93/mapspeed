@@ -12,5 +12,8 @@ declare global {
         PIVOT_LON: number,
         SHARQIY: number,
         ACCAUNT_ID: number,
+        BASE_ALLCARS_ID: number,
+        REPORT_INDEX: number,
+        WIALON_TOKEN: string,
     }
 }

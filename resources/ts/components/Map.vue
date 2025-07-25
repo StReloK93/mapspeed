@@ -15,13 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import Charts from './Charts.vue'
 import SpeedControl from './SpeedControl.vue'
 import Wialon from '@/modules/Wialon'
 import Leaflet from '@/modules/Leaflet'
 import { useAppStore } from '@/store/useAppStore'
 import { onMounted, ref } from 'vue'
-const chartToggle = ref(false)
 const map = ref()
 const appStore = useAppStore()
 const wialon = ref(null)
@@ -34,7 +32,7 @@ onMounted(async () => {
     appStore.UIData.map = leaflet
     
     wialon.value.onInit = () => {
-        appStore.withLoading(() => wialon.value.selectGroup(appStore.transport_groups[0]))
+        appStore.withLoading(() => wialon.value.selectGroup())
     }
 
     wialon.value.onSelectStart = () => {
