@@ -156,6 +156,8 @@ export default class {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
 		var template = user?.getReports();
 		
+		console.log(report_index);
+		
 		return await new Promise(
 			function (resolve) {
 				user.execReport(

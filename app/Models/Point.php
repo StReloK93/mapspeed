@@ -9,25 +9,24 @@ class Point extends Model
 {
     use HasFactory;
 
-    protected $table = "ttracks";
+    protected $table = "TSpeedAvg";
 
     public $timestamps = false;
     protected $fillable = [
         "ID",
-        "ObjectID",
-        "X",
-        "Y",
-        "Z",
-        "Speed",
-        "Created",
+        "Date",
+        "TraksCount",
+        "SpeedSum",
+        "SpeedAvg",
         "ZonaX",
         "ZonaY",
+        "Created",
     ];
 
     protected $casts = [
-        'average_speed' =>  'float'
-        // 'x' => 'float',
-        // 'y' => 'float',
+        'SpeedAvg' =>  'float',
+        'ZonaX' =>  'integer',
+        'ZonaY' =>  'integer',
         // 'objectid' => 'integer',
         // 'speed' => 'integer',
         // 'row' => 'integer',

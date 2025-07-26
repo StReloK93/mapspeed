@@ -9,9 +9,9 @@
 			<button @click="clearData" class="bg-white px-4 py-1.5 rounded-full mb-2">Tozalash</button>
 			<ChartLine ref="chartLineRef" />
 			<div class="text-center text-xl">
-				O'rtacha tezlik: {{ middleTotalSpeed }}
+				O'rtacha tezlik: {{ middleTotalSpeed }} Km/s
 			</div>
-			<VDatePicker v-model="range" mode="date" class="my-2"  is-range expanded>
+			<VDatePicker v-model="range" mode="date" class="my-2" :is-range="true" expanded>
 			</VDatePicker>
 			<button @click="sendPoints" class="px-4 py-1.5 rounded-full bg-blue-500 text-white">
 				<i v-if="pageData.loading" class="fa-sharp fa-regular fa-spinner fa-spin-pulse"></i>
@@ -60,29 +60,29 @@ async function sendPoints() {
 	pageData.loading = true
 	const points = pageData.leaflet.getRectanglePoints()
 
+	if (range.value.start == null || range.value.end == null) {
+		alert('Kunni tanlang')
+		return pageData.loading = false
+	}
+
+	if (points.length == 0) {
+		alert("Yo'lni tanlang")
+		return pageData.loading = false
+	}
 	const data = await WaysRepository.getWaysSpeed({
 		startDay: moment(range.value.start).format('YYYY-MM-DD'),
 		endDay: moment(range.value.end).format('YYYY-MM-DD'),
 		points: points
 	})
-	.catch((event) => {
-		if(range.value.start == null && range.value.end  == null){
-			alert('Kunni tanlang');
-		}
+		.catch(() => {
+			pageData.loading = false
+		})
 
-		if(points.length == 0){
-			alert("Yo'lni tanlang");
-		}
-		pageData.loading = false
-	})
-	
-	if(data.length){
-		const zero = data.reduce((sum, total) => sum+total.average_speed, 0)
-		middleTotalSpeed.value = Math.round(zero/data.length) 
+	if (data?.length) {
+		const zero = data.reduce((sum, total) => sum + total.SpeedAvg, 0)
+		middleTotalSpeed.value = Math.round(zero / data.length)
 	}
-	else{
-		middleTotalSpeed.value = 0
-	}
+	else middleTotalSpeed.value = 0
 
 	chartLineRef.value.getChartData(data)
 	pageData.loading = false
@@ -90,9 +90,9 @@ async function sendPoints() {
 
 async function createLines(dateTime) {
 	pageData.loading = true
-	const from = moment(dateTime).add( -6,'h').unix()
+	const from = moment(dateTime).add(-6, 'h').unix()
 	const to = moment(dateTime).unix()
-	await pageData.wialon.executeReport(7381, from, to)
+	await pageData.wialon.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.REPORT_INDEX)
 	pageData.loading = false
 }
 

@@ -17,7 +17,7 @@
                         </div>
                         <article class="flex-grow">
                             <div class="text-center">
-                                {{ point.item.SpeedAvg }} <span class="text-xs">Km/s</span>
+                                {{ point.item.BSpeedAvg }} <span class="text-xs">Km/s</span>
                             </div>
                             <div class="text-center">
                                 {{ point.item.SpeedAvgL }} <span class="text-xs text-red-600">Km/s</span>

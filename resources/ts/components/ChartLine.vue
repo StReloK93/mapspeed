@@ -18,7 +18,7 @@ function UTCTime<Number>(time: string) {
 
 function getChartData(data) {
     if(data) chartConstructor.value.series[0].setData(data.map((byHour) => {
-        return { y: byHour.average_speed, x: UTCTime(byHour.hour) }
+        return { y: byHour.SpeedAvg, x: UTCTime(byHour.Date) }
     }));
 }
 
