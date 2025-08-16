@@ -8,7 +8,6 @@ export function daysAgo(num) {
 
 export function getTimesBySmena(day, smena) {
     const current = moment(day);
-
     if (smena == 1) {
         const startDay = moment(current.format("YYYY-MM-DD 09:10")).unix();
         const endDay = moment(current.format("YYYY-MM-DD 21:10")).unix();

@@ -16,7 +16,7 @@
                <div>Avtoag'dargichlar tezlik xaritasi</div>
             </tippy>
          </RouterLink>
-         <RouterLink v-if="env.SHARQIY" to="water-truck" class="bg-sky-200 w-28 h-28 p-1.5 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
+         <RouterLink v-if="(env.WATER_TRUCK_GROUPID && env.WATER_TRUCKS_REPORT)" to="water-truck" class="bg-sky-200 w-28 h-28 p-1.5 rounded-xl shadow-md grayscale hover:grayscale-0  transition-all">
             <img src="@icons/watertruck.png">
             <tippy target="_parent">
                <div>Suv sepuvchi texnikalar harakati</div>

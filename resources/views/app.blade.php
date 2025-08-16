@@ -26,7 +26,10 @@
         ACCAUNT_ID: {{  env('ACCAUNT_ID') == '' ? 'null' : env('ACCAUNT_ID') }},
         BASE_ALLCARS_ID: {{  env('BASE_ALLCARS_ID') == '' ? 'null' : env('BASE_ALLCARS_ID') }},
         WIALON_TOKEN: '{{  env('WIALON_TOKEN') == '' ? 'null' : env('WIALON_TOKEN') }}',
-        REPORT_INDEX: {{  env('REPORT_INDEX') == '' ? 'null' : env('REPORT_INDEX') }},
+        WATER_TRUCK_GROUPID: {{  env('WATER_TRUCK_GROUPID') == '' ? 'null' : env('WATER_TRUCK_GROUPID') }},
+        WATER_TRUCKS_REPORT: {{  env('WATER_TRUCKS_REPORT') == '' ? 'null' : env('WATER_TRUCKS_REPORT') }},
+        BASE_SMENA_DAY: "{{  env('BASE_SMENA_DAY') == '' ? 'null' : env('BASE_SMENA_DAY') }}",
+        BASE_SMENA_NIGHT: "{{  env('BASE_SMENA_NIGHT') == '' ? 'null' : env('BASE_SMENA_NIGHT') }}"
     }
 </script>
 

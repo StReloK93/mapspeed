@@ -76,7 +76,6 @@ export default class {
 							resolve(rows);
 						});
 					});
-					console.log(rows);
 
 					const detailPromises = rows.map((row: any) => {
 						return new Promise((resolve, reject) => {
@@ -134,9 +133,9 @@ export default class {
 	public async waterTruckReport(from, to) {
 		const qaynarov = this.session.getItems("avl_resource")[0];
 		const reports = qaynarov.getReports();
-
+		
 		return await new Promise((resolve) => {
-			qaynarov.execReport(reports[54], 10054, 0,
+			qaynarov.execReport(reports[ENV.WATER_TRUCKS_REPORT], ENV.WATER_TRUCK_GROUPID, 0,
 				{ from: from, to: to, flags: wialon.item.MReport.intervalFlag.absolute },
 				async () => {
 					var renderer = this.session.getRenderer();
@@ -155,8 +154,6 @@ export default class {
 	public async executeReport(group_id, from, to, report_index) {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
 		var template = user?.getReports();
-		
-		console.log(report_index);
 		
 		return await new Promise(
 			function (resolve) {
