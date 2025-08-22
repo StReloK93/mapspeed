@@ -29,7 +29,8 @@
         WATER_TRUCK_GROUPID: {{  env('WATER_TRUCK_GROUPID') == '' ? 'null' : env('WATER_TRUCK_GROUPID') }},
         WATER_TRUCKS_REPORT: {{  env('WATER_TRUCKS_REPORT') == '' ? 'null' : env('WATER_TRUCKS_REPORT') }},
         BASE_SMENA_DAY: "{{  env('BASE_SMENA_DAY') == '' ? 'null' : env('BASE_SMENA_DAY') }}",
-        BASE_SMENA_NIGHT: "{{  env('BASE_SMENA_NIGHT') == '' ? 'null' : env('BASE_SMENA_NIGHT') }}"
+        BASE_SMENA_NIGHT: "{{  env('BASE_SMENA_NIGHT') == '' ? 'null' : env('BASE_SMENA_NIGHT') }}",
+        RESOURCE_INDEX: "{{  env('RESOURCE_INDEX') == '' ? 'null' : env('RESOURCE_INDEX') }}",
     }
 </script>
 

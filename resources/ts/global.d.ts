@@ -18,6 +18,9 @@ declare global {
         WATER_TRUCKS_REPORT: string,
         WATER_TRUCK_GROUPID: string,
         BASE_SMENA_DAY: string,
-        BASE_SMENA_NIGHT: string
+        BASE_SMENA_NIGHT: string,
+        RESOURCE_INDEX: string,
+
+        
     }
 }

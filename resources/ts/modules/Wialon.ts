@@ -131,7 +131,9 @@ export default class {
 	}
 
 	public async waterTruckReport(from, to) {
-		const qaynarov = this.session.getItems("avl_resource")[0];
+		const qaynarov = this.session.getItems("avl_resource")[ENV.RESOURCE_INDEX];
+		console.log(this.session.getItems("avl_resource"));
+		
 		const reports = qaynarov.getReports();
 		
 		return await new Promise((resolve) => {
