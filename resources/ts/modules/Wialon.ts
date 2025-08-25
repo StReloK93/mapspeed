@@ -156,7 +156,7 @@ export default class {
 	public async executeReport(group_id, from, to, report_index) {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
 		var template = user?.getReports();
-		
+		console.log(report_index)
 		return await new Promise(
 			function (resolve) {
 				user.execReport(
@@ -189,7 +189,7 @@ export default class {
 		const to = moment().unix();
 		const from = to - 3600 * 6 - 1;
 
-		await this.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.REPORT_INDEX);
+		await this.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.RESOURCE_INDEX);
 		
 		const { data: points } = await axios.post("/api/tracks/show", {
 			oldDays: this.store.oldDays,
