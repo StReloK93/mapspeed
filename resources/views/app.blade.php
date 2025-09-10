@@ -31,6 +31,7 @@
         BASE_SMENA_DAY: "{{  env('BASE_SMENA_DAY') == '' ? 'null' : env('BASE_SMENA_DAY') }}",
         BASE_SMENA_NIGHT: "{{  env('BASE_SMENA_NIGHT') == '' ? 'null' : env('BASE_SMENA_NIGHT') }}",
         RESOURCE_INDEX: "{{  env('RESOURCE_INDEX') == '' ? 'null' : env('RESOURCE_INDEX') }}",
+        REPORT_INDEX: "{{  env('REPORT_INDEX') == '' ? 'null' : env('REPORT_INDEX') }}",
     }
 </script>
 

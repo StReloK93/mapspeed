@@ -155,18 +155,19 @@ export default class {
 
 	public async executeReport(group_id, from, to, report_index) {
 		var user = this.session.getItems("avl_resource").find((item) => item._id == ENV.ACCAUNT_ID);
+		console.log(report_index);
+		
 		var template = user?.getReports();
-		console.log(report_index)
 		return await new Promise(
 			function (resolve) {
 				user.execReport(
 					template[report_index],
 					group_id,
-					0,
+					4,
 					{
 						from: from,
 						to: to,
-						flags: wialon.item.MReport.intervalFlag.absolute,
+						flags: 0,
 					},
 					() => {
 						var renderer = this.session.getRenderer();
@@ -188,8 +189,8 @@ export default class {
 
 		const to = moment().unix();
 		const from = to - 3600 * 6 - 1;
-
-		await this.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.RESOURCE_INDEX);
+		
+		await this.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.REPORT_INDEX);
 		
 		const { data: points } = await axios.post("/api/tracks/show", {
 			oldDays: this.store.oldDays,
