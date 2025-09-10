@@ -94,7 +94,7 @@ async function createLines(dateTime) {
 	pageData.loading = true
 	const from = moment(dateTime).add(-6, 'h').unix()
 	const to = moment(dateTime).unix()
-	await pageData.wialon.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.RESOURCE_INDEX)
+	await pageData.wialon.executeReport(ENV.BASE_ALLCARS_ID, from, to, ENV.REPORT_INDEX)
 	pageData.loading = false
 }
 
